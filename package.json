@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npx tsc",
+    "build": "npx prisma generate && npx tsc",
     "start": "node dist/backend/index.js",
     "server": "npx prisma generate && nodemon --watch \"backend/**\" --ext \"ts,json\" --exec \"ts-node backend/index.ts\"",
     "client": "npm run dev --prefix frontend",
