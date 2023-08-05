@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npx prisma generate && npx tsc",
     "start": "node dist/index.js",
-    "server": "npx prisma generate && nodemon --watch \"/**\" --ext \"ts,json\" --exec \"ts-node index.ts\"",
+    "server": "npx prisma generate && nodemon index.ts",
     "client": "npm run dev --prefix frontend",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
