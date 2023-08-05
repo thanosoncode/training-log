@@ -4,16 +4,13 @@ import { render, RenderOptions } from '@testing-library/react';
 import { ReactElement } from 'react';
 import { RouterProvider } from 'react-router-dom';
 
-import { router } from '../App';
 import theme from '../theme';
 
 const AllTheProviders = () => {
   const queryClient = new QueryClient();
   return (
     <ThemeProvider theme={theme}>
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-      </QueryClientProvider>
+      <QueryClientProvider client={queryClient}></QueryClientProvider>
     </ThemeProvider>
   );
 };
