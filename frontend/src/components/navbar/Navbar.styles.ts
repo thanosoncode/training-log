@@ -3,29 +3,51 @@ import { makeStyles } from 'tss-react/mui';
 
 export const useStyles = makeStyles()((theme: Theme) => ({
   navbarRoot: {
+    padding: theme.spacing(3, 0, 0, 0),
+    borderBottom: '1px solid #474747'
+  },
+  navbarContainer: {
     display: 'flex',
-    gap: 12,
-    padding: theme.spacing(2, 0),
+    justifyContent: 'space-between',
+    maxWidth: 1000,
+    margin: '0 auto'
+  },
+  logo: {
+    textDecoration: 'none',
+    color: 'inherit',
+    textTransform: 'uppercase',
+    fontWeight: 'bolder',
+    fontSize: '20px'
+  },
+  centerLinks: {
+    display: 'flex',
+    gap: 20,
     justifyContent: 'center',
     alignItems: 'center'
   },
-  logo: { width: 40, height: 40 },
   linkContainer: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
-    gap: '4px'
+    alignItems: 'flex-start',
+    gap: '10px'
   },
   link: {
     textDecoration: 'none',
     color: theme.palette.text.primary,
     borderBottom: `2px solid transparent`,
-    padding: theme.spacing(0, 1, 1, 1),
-    height: 'min-content'
+    padding: '0px 4px 16px 4px',
+    height: 'min-content',
+    fontWeight: 'bolder'
   },
   active: {
     borderBottom: `2px solid ${theme.palette.primary.main}`,
     color: theme.palette.primary.main,
     transition: '0.2s ease-out'
+  },
+  modeIcon: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    padding: 0,
+    height: 'min-content'
   }
 }));
