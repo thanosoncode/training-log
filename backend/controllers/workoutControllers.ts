@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { prisma } from "../../prisma/prisma";
+import { prisma } from "../prisma/prisma";
 import { Exercise } from "../models/workoutModels";
 import { workoutIsValid } from "../utils/helpers";
 
