@@ -16,6 +16,7 @@ model Workout {
 }
 
 type Exercise {
+  id     String
   name   String
   sets   String
   reps   String
