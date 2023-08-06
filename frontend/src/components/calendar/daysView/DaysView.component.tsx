@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { Workout } from '../../../utils/models';
 import { useStyles } from './DaysView.styles';
+import Tooltip from '@mui/material/Tooltip';
 
 interface DaysViewProps {
   year: number;
@@ -80,27 +81,27 @@ const DaysView: React.FC<DaysViewProps> = ({ year, month, workouts, setSelectedW
 
   return (
     <Box className={classes.days}>
-      <span>S</span>
-      <span>M</span>
-      <span>T</span>
-      <span>W</span>
-      <span>T</span>
-      <span>F</span>
-      <span>S</span>
+      <span className={classes.daysName}>S</span>
+      <span className={classes.daysName}>M</span>
+      <span className={classes.daysName}>T</span>
+      <span className={classes.daysName}>W</span>
+      <span className={classes.daysName}>T</span>
+      <span className={classes.daysName}>F</span>
+      <span className={classes.daysName}>S</span>
       {new Array(getEmptyCells(getWhatDayIsTheFirst(year, month))).fill(null).map((_, index) => (
         <span key={index}></span>
       ))}
       {days.map((day, index) => (
-        <Box
+        <Tooltip
+          title={<span className={classes.label}>{day.label}</span>}
           key={index + 1}
           onClick={() => handleDayClick(day.id)}
           className={cx({
             [classes.day]: true,
             [classes.dayActive]: day.day.toString().length > 0
           })}>
-          <span> {index + 1}</span>
-          <span className={classes.label}>{day.label}</span>
-        </Box>
+          <span>{index + 1}</span>
+        </Tooltip>
       ))}
     </Box>
   );

@@ -1,7 +1,6 @@
 import { Box, CircularProgress, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-
 import { getSingleWorkout, getWorkouts } from '../../api/workouts';
 import Calendar from '../../components/calendar/Calendar.component';
 import PieChart from '../../components/charts/PieChart';
@@ -20,21 +19,30 @@ const Home = () => {
 
   const { data: workout, isLoading: isSingleWorkoutLoading } = useQuery(['single-workout', selectedWorkoutId], () => getSingleWorkout(selectedWorkoutId));
 
+  const rightSideContent = () => {
+    if (workouts && !selectedWorkoutId) {
+      return <Typography>Pick a date for more info.</Typography>;
+    }
+    if (isSingleWorkoutLoading) {
+      return <CircularProgress />;
+    }
+    if (selectedWorkoutId && !isSingleWorkoutLoading) {
+      return (
+        <>
+          <Box className={classes.exercisesListContainer}>
+            <ExercisesList exercises={workout?.exercises ?? []} workout={workout} showTitle={true} />
+          </Box>
+          <PieChart data={workout?.exercises ?? []} />
+        </>
+      );
+    }
+  };
+
   return (
     <Box className={classes.root}>
       <Box className={classes.container}>
         {isWorkoutsLoading ? <CircularProgress /> : <Calendar setSelectedWorkoutId={setSelectedWorkoutId} workouts={workouts} />}
-        {workouts && !selectedWorkoutId ? <Typography>Pick a date for more info.</Typography> : null}
-        {isSingleWorkoutLoading ? (
-          <CircularProgress />
-        ) : (
-          <Box className={classes.details}>
-            <Box className={classes.exercisesListContainer}>
-              <ExercisesList exercises={workout?.exercises ?? []} workout={workout} showTitle={true} />
-            </Box>
-            <PieChart data={workout?.exercises ?? []} />
-          </Box>
-        )}
+        <Box className={classes.details}>{rightSideContent()}</Box>
       </Box>
     </Box>
   );

@@ -44,10 +44,20 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     color: theme.palette.primary.main,
     transition: '0.2s ease-out'
   },
-  modeIcon: {
+  userIcon: {
     display: 'flex',
     alignItems: 'flex-start',
     padding: 0,
     height: 'min-content'
+  },
+  modeButton: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    padding: 0,
+    height: 'min-content'
+  },
+  listItemContainer: {
+    display: 'flex',
+    gap: '12px'
   }
 }));

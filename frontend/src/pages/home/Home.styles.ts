@@ -9,13 +9,12 @@ export const useStyles = makeStyles()(() => ({
     alignItems: 'center',
     flexDirection: 'column',
     gap: '32px',
-    margin: theme.spacing(6, 0)
+    marginTop: '160px'
   },
   container: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
+    alignItems: 'flex-start',
     gap: '32px'
   },
   date: { marginBottom: 2 },
@@ -23,7 +22,8 @@ export const useStyles = makeStyles()(() => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    minWidth: 360
   },
   exercisesListContainer: {
     width: 350

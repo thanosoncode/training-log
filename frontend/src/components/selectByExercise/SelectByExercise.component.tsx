@@ -19,6 +19,8 @@ const SelectByExercise: React.FC<SelectByExerciseProps> = ({ onChange, value, op
 
   const allExercises = workouts && (workouts.flatMap((w) => w.exercises) as Exercise[]);
 
+  console.log('allExercises', allExercises);
+
   const exercisePerTime = allExercises.reduce((acc: { [key: string]: number }, ex) => {
     acc[ex.name] ? acc[ex.name]++ : (acc[ex.name] = 1);
     return acc;

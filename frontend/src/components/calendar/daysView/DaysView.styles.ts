@@ -11,6 +11,7 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     width: 'min-content',
     fontSize: '14px'
   },
+  daysName: { fontWeight: 'bold' },
   day: {
     cursor: 'pointer',
     borderRadius: '50%',
@@ -30,8 +31,8 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     color: 'white'
   },
   label: {
-    position: 'absolute',
-    top: '30px',
-    color: theme.palette.primary.main
+    padding: theme.spacing(3, 0),
+    fontSize: 14,
+    textTransform: 'capitalize'
   }
 }));
