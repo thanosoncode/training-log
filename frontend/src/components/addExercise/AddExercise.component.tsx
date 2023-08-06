@@ -7,6 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 import theme from '../../theme';
 import { Exercise } from '../../utils/models';
@@ -18,7 +19,7 @@ interface AddExerciseProps {
 }
 
 const AddExercise: React.FC<AddExerciseProps> = (props) => {
-  const emptyExercise = { name: '', sets: '0', reps: '0', weight: '' };
+  const emptyExercise = { id: '', name: '', sets: '0', reps: '0', weight: '' };
 
   const [exercise, setExercise] = useState<Exercise>(emptyExercise);
   const [inValidExercise, setInvalidExercise] = useState(false);
@@ -44,7 +45,7 @@ const AddExercise: React.FC<AddExerciseProps> = (props) => {
       return;
     }
 
-    props.setExercises([...props.exercises, exercise]);
+    props.setExercises([...props.exercises, { ...exercise, id: uuidv4() }]);
     setExercise(emptyExercise);
     setInvalidExercise(false);
   };

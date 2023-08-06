@@ -17,7 +17,7 @@ const SelectByExercise: React.FC<SelectByExerciseProps> = ({ onChange, value, op
   const queryClient = useQueryClient();
   const workouts = queryClient.getQueryData(['workouts']) as Workout[];
 
-  const allExercises = workouts && (workouts.flatMap((w) => w.exercises) as Exercise[]);
+  const allExercises = workouts ? (workouts.flatMap((w) => w.exercises) as Exercise[]) : [];
 
   console.log('allExercises', allExercises);
 
@@ -36,7 +36,7 @@ const SelectByExercise: React.FC<SelectByExerciseProps> = ({ onChange, value, op
           const count = exercisePerTime[ex];
           return (
             <MenuItem key={ex} value={ex} className={classes.menuItem}>
-              <span> {ex}</span>
+              <span>{ex}</span>
               {showExercisesCount && <span className={count ? classes.count : ''}>{count}</span>}
             </MenuItem>
           );

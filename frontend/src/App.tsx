@@ -9,6 +9,7 @@ import Home from './pages/home/Home.component';
 import Progression from './pages/progression/Progression.component';
 import Workouts from './pages/workouts/Workouts.component';
 import { useState } from 'react';
+import NewWorkout from './pages/new-workout/NewWorkout.component';
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -42,8 +43,9 @@ const App = () => {
     createRoutesFromElements(
       <Route path="/" element={<RootLayout mode={mode} handleThemeMode={handleThemeMode} />} errorElement={<Error />}>
         <Route index element={<Home />} errorElement={<Error />} />
-        <Route path="/my-workouts" element={<Workouts />} errorElement={<Error />} />
-        <Route path="/progression" element={<Progression />} errorElement={<Error />} />
+        <Route path="/workouts" element={<Workouts />} errorElement={<Error />} />
+        <Route path="/progress" element={<Progression />} errorElement={<Error />} />
+        <Route path="/new-workout" element={<NewWorkout />} errorElement={<Error />} />
       </Route>
     )
   );

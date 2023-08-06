@@ -6,7 +6,8 @@ export const useStyles = makeStyles()(() => ({
   menuItem: {
     display: 'flex',
     justifyContent: 'space-between',
-    gap: '16px'
+    gap: '16px',
+    textTransform: 'capitalize'
   },
   count: {
     width: 20,

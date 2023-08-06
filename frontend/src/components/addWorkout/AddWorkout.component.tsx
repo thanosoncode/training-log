@@ -10,7 +10,7 @@ import Controls from '../controls/Controls.component';
 import ExercisesList from '../exerciseList/ExercisesList.component';
 
 interface AddWorkoutProps {
-  setisAddWorkoutOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setisAddWorkoutOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const AddWorkout: React.FC<AddWorkoutProps> = ({ setisAddWorkoutOpen }) => {
@@ -30,7 +30,7 @@ const AddWorkout: React.FC<AddWorkoutProps> = ({ setisAddWorkoutOpen }) => {
   const { mutate, isLoading: isSavingWorkout } = useMutation(['post-workout'], () => postWorkout({ label, exercises }), {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['workouts'] });
-      setisAddWorkoutOpen(false);
+      setisAddWorkoutOpen && setisAddWorkoutOpen(false);
     }
   });
 

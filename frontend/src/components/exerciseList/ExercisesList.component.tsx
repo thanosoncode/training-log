@@ -12,15 +12,19 @@ import { makeStyles } from 'tss-react/mui';
 
 import theme from '../../theme';
 import { Exercise, Workout } from '../../utils/models';
+import CancelPresentationIcon from '@mui/icons-material/CancelPresentation';
 
 interface ExercisesListProps {
   exercises: Exercise[];
   workout?: Workout | null;
   showTitle: boolean;
+  onDelete: (id: string) => void;
 }
 
-const ExercisesList: React.FC<ExercisesListProps> = ({ exercises, workout, showTitle }) => {
+const ExercisesList: React.FC<ExercisesListProps> = ({ exercises, workout, showTitle, onDelete }) => {
   const { classes } = useStyles();
+
+  console.log('exercises', exercises);
   return (
     <>
       {showTitle && (
@@ -34,23 +38,29 @@ const ExercisesList: React.FC<ExercisesListProps> = ({ exercises, workout, showT
         </Box>
       )}
       {exercises && exercises.length > 0 ? (
-        <TableContainer component={Paper} sx={{ height: 'min-content' }}>
+        <TableContainer component={Paper} sx={{ height: 'min-content', border: '1px solid #464646' }}>
           <Table size="small">
             <TableHead>
               <TableRow>
-                <TableCell sx={{ color: theme.palette.text.secondary }}>name</TableCell>
-                <TableCell className={classes.headCell}>sets</TableCell>
-                <TableCell className={classes.headCell}>reps</TableCell>
-                <TableCell className={classes.headCell}>weight</TableCell>
+                <TableCell sx={{ color: theme.palette.text.secondary }}>Exercise</TableCell>
+                <TableCell className={classes.headCell}>Sets</TableCell>
+                <TableCell className={classes.headCell}>Reps</TableCell>
+                <TableCell className={classes.headCell}>Weight</TableCell>
+                <TableCell className={classes.headCell}>Remove</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {exercises.map((ex, index) => (
-                <TableRow key={index}>
-                  <TableCell className={classes.cellName}>{ex.name}</TableCell>
-                  <TableCell sx={{ textAlign: 'center' }}>{ex.sets}</TableCell>
-                  <TableCell sx={{ textAlign: 'center' }}>{ex.reps}</TableCell>
-                  <TableCell sx={{ textAlign: 'center' }}>{ex.weight}</TableCell>
+              {exercises.map((exercise) => (
+                <TableRow key={exercise.id}>
+                  <TableCell className={classes.cellName} sx={{ fontSize: '16px' }}>
+                    {exercise.name}
+                  </TableCell>
+                  <TableCell sx={{ textAlign: 'center', fontSize: '16px' }}>{exercise.sets}</TableCell>
+                  <TableCell sx={{ textAlign: 'center', fontSize: '16px' }}>{exercise.reps}</TableCell>
+                  <TableCell sx={{ textAlign: 'center', fontSize: '16px' }}>{exercise.weight}</TableCell>
+                  <TableCell sx={{ textAlign: 'center', fontSize: '16px' }}>
+                    <CancelPresentationIcon onClick={() => onDelete(exercise.id)} />
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

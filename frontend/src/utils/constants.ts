@@ -1,23 +1,23 @@
 export const LONG_CACHE = 3600000;
 
-export const workoutLabels = ['push', 'pull', 'upper mix', 'legs', 'legs push', 'legs puss', 'shoulders', 'calisthenics'];
+export const workoutLabels = ['Push', 'Pull', 'Upper Body', 'Legs Pull', 'Legs push', 'Lower Body', 'shoulders', 'calisthenics'];
 
 export const possibleExercises = [
-  'overhead shoulder press',
-  'incline bench',
-  'dumbell shoulder press',
-  'tricep extensions',
-  'lateral raises',
-  'pull ups',
-  'rows',
-  'rear delt flyes',
-  'bicep curls',
-  'bulgarian split squats',
-  'trap deadlifts',
-  'deadlifts',
-  'hack squat',
-  'leg extensions',
-  'hamstring curls',
-  'hip thrust',
-  'ghd'
+  'Overhead Shoulder Press',
+  'Incline Bench',
+  'Dumbell Shoulder Press',
+  'Tricep Extensions',
+  'Lateral Raises',
+  'Pull Ups',
+  'Rows',
+  'Rear Delt Flyes',
+  'Bicep Curls',
+  'Bulgarian Split Squats',
+  'Trap Deadlifts',
+  'Deadlifts',
+  'Hack Squat',
+  'Leg Extensions',
+  'Hamstring Curls',
+  'Hip Thrust',
+  'Ghd'
 ];

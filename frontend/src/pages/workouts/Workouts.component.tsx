@@ -6,13 +6,11 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { useState } from 'react';
-
 import { deleteWorkout, getWorkouts } from '../../api/workouts';
 import AddWorkout from '../../components/addWorkout/AddWorkout.component';
 import ConfirmationDialog from '../../components/confirmationDialog/ConfirmationDialog.component';
 import ExercisesList from '../../components/exerciseList/ExercisesList.component';
 import FIlterBy from '../../components/filterBy/FIlterBy.component';
-import theme from '../../theme';
 import { LONG_CACHE } from '../../utils/constants';
 import { Workout } from '../../utils/models';
 import { useStyles } from './Workouts.styles';

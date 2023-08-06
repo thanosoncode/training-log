@@ -3,7 +3,7 @@ import { makeStyles } from 'tss-react/mui';
 
 export const useStyles = makeStyles()((theme: Theme) => ({
   navbarRoot: {
-    padding: theme.spacing(3, 0, 0, 0),
+    paddingTop: '24px',
     borderBottom: '1px solid #474747'
   },
   navbarContainer: {
@@ -12,18 +12,20 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     maxWidth: 1000,
     margin: '0 auto'
   },
+  leftSide: { display: 'flex', gap: '40px', alignItems: 'flex-start' },
   logo: {
     textDecoration: 'none',
     color: 'inherit',
     textTransform: 'uppercase',
     fontWeight: 'bolder',
-    fontSize: '20px'
+    fontSize: '24px',
+    lineHeight: 'initial'
   },
-  centerLinks: {
+  links: {
     display: 'flex',
     gap: 20,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'baseline'
   },
   linkContainer: {
     display: 'flex',
@@ -34,16 +36,18 @@ export const useStyles = makeStyles()((theme: Theme) => ({
   link: {
     textDecoration: 'none',
     color: theme.palette.text.primary,
-    borderBottom: `2px solid transparent`,
+    borderBottom: `1px solid transparent`,
     padding: '0px 4px 16px 4px',
     height: 'min-content',
     fontWeight: 'bolder'
   },
   active: {
-    borderBottom: `2px solid ${theme.palette.primary.main}`,
+    borderBottom: `1px solid ${theme.palette.primary.main}`,
     color: theme.palette.primary.main,
     transition: '0.2s ease-out'
   },
+  rightSide: { display: 'flex', gap: '24px', alignItems: 'flex-start' },
+  newWorkoutButton: { height: 'min-content', marginLeft: 'auto', padding: '2px 12px', textTransform: 'capitalize', fontWeight: 'bolder' },
   userIcon: {
     display: 'flex',
     alignItems: 'flex-start',
