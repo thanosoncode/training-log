@@ -20,11 +20,14 @@ const Navbar: React.FC<NavbarProps> = ({ handleThemeMode, mode }) => {
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+
+  const handleUserMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
+    setIsUserMenuOpen(true);
   };
   const handleCloseUserMenu = () => {
     setAnchorEl(null);
+    setIsUserMenuOpen(false);
   };
 
   const handleAddButtonClick = () => {};
@@ -82,7 +85,7 @@ const Navbar: React.FC<NavbarProps> = ({ handleThemeMode, mode }) => {
           )}
 
           <Box>
-            <IconButton className={classes.userIcon} onClick={handleClick}>
+            <IconButton className={classes.userIcon} onClick={handleUserMenuClick}>
               <AccountCircleIcon />
             </IconButton>
             <Menu
@@ -95,27 +98,27 @@ const Navbar: React.FC<NavbarProps> = ({ handleThemeMode, mode }) => {
               MenuListProps={{
                 'aria-labelledby': 'user-menu'
               }}>
+              <MenuItem>
+                <IconButton onClick={handleThemeMode} className={classes.modeButton}>
+                  {mode === 'light' ? (
+                    <Box className={classes.listItemContainer}>
+                      <DarkModeIcon fontSize="small" />
+                      <Typography variant="subtitle1">Light mode</Typography>
+                    </Box>
+                  ) : (
+                    <Box className={classes.listItemContainer}>
+                      <WbSunnyIcon fontSize="small" />
+                      <Typography variant="subtitle1">Dark mode</Typography>
+                    </Box>
+                  )}
+                </IconButton>
+              </MenuItem>
               <MenuItem onClick={handleCloseUserMenu}>
                 <IconButton className={classes.modeButton}>
                   <Box className={classes.listItemContainer}>
                     <LogoutIcon fontSize="small" />
                     <Typography>Log out</Typography>
                   </Box>
-                </IconButton>
-              </MenuItem>
-              <MenuItem>
-                <IconButton onClick={handleThemeMode} className={classes.modeButton}>
-                  {mode === 'light' ? (
-                    <Box className={classes.listItemContainer}>
-                      <DarkModeIcon fontSize="small" />
-                      <Typography>Dark mode</Typography>
-                    </Box>
-                  ) : (
-                    <Box className={classes.listItemContainer}>
-                      <WbSunnyIcon fontSize="small" />
-                      <Typography>Light mode</Typography>
-                    </Box>
-                  )}
                 </IconButton>
               </MenuItem>
             </Menu>

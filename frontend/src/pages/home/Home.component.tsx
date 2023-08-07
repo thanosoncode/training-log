@@ -17,6 +17,8 @@ const Home = () => {
     staleTime: LONG_CACHE
   });
 
+  console.log('workouts', workouts);
+
   const { data: workout, isLoading: isSingleWorkoutLoading } = useQuery(['single-workout', selectedWorkoutId], () => getSingleWorkout(selectedWorkoutId));
 
   const rightSideContent = () => {

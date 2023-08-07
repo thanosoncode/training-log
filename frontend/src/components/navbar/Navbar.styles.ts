@@ -56,12 +56,17 @@ export const useStyles = makeStyles()((theme: Theme) => ({
   },
   modeButton: {
     display: 'flex',
-    alignItems: 'flex-start',
+
     padding: 0,
-    height: 'min-content'
+    height: 'min-content',
+    '&:hover': {
+      background: 'none'
+    }
   },
   listItemContainer: {
     display: 'flex',
-    gap: '12px'
+    gap: '12px',
+    padding: '0 8px',
+    alignItems: 'center'
   }
 }));

@@ -1,6 +1,5 @@
 import Box from '@mui/material/Box';
 import { useStyles } from './NewWorkout.styles';
-import AddWorkout from '../../components/addWorkout/AddWorkout.component';
 import AddExercise from '../../components/addExercise/AddExercise.component';
 import { useState } from 'react';
 import { Exercise } from '../../utils/models';

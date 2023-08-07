@@ -18,7 +18,7 @@ interface ExercisesListProps {
   exercises: Exercise[];
   workout?: Workout | null;
   showTitle: boolean;
-  onDelete: (id: string) => void;
+  onDelete?: (id: string) => void;
 }
 
 const ExercisesList: React.FC<ExercisesListProps> = ({ exercises, workout, showTitle, onDelete }) => {
@@ -46,7 +46,7 @@ const ExercisesList: React.FC<ExercisesListProps> = ({ exercises, workout, showT
                 <TableCell className={classes.headCell}>Sets</TableCell>
                 <TableCell className={classes.headCell}>Reps</TableCell>
                 <TableCell className={classes.headCell}>Weight</TableCell>
-                <TableCell className={classes.headCell}>Remove</TableCell>
+                {onDelete && <TableCell className={classes.headCell}>Remove</TableCell>}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -58,9 +58,11 @@ const ExercisesList: React.FC<ExercisesListProps> = ({ exercises, workout, showT
                   <TableCell sx={{ textAlign: 'center', fontSize: '16px' }}>{exercise.sets}</TableCell>
                   <TableCell sx={{ textAlign: 'center', fontSize: '16px' }}>{exercise.reps}</TableCell>
                   <TableCell sx={{ textAlign: 'center', fontSize: '16px' }}>{exercise.weight}</TableCell>
-                  <TableCell sx={{ textAlign: 'center', fontSize: '16px' }}>
-                    <CancelPresentationIcon onClick={() => onDelete(exercise.id)} />
-                  </TableCell>
+                  {onDelete && (
+                    <TableCell sx={{ textAlign: 'center', fontSize: '16px' }}>
+                      <CancelPresentationIcon onClick={() => onDelete(exercise.id)} />
+                    </TableCell>
+                  )}
                 </TableRow>
               ))}
             </TableBody>
