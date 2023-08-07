@@ -9,7 +9,9 @@ import Home from './pages/home/Home.component';
 import Progression from './pages/progression/Progression.component';
 import Workouts from './pages/workouts/Workouts.component';
 import { useState } from 'react';
-import NewWorkout from './pages/new-workout/NewWorkout.component';
+import Strength from './pages/new-workout/strength/Strength.component';
+import Cardio from './pages/new-workout/cardio/Cardio.component';
+import NewWorkout from './pages/new-workout/NewWorkout';
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -46,6 +48,8 @@ const App = () => {
         <Route path="/workouts" element={<Workouts />} errorElement={<Error />} />
         <Route path="/progress" element={<Progression />} errorElement={<Error />} />
         <Route path="/new-workout" element={<NewWorkout />} errorElement={<Error />} />
+        <Route path="/new-workout/strength" element={<Strength />} errorElement={<Error />} />
+        <Route path="/new-workout/cardio" element={<Cardio />} errorElement={<Error />} />
       </Route>
     )
   );

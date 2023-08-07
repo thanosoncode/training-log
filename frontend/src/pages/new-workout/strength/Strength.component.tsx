@@ -1,19 +1,19 @@
 import Box from '@mui/material/Box';
-import { useStyles } from './NewWorkout.styles';
-import AddExercise from '../../components/addExercise/AddExercise.component';
+import { useStyles } from './Strength.styles';
+import AddExercise from '../../../components/addExercise/AddExercise.component';
 import { useState } from 'react';
-import { Exercise } from '../../utils/models';
-import ExercisesList from '../../components/exerciseList/ExercisesList.component';
-import AddWorkoutLabel from '../../components/addWorkoutLabel/AddWorkoutLabel.component';
+import { Exercise } from '../../../utils/models';
+import ExercisesList from '../../../components/exerciseList/ExercisesList.component';
+import AddWorkoutLabel from '../../../components/addWorkoutLabel/AddWorkoutLabel.component';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { Backdrop, Button, CircularProgress, Typography } from '@mui/material';
-import { QueryClient, useMutation } from '@tanstack/react-query';
-import { postWorkout } from '../../api/workouts';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { postWorkout } from '../../../api/workouts';
 import { useNavigate } from 'react-router-dom';
 
-const NewWorkout = () => {
+const NewStrength = () => {
   const { classes } = useStyles();
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [workoutLabel, setWorkoutLabel] = useState('');
   const [exercises, setExercises] = useState<Exercise[]>([]);
@@ -28,9 +28,9 @@ const NewWorkout = () => {
     setExercises(exercises.filter((x) => x.id !== id));
   };
 
-  const { mutate, isLoading: isSavingWorkout } = useMutation(['post-workout'], () => postWorkout({ label: workoutLabel, exercises }), {
+  const { mutate, isLoading: isSavingWorkout } = useMutation(['post-strength'], () => postWorkout({ label: workoutLabel, exercises }), {
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['workouts'] });
+      queryClient.invalidateQueries({ queryKey: ['strength'] });
       setExercises([]);
       setWorkoutLabel('');
       setIsWorkoutLabelSelected(false);
@@ -68,4 +68,4 @@ const NewWorkout = () => {
     </Box>
   );
 };
-export default NewWorkout;
+export default NewStrength;

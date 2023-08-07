@@ -29,13 +29,13 @@ const Workouts = () => {
     setFiltersOpen(!filtersOpen);
   };
 
-  const { data: workouts, isLoading } = useQuery(['workouts'], getWorkouts, {
+  const { data: workouts, isLoading } = useQuery(['strength'], getWorkouts, {
     refetchOnWindowFocus: false,
     staleTime: LONG_CACHE
   });
 
-  const { mutate: deleteSelectedWorkout, isLoading: isDeleting } = useMutation(['delete-workout'], deleteWorkout, {
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['workouts'] })
+  const { mutate: deleteSelectedWorkout, isLoading: isDeleting } = useMutation(['delete-strength'], deleteWorkout, {
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['strength'] })
   });
 
   const handleDelete = (id: string | undefined) => {
