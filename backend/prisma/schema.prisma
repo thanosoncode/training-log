@@ -7,18 +7,31 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Workout {
-  id        String     @id @default(auto()) @map("_id") @db.ObjectId
-  label     String
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  exercises Exercise[]
-}
-
 type Exercise {
   id     String
   name   String
   sets   String
   reps   String
   weight String
+}
+
+model Strength {
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  label     String
+  exercises Exercise[]
+}
+
+type CardioExercise {
+  name     String
+  minutes  String
+  distance String
+}
+
+model Cardio {
+  id        String         @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  exercise  CardioExercise
 }

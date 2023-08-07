@@ -1,4 +1,4 @@
-import { Exercise } from "../models/workoutModels";
+import { Exercise } from "@prisma/client";
 
 export const workoutIsValid = (label: string, exercises: Exercise[]) => {
   const exercisesAreValid =
@@ -6,7 +6,11 @@ export const workoutIsValid = (label: string, exercises: Exercise[]) => {
     exercises.length > 0 &&
     exercises.every(
       (exercise) =>
-        exercise.name && exercise.sets && exercise.reps && exercise.weight
+        exercise.name &&
+        exercise.sets &&
+        exercise.reps &&
+        exercise.weight &&
+        exercise.id
     );
   const labelIsValid = label && label.length > 0;
 

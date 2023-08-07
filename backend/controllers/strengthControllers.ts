@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import { prisma } from "../prisma/prisma";
-import { Exercise } from "../models/workoutModels";
 import { workoutIsValid } from "../utils/helpers";
+import { Exercise } from "@prisma/client";
 
-const getWorkouts = async (req: Request, res: Response) => {
-  const workouts = await prisma.workout.findMany({
+const getAllStrength = async (req: Request, res: Response) => {
+  const workouts = await prisma.strength.findMany({
     orderBy: {
       createdAt: "desc",
     },
@@ -15,7 +15,7 @@ const getWorkouts = async (req: Request, res: Response) => {
   return res.status(200).json(workouts);
 };
 
-const createWorkout = async (req: Request, res: Response) => {
+const createStrength = async (req: Request, res: Response) => {
   const { label, exercises }: { label: string; exercises: Exercise[] } =
     req.body;
 
@@ -25,7 +25,7 @@ const createWorkout = async (req: Request, res: Response) => {
       .json({ message: "Label and/or exercises are not valid" });
   }
 
-  const workout = await prisma.workout.create({
+  const workout = await prisma.strength.create({
     data: {
       label,
       exercises,
@@ -35,12 +35,12 @@ const createWorkout = async (req: Request, res: Response) => {
   res.status(201).json(workout);
 };
 
-const getSingleWorkout = async (req: Request, res: Response) => {
+const getSingleStrength = async (req: Request, res: Response) => {
   const { id } = req.params;
   if (id.length !== 24) {
     return res.status(400).json({ message: "Invalid id" });
   }
-  const workout = await prisma.workout.findFirst({
+  const workout = await prisma.strength.findFirst({
     where: {
       id,
     },
@@ -51,7 +51,7 @@ const getSingleWorkout = async (req: Request, res: Response) => {
   return res.json(workout);
 };
 
-const updateWorkout = async (req: Request, res: Response) => {
+const updateStrength = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { label, exercises }: { label: string; exercises: Exercise[] } =
     req.body;
@@ -64,7 +64,7 @@ const updateWorkout = async (req: Request, res: Response) => {
       .status(400)
       .json({ message: "Label and/or exercises are not valid" });
   }
-  const workout = await prisma.workout.findFirst({
+  const workout = await prisma.strength.findFirst({
     where: {
       id,
     },
@@ -75,7 +75,7 @@ const updateWorkout = async (req: Request, res: Response) => {
       .json({ message: "Could not find workout with that id" });
   }
 
-  const updatedWorkout = await prisma.workout.update({
+  const updatedWorkout = await prisma.strength.update({
     where: {
       id,
     },
@@ -87,12 +87,12 @@ const updateWorkout = async (req: Request, res: Response) => {
   return res.status(200).json(updatedWorkout);
 };
 
-const deleteWorkout = async (req: Request, res: Response) => {
+const deleteStrength = async (req: Request, res: Response) => {
   const { id } = req.params;
   if (id.length !== 24) {
     return res.status(400).json({ message: "Invalid id" });
   }
-  const workout = await prisma.workout.findFirst({
+  const workout = await prisma.strength.findFirst({
     where: {
       id,
     },
@@ -102,7 +102,7 @@ const deleteWorkout = async (req: Request, res: Response) => {
       .status(400)
       .json({ message: "Could not find workout with that id" });
   }
-  await prisma.workout.delete({
+  await prisma.strength.delete({
     where: {
       id,
     },
@@ -111,9 +111,9 @@ const deleteWorkout = async (req: Request, res: Response) => {
 };
 
 export {
-  getWorkouts,
-  createWorkout,
-  getSingleWorkout,
-  updateWorkout,
-  deleteWorkout,
+  getAllStrength,
+  createStrength,
+  getSingleStrength,
+  updateStrength,
+  deleteStrength,
 };
