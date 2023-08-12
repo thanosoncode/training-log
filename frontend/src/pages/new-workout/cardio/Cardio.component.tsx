@@ -45,18 +45,18 @@ const Cardio = () => {
           </Typography>
           <Box sx={{ display: 'flex', gap: '24px' }}>
             <TextField
-              label="Time (mins)"
-              variant="standard"
-              name="minutes"
-              type="number"
-              onChange={(e) => setExercise({ ...exercise, [e.target.name]: e.target.value })}
-              InputProps={{ inputProps: { min: 0 } }}
-            />
-            <TextField
               label="Distance (meters)"
               variant="standard"
               type="number"
               name="distance"
+              onChange={(e) => setExercise({ ...exercise, [e.target.name]: e.target.value })}
+              InputProps={{ inputProps: { min: 0 } }}
+            />
+            <TextField
+              label="Time (mins)"
+              variant="standard"
+              name="minutes"
+              type="number"
               onChange={(e) => setExercise({ ...exercise, [e.target.name]: e.target.value })}
               InputProps={{ inputProps: { min: 0 } }}
             />
