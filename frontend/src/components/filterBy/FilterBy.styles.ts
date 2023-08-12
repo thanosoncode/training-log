@@ -19,5 +19,8 @@ export const useStyles = makeStyles()(() => ({
     alignItems: 'center',
     fontSize: 14
   },
-  clearFilters: {}
+  clearFilters: {
+    '&.Mui-selected': { backgroundColor: 'transparent !important' },
+    '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.08) !important' }
+  }
 }));

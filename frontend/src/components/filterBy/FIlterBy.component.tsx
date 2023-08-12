@@ -33,7 +33,7 @@ const FIlterBy: React.FC<FilterByProps> = ({ handleLabelChange, selectedLabel, l
             );
           })}
         <Divider />
-        <MenuItem className={classes.clearFilters} value="">
+        <MenuItem className={classes.clearFilters} value="" selected={false}>
           Clear filters
         </MenuItem>
       </Select>
