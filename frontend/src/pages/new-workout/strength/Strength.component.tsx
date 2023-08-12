@@ -4,12 +4,14 @@ import AddExercise from '../../../components/addExercise/AddExercise.component';
 import { useState } from 'react';
 import { Exercise } from '../../../utils/models';
 import ExercisesList from '../../../components/exerciseList/ExercisesList.component';
-import AddWorkoutLabel from '../../../components/addWorkoutLabel/AddWorkoutLabel.component';
+import AddStrengthLabel from '../../../components/addLabel/AddLabel.component';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { Backdrop, Button, CircularProgress, Typography } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postWorkout } from '../../../api/workouts';
 import { useNavigate } from 'react-router-dom';
+import { strengthLabels } from '../../../utils/constants';
+import AddLabel from '../../../components/addLabel/AddLabel.component';
 
 const NewStrength = () => {
   const { classes } = useStyles();
@@ -52,7 +54,13 @@ const NewStrength = () => {
           )}
         </Box>
       ) : (
-        <AddWorkoutLabel label={workoutLabel} onChange={handleWorkoutTypeChange} onAdd={handleWorkoutTypeAdd} />
+        <AddLabel
+          title="What type of strength workout"
+          label={workoutLabel}
+          labels={strengthLabels}
+          onChange={handleWorkoutTypeChange}
+          onAdd={handleWorkoutTypeAdd}
+        />
       )}
       {isWorkoutLabelSelected ? (
         <>

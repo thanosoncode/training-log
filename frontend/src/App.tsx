@@ -7,11 +7,13 @@ import Error from './components/error/Error.component';
 import RootLayout from './components/rootLayout/RootLayout.component';
 import Home from './pages/home/Home.component';
 import Progression from './pages/progression/Progression.component';
-import Workouts from './pages/workouts/Workouts.component';
 import { useState } from 'react';
 import Strength from './pages/new-workout/strength/Strength.component';
 import Cardio from './pages/new-workout/cardio/Cardio.component';
 import NewWorkout from './pages/new-workout/NewWorkout';
+import StrengthList from './pages/workouts/strengthList/StrengthList.component';
+import CardioList from './pages/workouts/cardio/CardioList.component';
+import WorkoutsLayout from './pages/workouts/WorkoutsLayout.component';
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -45,7 +47,10 @@ const App = () => {
     createRoutesFromElements(
       <Route path="/" element={<RootLayout mode={mode} handleThemeMode={handleThemeMode} />} errorElement={<Error />}>
         <Route index element={<Home />} errorElement={<Error />} />
-        <Route path="/workouts" element={<Workouts />} errorElement={<Error />} />
+        <Route path="/workouts" element={<WorkoutsLayout />} errorElement={<Error />}>
+          <Route path="/workouts/strength" element={<StrengthList />} errorElement={<Error />} />
+          <Route path="/workouts/cardio" element={<CardioList />} errorElement={<Error />} />
+        </Route>
         <Route path="/progress" element={<Progression />} errorElement={<Error />} />
         <Route path="/new-workout" element={<NewWorkout />} errorElement={<Error />} />
         <Route path="/new-workout/strength" element={<Strength />} errorElement={<Error />} />

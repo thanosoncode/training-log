@@ -6,28 +6,22 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { useState } from 'react';
-import { deleteWorkout, getWorkouts } from '../../api/workouts';
-import ConfirmationDialog from '../../components/confirmationDialog/ConfirmationDialog.component';
-import ExercisesList from '../../components/exerciseList/ExercisesList.component';
-import FIlterBy from '../../components/filterBy/FIlterBy.component';
-import { LONG_CACHE } from '../../utils/constants';
-import { Workout } from '../../utils/models';
-import { useStyles } from './Workouts.styles';
+import { deleteWorkout, getWorkouts } from '../../../api/workouts';
+import ConfirmationDialog from '../../../components/confirmationDialog/ConfirmationDialog.component';
+import ExercisesList from '../../../components/exerciseList/ExercisesList.component';
+import FIlterBy from '../../../components/filterBy/FIlterBy.component';
+import { LONG_CACHE, strengthLabels } from '../../../utils/constants';
+import { Workout } from '../../../utils/models';
+import { useStyles } from './StrengthList.styles';
 
-const Workouts = () => {
+const StrengthList = () => {
   const { classes } = useStyles();
   const queryClient = useQueryClient();
   const [selectedLabel, setSelectedLabel] = useState('');
-  const [filtersOpen, setFiltersOpen] = useState(false);
   const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = useState(false);
   const [workoutToDelete, setWorkoutToDelete] = useState('');
 
   const handleLabelChange = (event: SelectChangeEvent<string>) => setSelectedLabel(event.target.value);
-
-  const handleFilterByOpen = () => {
-    setSelectedLabel('');
-    setFiltersOpen(!filtersOpen);
-  };
 
   const { data: workouts, isLoading } = useQuery(['strength'], getWorkouts, {
     refetchOnWindowFocus: false,
@@ -55,11 +49,24 @@ const Workouts = () => {
 
   const filteredWorkouts = selectedLabel ? workouts && workouts.filter((w) => w.label === selectedLabel) : workouts;
 
+  const strengthMap =
+    workouts &&
+    workouts.reduce((acc: { [key: string]: number }, workout) => {
+      if (acc[workout.label]) {
+        acc[workout.label]++;
+      } else {
+        acc[workout.label] = 1;
+      }
+      return acc;
+    }, {});
+
   return (
     <Box>
       <>
         <Box className={classes.titleContainer}>
-          <FIlterBy filtersOpen={filtersOpen} selectedLabel={selectedLabel} handleFilterByOpen={handleFilterByOpen} handleLabelChange={handleLabelChange} />
+          <Box sx={{ marginLeft: 'auto' }}>
+            <FIlterBy selectedLabel={selectedLabel} labels={strengthLabels} workoutsMap={strengthMap} handleLabelChange={handleLabelChange} />
+          </Box>
         </Box>
         <Box className={classes.workoutsContainer}>
           {isLoading && <CircularProgress />}
@@ -96,4 +103,4 @@ const Workouts = () => {
     </Box>
   );
 };
-export default Workouts;
+export default StrengthList;

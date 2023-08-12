@@ -37,3 +37,16 @@ export type TopWeigtPerExercise = {
   topWeight: number;
   createdAt: string;
 };
+
+export type CardioExercise = {
+  name: string;
+  minutes: string;
+  distance: string;
+};
+
+export type Cardio = {
+  id?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  exercise: CardioExercise;
+};

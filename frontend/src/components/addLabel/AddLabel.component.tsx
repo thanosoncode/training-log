@@ -1,22 +1,23 @@
 import { Box, Typography, FormControl, InputLabel, Select, MenuItem, Button, SelectChangeEvent } from '@mui/material';
-import { workoutLabels } from '../../utils/constants';
 
-interface AddWorkoutLabelProps {
+interface AddStrengthLabelProps {
+  title: string;
   label: string;
   onChange: (event: SelectChangeEvent<string>) => void;
   onAdd: () => void;
+  labels: string[];
 }
 
-const AddWorkoutLabel: React.FC<AddWorkoutLabelProps> = (props) => {
+const AddLabel: React.FC<AddStrengthLabelProps> = (props) => {
   return (
     <Box>
       <Box sx={{ display: 'flex', gap: 4 }}>
         <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-          <Typography variant="h6">What kind of workout?</Typography>
+          <Typography variant="h6">{props.title}</Typography>
           <FormControl sx={{ minWidth: 100 }}>
             <InputLabel id="label">Type</InputLabel>
             <Select id="label" label="Age" labelId="label" value={props.label} onChange={props.onChange}>
-              {workoutLabels.map((label) => (
+              {props.labels.map((label) => (
                 <MenuItem key={label} value={label} sx={{ textTransform: 'capitalize' }}>
                   {label}
                 </MenuItem>
@@ -24,11 +25,11 @@ const AddWorkoutLabel: React.FC<AddWorkoutLabelProps> = (props) => {
             </Select>
           </FormControl>
           <Button variant="contained" onClick={props.onAdd} disabled={!props.label} sx={{ height: '100%' }}>
-            add
+            Save
           </Button>
         </Box>
       </Box>
     </Box>
   );
 };
-export default AddWorkoutLabel;
+export default AddLabel;

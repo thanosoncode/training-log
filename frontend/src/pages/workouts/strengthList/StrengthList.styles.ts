@@ -1,6 +1,6 @@
 import { makeStyles } from 'tss-react/mui';
 
-import theme from '../../theme';
+import theme from '../../../theme';
 
 export const useStyles = makeStyles()(() => ({
   newWorkoutButton: { height: 'min-content', marginLeft: 'auto' },

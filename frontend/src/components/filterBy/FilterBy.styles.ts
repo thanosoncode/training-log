@@ -18,5 +18,6 @@ export const useStyles = makeStyles()(() => ({
     justifyContent: 'center',
     alignItems: 'center',
     fontSize: 14
-  }
+  },
+  clearFilters: {}
 }));
