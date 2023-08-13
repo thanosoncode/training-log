@@ -2,15 +2,10 @@ import Box from '@mui/material/Box';
 import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 
-import { StrengthWorkoutServer, Workout } from '../../../utils/models';
+import { CardioWorkoutFromServer, StrengthWorkoutServer, Workout } from '../../../utils/models';
 import { useStyles } from './DaysView.styles';
 import Tooltip from '@mui/material/Tooltip';
-
-type DayEntry = {
-  id: string;
-  day: string;
-  label: '';
-};
+import { cardioLabels } from '../../../utils/constants';
 
 type Entry = {
   id: string;
@@ -20,19 +15,23 @@ type Entry = {
   label: string;
 };
 
+type CombinedEntryWorkout = { id: string; month: number; year: number; label: string };
+
 type CombinedEntry = {
   day: number;
-  workouts: { id: string; month: number; year: number; label: string }[];
+  workouts: CombinedEntryWorkout[];
 };
 
 interface DaysViewProps {
   year: number;
   month: number;
-  strengthWorkouts: StrengthWorkoutServer[] | undefined;
-  setSelectedWorkoutId: React.Dispatch<React.SetStateAction<string>>;
+  strengthWorkouts: StrengthWorkoutServer[];
+  cardioWorkouts: CardioWorkoutFromServer[];
+  setSelectedStrengthId: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedCardioId: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const DaysView: React.FC<DaysViewProps> = ({ year, month, strengthWorkouts, setSelectedWorkoutId }) => {
+const DaysView: React.FC<DaysViewProps> = ({ year, month, strengthWorkouts, setSelectedStrengthId, setSelectedCardioId, cardioWorkouts }) => {
   const { classes, cx } = useStyles();
 
   const getDaysInMonth = (year: number, month: number) => {
@@ -40,8 +39,13 @@ const DaysView: React.FC<DaysViewProps> = ({ year, month, strengthWorkouts, setS
   };
   const [days, setDays] = useState<CombinedEntry[]>(new Array(getDaysInMonth(year, month)).fill({ day: 0, workouts: [] }));
 
-  const handleDayClick = (id: string) => {
-    setSelectedWorkoutId(id);
+  const handleDayClick = (workout: CombinedEntryWorkout) => {
+    const isCardioWorkout = cardioLabels.includes(workout.label);
+    if (isCardioWorkout) {
+      setSelectedCardioId(workout.id);
+    } else {
+      setSelectedStrengthId(workout.id);
+    }
   };
 
   const strengthWorkoutMap = (strengthWorkouts: StrengthWorkoutServer[]): Entry[] => {
@@ -79,22 +83,65 @@ const DaysView: React.FC<DaysViewProps> = ({ year, month, strengthWorkouts, setS
     return combinedEntries;
   };
 
+  const cardioWorkoutMap = (cardioWorkouts: CardioWorkoutFromServer[]): Entry[] => {
+    const entries = cardioWorkouts
+      .map((w) => {
+        const date = format(new Date(w.createdAt).getTime(), 'dd/MM/yyyy');
+        const [day, month, year] = date.split('/');
+        const entry = {
+          id: w.id ?? '',
+          day: Number(day),
+          month: Number(month),
+          year: Number(year),
+          label: w.exercise.name
+        };
+        return entry;
+      })
+      .filter((item) => item && item.month === month && item.year === year);
+
+    return entries;
+  };
+
+  const createCombineEntriesCardio = (entries: Entry[]) => {
+    const combinedEntries = entries.reduce((acc: CombinedEntry[], entry: Entry) => {
+      const workout = { id: entry.id, month: entry.month, year: entry.year, label: entry.label };
+      const existingEntry = acc.find((item) => item.day === entry.day);
+
+      if (!existingEntry) {
+        acc.push({ day: entry.day, workouts: [workout] });
+      } else {
+        existingEntry.workouts.push(workout);
+      }
+
+      return acc;
+    }, []);
+    return combinedEntries;
+  };
+
   useEffect(() => {
-    if (strengthWorkouts) {
-      const newDays = new Array(getDaysInMonth(year, month)).fill({
-        id: '',
-        day: ''
-      });
+    const newDays = new Array(getDaysInMonth(year, month)).fill({
+      id: '',
+      day: ''
+    });
 
-      const entriesStrength = strengthWorkoutMap(strengthWorkouts);
+    const entriesStrength = strengthWorkoutMap(strengthWorkouts);
 
-      createCombineEntriesStrength(entriesStrength).forEach((entry) => {
+    createCombineEntriesStrength(entriesStrength).forEach((entry) => {
+      newDays.splice(entry.day - 1, 1, entry);
+    });
+
+    const entriesCardio = cardioWorkoutMap(cardioWorkouts);
+
+    createCombineEntriesCardio(entriesCardio).forEach((entry) => {
+      if (newDays[entry.day - 1].day === '') {
         newDays.splice(entry.day - 1, 1, entry);
-      });
-
-      setDays(newDays);
-    }
-  }, [strengthWorkouts, month, year]);
+      } else {
+        newDays[entry.day - 1].workouts.push(...entry.workouts);
+      }
+    });
+    console.log('newDays', newDays);
+    setDays(newDays);
+  }, [strengthWorkouts, cardioWorkouts, month, year]);
 
   const getWhatDayIsTheFirst = (year: number, month: number) => {
     return new Date(year, month - 1, 1).toString().split(' ')[0];
@@ -121,8 +168,6 @@ const DaysView: React.FC<DaysViewProps> = ({ year, month, strengthWorkouts, setS
     }
   };
 
-  console.log('days', days);
-
   return (
     <Box className={classes.days}>
       <span className={classes.daysName}>S</span>
@@ -142,7 +187,7 @@ const DaysView: React.FC<DaysViewProps> = ({ year, month, strengthWorkouts, setS
             <div className={classes.tooltip}>
               {day.workouts &&
                 day.workouts.map((workout, index) => (
-                  <div key={index} onClick={() => handleDayClick(workout.id)} className={classes.tooltipItem}>
+                  <div key={index} onClick={() => handleDayClick(workout)} className={classes.tooltipItem}>
                     {workout.label}
                   </div>
                 ))}

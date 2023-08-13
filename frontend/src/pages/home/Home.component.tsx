@@ -1,43 +1,53 @@
 import { Box, CircularProgress, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-import { getSingleWorkout, getWorkouts } from '../../api/workouts';
+import { getSingleWorkoutStrength, getWorkoutsStrength } from '../../api/workouts';
 import Calendar from '../../components/calendar/Calendar.component';
-import PieChart from '../../components/charts/PieChart';
 import ExercisesList from '../../components/exerciseList/ExercisesList.component';
 import { LONG_CACHE } from '../../utils/constants';
 import { useStyles } from './Home.styles';
-import { getAllCardio } from '../../api/cardio';
+import { getAllCardio, getSingleCardio } from '../../api/cardio';
+import SingleCardioTable from '../../components/singleCardioTable/SingleCardioTable.component';
 
 const Home = () => {
   const { classes } = useStyles();
-  const [selectedWorkoutId, setSelectedWorkoutId] = useState<string>('');
+  const [selectedStrengthId, setSelectedStrengthId] = useState<string>('');
+  const [selectedCardioId, setSelectedCardioId] = useState<string>('');
 
-  const { data: strengthWorkouts, isLoading: isWorkoutsLoading } = useQuery(['strength'], getWorkouts, {
+  const { data: strengthWorkouts, isLoading: isWorkoutsLoading } = useQuery(['strength'], getWorkoutsStrength, {
     refetchOnWindowFocus: false
   });
 
-  const { data: cardio, isLoading: isCardioLoading } = useQuery(['cardio'], getAllCardio, {
+  const { data: cardioWorkouts, isLoading: isCardioLoading } = useQuery(['cardio'], getAllCardio, {
     refetchOnWindowFocus: false,
     staleTime: LONG_CACHE
   });
 
-  const { data: workout, isLoading: isSingleWorkoutLoading } = useQuery(['single-workout', selectedWorkoutId], () => getSingleWorkout(selectedWorkoutId));
+  const { data: workout, isLoading: isSingleStrengthLoading } = useQuery(['single-workout', selectedStrengthId], () =>
+    getSingleWorkoutStrength(selectedStrengthId)
+  );
+
+  const { data: cardio, isLoading: isSingleCardioLoading } = useQuery(['single-cardio', selectedCardioId], () => getSingleCardio(selectedCardioId));
 
   const rightSideContent = () => {
-    if (strengthWorkouts && !selectedWorkoutId) {
-      return <Typography>Pick a date for more info.</Typography>;
-    }
-    if (isSingleWorkoutLoading) {
+    if (isSingleStrengthLoading || isSingleCardioLoading) {
       return <CircularProgress />;
     }
-    if (selectedWorkoutId && !isSingleWorkoutLoading) {
+    if (selectedStrengthId && workout) {
       return (
         <>
-          <Box className={classes.exercisesListContainer}>
+          <Box className={classes.tableContainer}>
             <ExercisesList exercises={workout?.exercises ?? []} workout={workout} showTitle={true} />
           </Box>
-          <PieChart data={workout?.exercises ?? []} />
+        </>
+      );
+    }
+    if (selectedCardioId && cardio) {
+      return (
+        <>
+          <Box className={classes.tableContainer}>
+            <SingleCardioTable cardio={cardio} />
+          </Box>
         </>
       );
     }
@@ -46,7 +56,16 @@ const Home = () => {
   return (
     <Box className={classes.root}>
       <Box className={classes.container}>
-        {isWorkoutsLoading ? <CircularProgress /> : <Calendar setSelectedWorkoutId={setSelectedWorkoutId} strengthWorkouts={strengthWorkouts} />}
+        {isWorkoutsLoading ? (
+          <CircularProgress />
+        ) : (
+          <Calendar
+            setSelectedStrengthId={setSelectedStrengthId}
+            setSelectedCardioId={setSelectedCardioId}
+            strengthWorkouts={strengthWorkouts}
+            cardioWorkouts={cardioWorkouts}
+          />
+        )}
         <Box className={classes.details}>{rightSideContent()}</Box>
       </Box>
     </Box>

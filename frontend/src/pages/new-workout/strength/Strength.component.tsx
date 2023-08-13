@@ -8,7 +8,7 @@ import AddStrengthLabel from '../../../components/addLabel/AddLabel.component';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { Backdrop, Button, CircularProgress, Typography } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { postWorkout } from '../../../api/workouts';
+import { postWorkoutStrength } from '../../../api/workouts';
 import { useNavigate } from 'react-router-dom';
 import { strengthLabels } from '../../../utils/constants';
 import AddLabel from '../../../components/addLabel/AddLabel.component';
@@ -30,7 +30,7 @@ const NewStrength = () => {
     setExercises(exercises.filter((x) => x.id !== id));
   };
 
-  const { mutate, isLoading: isSavingWorkout } = useMutation(['post-strength'], () => postWorkout({ label: workoutLabel, exercises }), {
+  const { mutate, isLoading: isSavingWorkout } = useMutation(['post-strength'], () => postWorkoutStrength({ label: workoutLabel, exercises }), {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['strength'] });
       setExercises([]);

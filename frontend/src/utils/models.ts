@@ -52,6 +52,13 @@ export type CardioExercise = {
   distance: string;
 };
 
+export type CardioWorkoutFromServer = {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  exercise: CardioExercise;
+};
+
 export type Cardio = {
   id?: string;
   createdAt?: string;

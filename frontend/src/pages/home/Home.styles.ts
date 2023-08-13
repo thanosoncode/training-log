@@ -25,7 +25,7 @@ export const useStyles = makeStyles()(() => ({
     flexDirection: 'column',
     minWidth: 360
   },
-  exercisesListContainer: {
+  tableContainer: {
     width: 350
   }
 }));
