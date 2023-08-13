@@ -36,7 +36,7 @@ const NewStrength = () => {
       setExercises([]);
       setWorkoutLabel('');
       setIsWorkoutLabelSelected(false);
-      navigate('/workouts');
+      navigate('/workouts/strength');
     }
   });
 

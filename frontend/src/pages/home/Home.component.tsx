@@ -7,22 +7,25 @@ import PieChart from '../../components/charts/PieChart';
 import ExercisesList from '../../components/exerciseList/ExercisesList.component';
 import { LONG_CACHE } from '../../utils/constants';
 import { useStyles } from './Home.styles';
+import { getAllCardio } from '../../api/cardio';
 
 const Home = () => {
   const { classes } = useStyles();
   const [selectedWorkoutId, setSelectedWorkoutId] = useState<string>('');
 
-  const { data: workouts, isLoading: isWorkoutsLoading } = useQuery(['workouts'], getWorkouts, {
+  const { data: strengthWorkouts, isLoading: isWorkoutsLoading } = useQuery(['strength'], getWorkouts, {
+    refetchOnWindowFocus: false
+  });
+
+  const { data: cardio, isLoading: isCardioLoading } = useQuery(['cardio'], getAllCardio, {
     refetchOnWindowFocus: false,
     staleTime: LONG_CACHE
   });
 
-  console.log('workouts', workouts);
-
   const { data: workout, isLoading: isSingleWorkoutLoading } = useQuery(['single-workout', selectedWorkoutId], () => getSingleWorkout(selectedWorkoutId));
 
   const rightSideContent = () => {
-    if (workouts && !selectedWorkoutId) {
+    if (strengthWorkouts && !selectedWorkoutId) {
       return <Typography>Pick a date for more info.</Typography>;
     }
     if (isSingleWorkoutLoading) {
@@ -43,7 +46,7 @@ const Home = () => {
   return (
     <Box className={classes.root}>
       <Box className={classes.container}>
-        {isWorkoutsLoading ? <CircularProgress /> : <Calendar setSelectedWorkoutId={setSelectedWorkoutId} workouts={workouts} />}
+        {isWorkoutsLoading ? <CircularProgress /> : <Calendar setSelectedWorkoutId={setSelectedWorkoutId} strengthWorkouts={strengthWorkouts} />}
         <Box className={classes.details}>{rightSideContent()}</Box>
       </Box>
     </Box>

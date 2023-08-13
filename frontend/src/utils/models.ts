@@ -14,6 +14,14 @@ export interface Workout {
   exercises: Exercise[];
 }
 
+export interface StrengthWorkoutServer {
+  id: string;
+  label: string;
+  createdAt: string;
+  updatedAt: string;
+  exercises: Exercise[];
+}
+
 export type ExerciseWithVolumeAndDate = {
   name: string;
   volume: number;

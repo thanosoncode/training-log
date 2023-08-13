@@ -30,9 +30,18 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     backgroundColor: theme.palette.primary.main,
     color: 'white'
   },
-  label: {
-    padding: theme.spacing(3, 0),
+  tooltipContainer: { padding: theme.spacing(1, 0) },
+  tooltip: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '8px',
+    fontWeight: 'bold',
     fontSize: 14,
     textTransform: 'capitalize'
+  },
+  tooltipItem: {
+    padding: theme.spacing(1, 2),
+    cursor: 'pointer',
+    '&:hover': { backgroundColor: theme.palette.primary.main }
   }
 }));

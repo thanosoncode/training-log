@@ -24,7 +24,6 @@ interface ExercisesListProps {
 const ExercisesList: React.FC<ExercisesListProps> = ({ exercises, workout, showTitle, onDelete }) => {
   const { classes } = useStyles();
 
-  console.log('exercises', exercises);
   return (
     <>
       {showTitle && (

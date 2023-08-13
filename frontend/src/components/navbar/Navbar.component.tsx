@@ -52,10 +52,10 @@ const Navbar: React.FC<NavbarProps> = ({ handleThemeMode, mode }) => {
               </Box>
             </NavLink>
             <NavLink
-              to="/workouts"
+              to="/workouts/strength"
               className={cx({
                 [classes.link]: true,
-                [classes.active]: pathname === '/workouts'
+                [classes.active]: pathname.startsWith('/workouts')
               })}>
               <Box className={classes.linkContainer}>
                 <FitnessCenter fontSize="small" />
