@@ -4,7 +4,6 @@ interface AddStrengthLabelProps {
   title: string;
   label: string;
   onChange: (event: SelectChangeEvent<string>) => void;
-  onAdd: () => void;
   labels: string[];
 }
 
@@ -24,9 +23,6 @@ const AddLabel: React.FC<AddStrengthLabelProps> = (props) => {
               ))}
             </Select>
           </FormControl>
-          <Button variant="contained" onClick={props.onAdd} disabled={!props.label} sx={{ height: '100%' }}>
-            Save
-          </Button>
         </Box>
       </Box>
     </Box>

@@ -19,12 +19,10 @@ const NewStrength = () => {
   const navigate = useNavigate();
   const [workoutLabel, setWorkoutLabel] = useState('');
   const [exercises, setExercises] = useState<Exercise[]>([]);
-  const [isWorkoutLabelSelected, setIsWorkoutLabelSelected] = useState(false);
 
   const handleWorkoutTypeChange = (event: SelectChangeEvent<string>) => {
     setWorkoutLabel(event.target.value);
   };
-  const handleWorkoutTypeAdd = () => setIsWorkoutLabelSelected(true);
 
   const handleRemoveExercise = (id: string) => {
     setExercises(exercises.filter((x) => x.id !== id));
@@ -35,14 +33,13 @@ const NewStrength = () => {
       queryClient.invalidateQueries({ queryKey: ['strength'] });
       setExercises([]);
       setWorkoutLabel('');
-      setIsWorkoutLabelSelected(false);
       navigate('/workouts/strength');
     }
   });
 
   return (
     <Box className={classes.root}>
-      {isWorkoutLabelSelected ? (
+      {workoutLabel ? (
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
           <Typography variant="h3" sx={{ textTransform: 'capitalize', lineHeight: 'intial' }}>
             {workoutLabel}
@@ -54,15 +51,9 @@ const NewStrength = () => {
           )}
         </Box>
       ) : (
-        <AddLabel
-          title="What type of strength workout"
-          label={workoutLabel}
-          labels={strengthLabels}
-          onChange={handleWorkoutTypeChange}
-          onAdd={handleWorkoutTypeAdd}
-        />
+        <AddLabel title="What type of strength workout" label={workoutLabel} labels={strengthLabels} onChange={handleWorkoutTypeChange} />
       )}
-      {isWorkoutLabelSelected ? (
+      {workoutLabel ? (
         <>
           <Box sx={{ marginBottom: '64px' }}>
             <ExercisesList exercises={exercises} showTitle={true} onDelete={handleRemoveExercise} />

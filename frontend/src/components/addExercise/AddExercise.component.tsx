@@ -44,7 +44,7 @@ const AddExercise: React.FC<AddExerciseProps> = (props) => {
       setInvalidExercise(true);
       return;
     }
-
+    console.log('exercise', exercise);
     props.setExercises([...props.exercises, { ...exercise, id: uuidv4() }]);
     setExercise(emptyExercise);
     setInvalidExercise(false);
@@ -66,29 +66,33 @@ const AddExercise: React.FC<AddExerciseProps> = (props) => {
         }}>
         <SelectByExercise value={exercise.name} onChange={handleSelectChange} showExercisesCount={false} />
         <FormControl>
-          <InputLabel id="sets">sets</InputLabel>
-          <Select id="sets" name="sets" label="sets" labelId="sets" value={exercise?.sets} onChange={handleSelectChange}>
-            {new Array(11).fill(null).map((_, index) => (
-              <MenuItem key={index} value={index.toString()}>
-                {index.toString()}
-              </MenuItem>
-            ))}
-          </Select>
+          <TextField
+            id="sets"
+            name="sets"
+            label="Sets"
+            variant="outlined"
+            type="number"
+            value={exercise.sets}
+            onChange={handleInputChange}
+            inputProps={{ min: 0 }}
+          />
         </FormControl>
         <FormControl>
-          <InputLabel id="reps">reps</InputLabel>
-          <Select id="reps" name="reps" label="reps" labelId="reps" value={exercise?.reps} onChange={handleSelectChange}>
-            {new Array(21).fill(null).map((_, index) => (
-              <MenuItem key={index} value={index.toString()}>
-                {index.toString()}
-              </MenuItem>
-            ))}
-          </Select>
+          <TextField
+            id="reps"
+            name="reps"
+            label="Reps"
+            variant="outlined"
+            type="number"
+            value={exercise.reps}
+            onChange={handleInputChange}
+            inputProps={{ min: 0 }}
+          />
         </FormControl>
         <TextField
           id="weight"
           name="weight"
-          label="weight"
+          label="Weight"
           variant="outlined"
           type="number"
           value={exercise.weight}

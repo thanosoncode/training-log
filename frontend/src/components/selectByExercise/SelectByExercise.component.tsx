@@ -27,7 +27,7 @@ const SelectByExercise: React.FC<SelectByExerciseProps> = ({ onChange, value, op
   return (
     <FormControl variant="standard" sx={{ minWidth: 200 }}>
       <InputLabel id="name" sx={{ width: 200 }}>
-        exercise
+        Exercise
       </InputLabel>
       <Select id="name" name="name" label="name" labelId="name" value={value} onChange={onChange} autoWidth>
         {options.map((ex) => {
