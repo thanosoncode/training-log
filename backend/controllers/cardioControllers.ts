@@ -1,7 +1,30 @@
 import { Request, Response } from "express";
 import { prisma } from "../prisma/prisma";
+import { isValidMonth, isValidYear } from "../utils/helpers";
 
 const getAllCardio = async (req: Request, res: Response) => {
+  const { month, year } = req.query as { month: string; year: string };
+
+  if (isValidMonth(month) && isValidYear(year)) {
+    const cardio = await prisma.cardio.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+      where: {
+        createdAt: {
+          gte: new Date(`${year}-${month}-1`).toISOString(),
+          lte: new Date(`${year}-${month}-31`).toISOString(),
+        },
+      },
+    });
+    if (!cardio) {
+      return res
+        .status(400)
+        .json({ message: "No cardio cardio sessions found" });
+    }
+    return res.status(200).json(cardio);
+  }
+
   const cardio = await prisma.cardio.findMany({
     orderBy: {
       createdAt: "desc",

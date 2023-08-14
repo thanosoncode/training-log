@@ -16,3 +16,9 @@ export const workoutIsValid = (label: string, exercises: Exercise[]) => {
 
   return exercisesAreValid && labelIsValid;
 };
+
+export const isValidMonth = (month: string) =>
+  month && Number(month) > 0 && Number(month) < 12;
+
+export const isValidYear = (year: string) =>
+  Number(year) > 2000 && Number(year) < 2100;
