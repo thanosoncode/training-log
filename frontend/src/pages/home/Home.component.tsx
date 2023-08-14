@@ -8,19 +8,22 @@ import { LONG_CACHE } from '../../utils/constants';
 import { useStyles } from './Home.styles';
 import { getAllCardio, getSingleCardio } from '../../api/cardio';
 import SingleCardioTable from '../../components/singleCardioTable/SingleCardioTable.component';
+import { useAppDispatch, useAppState } from '../../context/AppContext';
 
 const Home = () => {
   const { classes } = useStyles();
-  const [selectedStrengthId, setSelectedStrengthId] = useState<string>('');
-  const [selectedCardioId, setSelectedCardioId] = useState<string>('');
+  const appDispatch = useAppDispatch();
+  const { selectedStrengthId, selectedCardioId } = useAppState();
 
-  const { data: strengthWorkouts, isLoading: isStrengthLoading } = useQuery(['strength'], getAllStrength, {
-    refetchOnWindowFocus: false
+  const { isLoading: isStrengthLoading } = useQuery(['strength'], getAllStrength, {
+    refetchOnWindowFocus: false,
+    onSuccess: (data) => appDispatch({ type: 'SET_ALL_STRENGTH', payload: data })
   });
 
-  const { data: cardioWorkouts, isLoading: isCardioLoading } = useQuery(['cardio'], getAllCardio, {
+  const { isLoading: isCardioLoading } = useQuery(['cardio'], getAllCardio, {
     refetchOnWindowFocus: false,
-    staleTime: LONG_CACHE
+    staleTime: LONG_CACHE,
+    onSuccess: (data) => appDispatch({ type: 'SET_ALL_CARDIO', payload: data })
   });
 
   const { data: workout, isLoading: isSingleStrengthLoading } = useQuery(['single-workout', selectedStrengthId], () =>
@@ -56,16 +59,7 @@ const Home = () => {
   return (
     <Box className={classes.root}>
       <Box className={classes.container}>
-        {isStrengthLoading || isCardioLoading ? (
-          <CircularProgress />
-        ) : (
-          <Calendar
-            setSelectedStrengthId={setSelectedStrengthId}
-            setSelectedCardioId={setSelectedCardioId}
-            strengthWorkouts={strengthWorkouts}
-            cardioWorkouts={cardioWorkouts}
-          />
-        )}
+        {isStrengthLoading || isCardioLoading ? <CircularProgress /> : <Calendar />}
         <Box className={classes.details}>{rightSideContent()}</Box>
       </Box>
     </Box>

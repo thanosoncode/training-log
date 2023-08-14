@@ -8,14 +8,9 @@ import DaysView from './daysView/DaysView.component';
 import YearsView from './yearsView/YearsView.component';
 import { useAppDispatch, useAppState } from '../../context/AppContext';
 
-interface CalendarProps {
-  strengthWorkouts: StrengthWorkoutServer[] | undefined;
-  cardioWorkouts: CardioWorkoutFromServer[] | undefined;
-  setSelectedStrengthId: React.Dispatch<React.SetStateAction<string>>;
-  setSelectedCardioId: React.Dispatch<React.SetStateAction<string>>;
-}
+interface CalendarProps {}
 
-const Calendar: React.FC<CalendarProps> = ({ setSelectedStrengthId, setSelectedCardioId, strengthWorkouts, cardioWorkouts }) => {
+const Calendar: React.FC<CalendarProps> = () => {
   const { classes } = useStyles();
   const { month } = useAppState();
   const appDispatch = useAppDispatch();
@@ -96,18 +91,7 @@ const Calendar: React.FC<CalendarProps> = ({ setSelectedStrengthId, setSelectedC
           </IconButton>
         </Box>
       </Box>
-      {isYearsOpen ? (
-        <YearsView year={year} handleYearClick={handleYearClick} />
-      ) : (
-        <DaysView
-          month={month}
-          year={year}
-          strengthWorkouts={strengthWorkouts || []}
-          cardioWorkouts={cardioWorkouts || []}
-          setSelectedStrengthId={setSelectedStrengthId}
-          setSelectedCardioId={setSelectedCardioId}
-        />
-      )}
+      {isYearsOpen ? <YearsView year={year} handleYearClick={handleYearClick} /> : <DaysView month={month} year={year} />}
     </Paper>
   );
 };

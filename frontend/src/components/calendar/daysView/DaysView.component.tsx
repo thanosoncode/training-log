@@ -2,10 +2,11 @@ import Box from '@mui/material/Box';
 import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 
-import { CardioWorkoutFromServer, StrengthWorkoutServer, Workout } from '../../../utils/models';
+import { CardioWorkoutFromServer, StrengthWorkoutServer } from '../../../utils/models';
 import { useStyles } from './DaysView.styles';
 import Tooltip from '@mui/material/Tooltip';
 import { cardioLabels } from '../../../utils/constants';
+import { useAppDispatch, useAppState } from '../../../context/AppContext';
 
 type Entry = {
   id: string;
@@ -25,14 +26,12 @@ type CombinedEntry = {
 interface DaysViewProps {
   year: number;
   month: number;
-  strengthWorkouts: StrengthWorkoutServer[];
-  cardioWorkouts: CardioWorkoutFromServer[];
-  setSelectedStrengthId: React.Dispatch<React.SetStateAction<string>>;
-  setSelectedCardioId: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const DaysView: React.FC<DaysViewProps> = ({ year, month, strengthWorkouts, setSelectedStrengthId, setSelectedCardioId, cardioWorkouts }) => {
+const DaysView: React.FC<DaysViewProps> = ({ year, month }) => {
   const { classes, cx } = useStyles();
+  const appDispatch = useAppDispatch();
+  const { allCardio, allStrength } = useAppState();
 
   const getDaysInMonth = (year: number, month: number) => {
     return new Date(year, month, 0).getDate();
@@ -42,9 +41,9 @@ const DaysView: React.FC<DaysViewProps> = ({ year, month, strengthWorkouts, setS
   const handleDayClick = (workout: CombinedEntryWorkout) => {
     const isCardioWorkout = cardioLabels.includes(workout.label);
     if (isCardioWorkout) {
-      setSelectedCardioId(workout.id);
+      appDispatch({ type: 'SET_SELECTED_CARDIO_ID', payload: workout.id });
     } else {
-      setSelectedStrengthId(workout.id);
+      appDispatch({ type: 'SET_SELECTED_STRENGTH_ID', payload: workout.id });
     }
   };
 
@@ -124,13 +123,13 @@ const DaysView: React.FC<DaysViewProps> = ({ year, month, strengthWorkouts, setS
       day: ''
     });
 
-    const entriesStrength = strengthWorkoutMap(strengthWorkouts);
+    const entriesStrength = strengthWorkoutMap(allStrength);
 
     createCombineEntriesStrength(entriesStrength).forEach((entry) => {
       newDays.splice(entry.day - 1, 1, entry);
     });
 
-    const entriesCardio = cardioWorkoutMap(cardioWorkouts);
+    const entriesCardio = cardioWorkoutMap(allCardio);
 
     createCombineEntriesCardio(entriesCardio).forEach((entry) => {
       if (newDays[entry.day - 1].day === '') {
@@ -139,9 +138,8 @@ const DaysView: React.FC<DaysViewProps> = ({ year, month, strengthWorkouts, setS
         newDays[entry.day - 1].workouts.push(...entry.workouts);
       }
     });
-    console.log('newDays', newDays);
     setDays(newDays);
-  }, [strengthWorkouts, cardioWorkouts, month, year]);
+  }, [allCardio, allStrength, month, year]);
 
   const getWhatDayIsTheFirst = (year: number, month: number) => {
     return new Date(year, month - 1, 1).toString().split(' ')[0];
@@ -180,13 +178,13 @@ const DaysView: React.FC<DaysViewProps> = ({ year, month, strengthWorkouts, setS
       {new Array(getEmptyCells(getWhatDayIsTheFirst(year, month))).fill(null).map((_, index) => (
         <span key={index}></span>
       ))}
-      {days.map((day, index) => (
+      {days.map((entry, index) => (
         <Tooltip
           classes={{ tooltip: classes.tooltipContainer }}
           title={
             <div className={classes.tooltip}>
-              {day.workouts &&
-                day.workouts.map((workout, index) => (
+              {entry.workouts &&
+                entry.workouts.map((workout, index) => (
                   <div key={index} onClick={() => handleDayClick(workout)} className={classes.tooltipItem}>
                     {workout.label}
                   </div>
@@ -196,7 +194,7 @@ const DaysView: React.FC<DaysViewProps> = ({ year, month, strengthWorkouts, setS
           key={index + 1}
           className={cx({
             [classes.day]: true,
-            [classes.dayActive]: day.day.toString().length > 0
+            [classes.dayActive]: entry.day.toString().length > 0
           })}>
           <span>{index + 1}</span>
         </Tooltip>

@@ -9,7 +9,7 @@ export const useStyles = makeStyles()(() => ({
     justifyContent: 'cetner',
     alignItems: 'center',
     gap: '16px',
-    margin: theme.spacing(3, 0, 4, 0),
+    margin: theme.spacing(2, 0),
     height: 40,
     padding: theme.spacing(0, 1)
   },

@@ -1,21 +1,45 @@
 import { createContext, useContext, useReducer } from 'react';
+import { CardioWorkoutFromServer, StrengthWorkoutServer } from '../utils/models';
 
 export type AppState = {
+  allCardio: CardioWorkoutFromServer[];
+  allStrength: StrengthWorkoutServer[];
+  selectedStrengthId: string;
+  selectedCardioId: string;
   month: number;
 };
 
 const defaultState: AppState = {
+  allCardio: [],
+  allStrength: [],
+  selectedStrengthId: '',
+  selectedCardioId: '',
   month: new Date().getMonth() + 1
 };
 
 type Dispatch = (action: Action) => void;
-type Action = { type: 'MONTH_INCREASE' } | { type: 'MONTH_DECREASE' } | { type: 'SET_MONTH'; payload: number };
+type Action =
+  | { type: 'SET_ALL_CARDIO'; payload: CardioWorkoutFromServer[] }
+  | { type: 'SET_ALL_STRENGTH'; payload: StrengthWorkoutServer[] }
+  | { type: 'SET_SELECTED_CARDIO_ID'; payload: string }
+  | { type: 'SET_SELECTED_STRENGTH_ID'; payload: string }
+  | { type: 'MONTH_INCREASE' }
+  | { type: 'MONTH_DECREASE' }
+  | { type: 'SET_MONTH'; payload: number };
 
 const AppStateContext = createContext<AppState | null>(null);
 const AppDispatchContext = createContext<Dispatch | null>(null);
 
 const appReducer = (state: AppState, action: Action) => {
   switch (action.type) {
+    case 'SET_ALL_CARDIO':
+      return { ...state, allCardio: action.payload };
+    case 'SET_ALL_STRENGTH':
+      return { ...state, allStrength: action.payload };
+    case 'SET_SELECTED_STRENGTH_ID':
+      return { ...state, selectedStrengthId: action.payload };
+    case 'SET_SELECTED_CARDIO_ID':
+      return { ...state, selectedCardioId: action.payload };
     case 'MONTH_INCREASE':
       return { ...state, month: state.month + 1 };
     case 'MONTH_DECREASE':

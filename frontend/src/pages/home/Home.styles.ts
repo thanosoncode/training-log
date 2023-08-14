@@ -9,7 +9,7 @@ export const useStyles = makeStyles()(() => ({
     alignItems: 'center',
     flexDirection: 'column',
     gap: '32px',
-    marginTop: '160px'
+    marginTop: '64px'
   },
   container: {
     display: 'flex',
