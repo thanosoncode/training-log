@@ -1,18 +1,38 @@
 import { Request, Response } from "express";
 import { prisma } from "../prisma/prisma";
-import { workoutIsValid } from "../utils/helpers";
+import { isValidMonth, isValidYear, workoutIsValid } from "../utils/helpers";
 import { Exercise } from "@prisma/client";
 
 const getAllStrength = async (req: Request, res: Response) => {
-  const workouts = await prisma.strength.findMany({
+  const { month, year } = req.query as { month: string; year: string };
+
+  if (isValidMonth(month) && isValidYear(year)) {
+    const strength = await prisma.strength.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+      where: {
+        createdAt: {
+          gte: new Date(`${year}-${month}-1`).toISOString(),
+          lte: new Date(`${year}-${month}-31`).toISOString(),
+        },
+      },
+    });
+    if (!strength) {
+      return res.status(400).json({ message: "No strength workouts found" });
+    }
+    return res.status(200).json(strength);
+  }
+
+  const strength = await prisma.strength.findMany({
     orderBy: {
       createdAt: "desc",
     },
   });
-  if (!workouts) {
-    return res.status(400).json({ message: "no workouts" });
+  if (!strength) {
+    return res.status(400).json({ message: "no strength workouts" });
   }
-  return res.status(200).json(workouts);
+  return res.status(200).json(strength);
 };
 
 const createStrength = async (req: Request, res: Response) => {
