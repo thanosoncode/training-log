@@ -1,7 +1,7 @@
 import { StrengthWorkoutServer, Workout } from '../utils/models';
 import axios from './axios';
 
-export const getWorkoutsStrength = async (): Promise<StrengthWorkoutServer[]> => {
+export const getAllStrength = async (): Promise<StrengthWorkoutServer[]> => {
   const response = await axios.get('/api/strength');
   const data = await response.data;
   return data;

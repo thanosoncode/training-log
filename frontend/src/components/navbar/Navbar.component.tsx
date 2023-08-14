@@ -83,7 +83,6 @@ const Navbar: React.FC<NavbarProps> = ({ handleThemeMode, mode }) => {
               </Button>
             </NavLink>
           )}
-
           <Box>
             <IconButton className={classes.userIcon} onClick={handleUserMenuClick}>
               <AccountCircleIcon />

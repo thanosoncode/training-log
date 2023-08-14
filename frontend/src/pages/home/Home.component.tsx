@@ -1,7 +1,7 @@
 import { Box, CircularProgress, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-import { getSingleWorkoutStrength, getWorkoutsStrength } from '../../api/workouts';
+import { getSingleWorkoutStrength, getAllStrength } from '../../api/workouts';
 import Calendar from '../../components/calendar/Calendar.component';
 import ExercisesList from '../../components/exerciseList/ExercisesList.component';
 import { LONG_CACHE } from '../../utils/constants';
@@ -14,7 +14,7 @@ const Home = () => {
   const [selectedStrengthId, setSelectedStrengthId] = useState<string>('');
   const [selectedCardioId, setSelectedCardioId] = useState<string>('');
 
-  const { data: strengthWorkouts, isLoading: isWorkoutsLoading } = useQuery(['strength'], getWorkoutsStrength, {
+  const { data: strengthWorkouts, isLoading: isStrengthLoading } = useQuery(['strength'], getAllStrength, {
     refetchOnWindowFocus: false
   });
 
@@ -56,7 +56,7 @@ const Home = () => {
   return (
     <Box className={classes.root}>
       <Box className={classes.container}>
-        {isWorkoutsLoading ? (
+        {isStrengthLoading || isCardioLoading ? (
           <CircularProgress />
         ) : (
           <Calendar

@@ -14,6 +14,7 @@ import NewWorkout from './pages/new-workout/NewWorkout';
 import StrengthList from './pages/workouts/strengthList/StrengthList.component';
 import CardioList from './pages/workouts/cardio/CardioList.component';
 import WorkoutsLayout from './pages/workouts/WorkoutsLayout.component';
+import AppProvider from './context/AppContext';
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -63,7 +64,9 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <RouterProvider router={router} />
+        <AppProvider>
+          <RouterProvider router={router} />
+        </AppProvider>
       </ThemeProvider>
       <ReactQueryDevtools initialIsOpen={false}></ReactQueryDevtools>
     </QueryClientProvider>

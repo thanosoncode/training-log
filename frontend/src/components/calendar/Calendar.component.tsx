@@ -2,10 +2,11 @@ import { ExpandMore, NavigateBefore, NavigateNext } from '@mui/icons-material';
 import { Box, IconButton, Paper } from '@mui/material';
 import { useState } from 'react';
 
-import { CardioWorkoutFromServer, StrengthWorkoutServer, Workout } from '../../utils/models';
+import { CardioWorkoutFromServer, StrengthWorkoutServer } from '../../utils/models';
 import { useStyles } from './Calendar.styles';
 import DaysView from './daysView/DaysView.component';
 import YearsView from './yearsView/YearsView.component';
+import { useAppDispatch, useAppState } from '../../context/AppContext';
 
 interface CalendarProps {
   strengthWorkouts: StrengthWorkoutServer[] | undefined;
@@ -16,7 +17,8 @@ interface CalendarProps {
 
 const Calendar: React.FC<CalendarProps> = ({ setSelectedStrengthId, setSelectedCardioId, strengthWorkouts, cardioWorkouts }) => {
   const { classes } = useStyles();
-  const [month, setMonth] = useState<number>(new Date().getMonth() + 1);
+  const { month } = useAppState();
+  const appDispatch = useAppDispatch();
   const [year, setYear] = useState(new Date().getFullYear());
   const [isYearsOpen, setYearsOpen] = useState(false);
 
@@ -54,18 +56,19 @@ const Calendar: React.FC<CalendarProps> = ({ setSelectedStrengthId, setSelectedC
 
   const handlePreviousMonthClick = () => {
     if (month >= 2) {
-      setMonth((m) => m - 1);
+      appDispatch({ type: 'MONTH_DECREASE' });
+
       return;
     }
-    setMonth(12);
+    appDispatch({ type: 'SET_MONTH', payload: 12 });
   };
 
   const handleNextMonthClick = () => {
     if (month < 12) {
-      setMonth((m) => m + 1);
+      appDispatch({ type: 'MONTH_INCREASE' });
       return;
     }
-    setMonth(1);
+    appDispatch({ type: 'SET_MONTH', payload: 1 });
   };
 
   const toggleYearOptions = () => setYearsOpen(!isYearsOpen);

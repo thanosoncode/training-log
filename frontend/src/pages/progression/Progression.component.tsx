@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { useState } from 'react';
 
-import { getWorkoutsStrength } from '../../api/workouts';
+import { getAllStrength } from '../../api/workouts';
 import BarChart from '../../components/charts/BarChart';
 import LineChart from '../../components/charts/LineChart';
 import SelectByExercise from '../../components/selectByExercise/SelectByExercise.component';
@@ -21,7 +21,7 @@ const Progression = () => {
 
   const handleSelectChange = (event: SelectChangeEvent) => setSelectedExercise(event.target.value);
 
-  const { data: workouts } = useQuery(['workouts'], getWorkoutsStrength, {
+  const { data: workouts } = useQuery(['workouts'], getAllStrength, {
     staleTime: LONG_CACHE,
     refetchOnWindowFocus: false
   });

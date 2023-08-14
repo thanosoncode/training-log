@@ -6,7 +6,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { useState } from 'react';
-import { deleteWorkoutStrength, getWorkoutsStrength } from '../../../api/workouts';
+import { deleteWorkoutStrength, getAllStrength } from '../../../api/workouts';
 import ConfirmationDialog from '../../../components/confirmationDialog/ConfirmationDialog.component';
 import ExercisesList from '../../../components/exerciseList/ExercisesList.component';
 import FIlterBy from '../../../components/filterBy/FIlterBy.component';
@@ -23,7 +23,7 @@ const StrengthList = () => {
 
   const handleLabelChange = (event: SelectChangeEvent<string>) => setSelectedLabel(event.target.value);
 
-  const { data: workouts, isLoading } = useQuery(['strength'], getWorkoutsStrength, {
+  const { data: workouts, isLoading } = useQuery(['strength'], getAllStrength, {
     refetchOnWindowFocus: false,
     staleTime: LONG_CACHE
   });
