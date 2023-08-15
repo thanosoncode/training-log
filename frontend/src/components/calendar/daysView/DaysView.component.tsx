@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react';
 
 import { CardioWorkoutFromServer, StrengthWorkoutServer } from '../../../utils/models';
 import { useStyles } from './DaysView.styles';
-import Tooltip from '@mui/material/Tooltip';
 import { cardioLabels } from '../../../utils/constants';
 import { useAppDispatch, useAppState } from '../../../context/AppContext';
+import DayItem from './dayItem/DayItem.component';
 
 type Entry = {
   id: string;
@@ -16,9 +16,9 @@ type Entry = {
   label: string;
 };
 
-type CombinedEntryWorkout = { id: string; month: number; year: number; label: string };
+export type CombinedEntryWorkout = { id: string; month: number; year: number; label: string };
 
-type CombinedEntry = {
+export type CombinedEntry = {
   day: number;
   workouts: CombinedEntryWorkout[];
 };
@@ -179,25 +179,7 @@ const DaysView: React.FC<DaysViewProps> = ({ year, month }) => {
         <span key={index}></span>
       ))}
       {days.map((entry, index) => (
-        <Tooltip
-          classes={{ tooltip: classes.tooltipContainer }}
-          title={
-            <div className={classes.tooltip}>
-              {entry.workouts &&
-                entry.workouts.map((workout, index) => (
-                  <div key={index} onClick={() => handleDayClick(workout)} className={classes.tooltipItem}>
-                    {workout.label}
-                  </div>
-                ))}
-            </div>
-          }
-          key={index + 1}
-          className={cx({
-            [classes.day]: true,
-            [classes.dayActive]: entry.day.toString().length > 0
-          })}>
-          <span>{index + 1}</span>
-        </Tooltip>
+        <DayItem key={index} index={index} entry={entry} handleDayClick={handleDayClick} />
       ))}
     </Box>
   );

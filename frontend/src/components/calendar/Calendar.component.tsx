@@ -74,7 +74,7 @@ const Calendar: React.FC<CalendarProps> = () => {
   };
 
   return (
-    <Paper className={classes.container}>
+    <Paper className={classes.container} sx={{ boxShadow: 3 }}>
       <Box className={classes.header}>
         <Box sx={{ fontWeight: 800 }}>
           {getMonthName(month)} {year}{' '}

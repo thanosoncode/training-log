@@ -1,7 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { possibleExercises } from '../../utils/constants';
+import { strengthExercises } from '../../utils/constants';
 import { Exercise, Workout } from '../../utils/models';
 import { useStyles } from './SelectByExercise.styles';
 
@@ -12,7 +12,7 @@ interface SelectByExerciseProps {
   showExercisesCount: boolean;
 }
 
-const SelectByExercise: React.FC<SelectByExerciseProps> = ({ onChange, value, options = possibleExercises, showExercisesCount }) => {
+const SelectByExercise: React.FC<SelectByExerciseProps> = ({ onChange, value, options = strengthExercises, showExercisesCount }) => {
   const { classes } = useStyles();
   const queryClient = useQueryClient();
   const workouts = queryClient.getQueryData(['workouts']) as Workout[];

@@ -44,7 +44,6 @@ const AddExercise: React.FC<AddExerciseProps> = (props) => {
       setInvalidExercise(true);
       return;
     }
-    console.log('exercise', exercise);
     props.setExercises([...props.exercises, { ...exercise, id: uuidv4() }]);
     setExercise(emptyExercise);
     setInvalidExercise(false);

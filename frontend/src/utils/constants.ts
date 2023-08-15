@@ -4,7 +4,7 @@ export const strengthLabels = ['Push', 'Pull', 'Upper Body', 'Legs Pull', 'Legs 
 
 export const cardioLabels = ['Running', 'Swimming', 'Cycling', 'Walking', 'Hiking'];
 
-export const possibleExercises = [
+export const strengthExercises = [
   'Overhead Shoulder Press',
   'Incline Bench',
   'Dumbell Shoulder Press',

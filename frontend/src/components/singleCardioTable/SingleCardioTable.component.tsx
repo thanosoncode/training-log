@@ -38,9 +38,8 @@ const SingleCardioTable: React.FC<SingleCardioTableProps> = ({ cardio, onDelete 
           <TableHead>
             <TableRow>
               <TableCell sx={{ color: theme.palette.text.secondary }}>Exercise</TableCell>
-              <TableCell className={classes.headCell}>Sets</TableCell>
-              <TableCell className={classes.headCell}>Reps</TableCell>
-              <TableCell className={classes.headCell}>Weight</TableCell>
+              <TableCell className={classes.headCell}> Distance &#40;m&#41;</TableCell>
+              <TableCell className={classes.headCell}> Minutes &#40;m&#41;</TableCell>
               {onDelete && <TableCell className={classes.headCell}>Remove</TableCell>}
             </TableRow>
           </TableHead>
