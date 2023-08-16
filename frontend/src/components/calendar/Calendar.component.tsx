@@ -12,9 +12,8 @@ interface CalendarProps {}
 
 const Calendar: React.FC<CalendarProps> = () => {
   const { classes } = useStyles();
-  const { month } = useAppState();
+  const { month, year } = useAppState();
   const appDispatch = useAppDispatch();
-  const [year, setYear] = useState(new Date().getFullYear());
   const [isYearsOpen, setYearsOpen] = useState(false);
 
   const getMonthName = (month: number) => {
@@ -69,7 +68,8 @@ const Calendar: React.FC<CalendarProps> = () => {
   const toggleYearOptions = () => setYearsOpen(!isYearsOpen);
 
   const handleYearClick = (year: number) => {
-    setYear(year - 1);
+    console.log('year', year);
+    appDispatch({ type: 'SET_YEAR', payload: year });
     setYearsOpen(false);
   };
 
@@ -91,7 +91,7 @@ const Calendar: React.FC<CalendarProps> = () => {
           </IconButton>
         </Box>
       </Box>
-      {isYearsOpen ? <YearsView year={year} handleYearClick={handleYearClick} /> : <DaysView month={month} year={year} />}
+      {isYearsOpen ? <YearsView handleYearClick={handleYearClick} /> : <DaysView />}
     </Paper>
   );
 };

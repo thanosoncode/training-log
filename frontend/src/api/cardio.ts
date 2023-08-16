@@ -1,8 +1,8 @@
 import { CardioWorkoutFromServer, CardioExercise } from '../utils/models';
 import axios from './axios';
 
-export const getAllCardio = async (): Promise<CardioWorkoutFromServer[]> => {
-  const response = await axios.get('/api/cardio');
+export const getAllCardio = async ({ month, year }: { month: number; year: number }): Promise<CardioWorkoutFromServer[]> => {
+  const response = await axios.get(`/api/cardio?month=${month.toString()}&year=${year.toString()}`);
   const data = await response.data;
   return data;
 };

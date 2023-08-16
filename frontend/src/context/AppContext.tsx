@@ -7,6 +7,7 @@ export type AppState = {
   selectedStrengthId: string;
   selectedCardioId: string;
   month: number;
+  year: number;
 };
 
 const defaultState: AppState = {
@@ -14,7 +15,8 @@ const defaultState: AppState = {
   allStrength: [],
   selectedStrengthId: '',
   selectedCardioId: '',
-  month: new Date().getMonth() + 1
+  month: new Date().getMonth() + 1,
+  year: new Date().getFullYear()
 };
 
 type Dispatch = (action: Action) => void;
@@ -25,7 +27,8 @@ type Action =
   | { type: 'SET_SELECTED_STRENGTH_ID'; payload: string }
   | { type: 'MONTH_INCREASE' }
   | { type: 'MONTH_DECREASE' }
-  | { type: 'SET_MONTH'; payload: number };
+  | { type: 'SET_MONTH'; payload: number }
+  | { type: 'SET_YEAR'; payload: number };
 
 const AppStateContext = createContext<AppState | null>(null);
 const AppDispatchContext = createContext<Dispatch | null>(null);
@@ -46,6 +49,8 @@ const appReducer = (state: AppState, action: Action) => {
       return { ...state, month: state.month - 1 };
     case 'SET_MONTH':
       return { ...state, month: action.payload };
+    case 'SET_YEAR':
+      return { ...state, year: action.payload };
     default: {
       throw new Error(`Unhandled action type: ${action}`);
     }

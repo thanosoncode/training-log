@@ -7,6 +7,7 @@ import { useStyles } from './DaysView.styles';
 import { cardioLabels } from '../../../utils/constants';
 import { useAppDispatch, useAppState } from '../../../context/AppContext';
 import DayItem from './dayItem/DayItem.component';
+import { useQueryClient } from '@tanstack/react-query';
 
 type Entry = {
   id: string;
@@ -23,15 +24,16 @@ export type CombinedEntry = {
   workouts: CombinedEntryWorkout[];
 };
 
-interface DaysViewProps {
-  year: number;
-  month: number;
-}
+interface DaysViewProps {}
 
-const DaysView: React.FC<DaysViewProps> = ({ year, month }) => {
+const DaysView: React.FC<DaysViewProps> = () => {
   const { classes, cx } = useStyles();
   const appDispatch = useAppDispatch();
-  const { allCardio, allStrength } = useAppState();
+  const { year, month } = useAppState();
+
+  const queryClient = useQueryClient();
+  const cardio = queryClient.getQueryData(['cardio', month, year]) as CardioWorkoutFromServer[];
+  const strength = queryClient.getQueryData(['strength', month, year]) as StrengthWorkoutServer[];
 
   const getDaysInMonth = (year: number, month: number) => {
     return new Date(year, month, 0).getDate();
@@ -48,6 +50,9 @@ const DaysView: React.FC<DaysViewProps> = ({ year, month }) => {
   };
 
   const strengthWorkoutMap = (strengthWorkouts: StrengthWorkoutServer[]): Entry[] => {
+    if (!strengthWorkouts) {
+      return [];
+    }
     const entries = strengthWorkouts
       .map((w) => {
         const date = format(new Date(w.createdAt).getTime(), 'dd/MM/yyyy');
@@ -83,6 +88,9 @@ const DaysView: React.FC<DaysViewProps> = ({ year, month }) => {
   };
 
   const cardioWorkoutMap = (cardioWorkouts: CardioWorkoutFromServer[]): Entry[] => {
+    if (!cardioWorkouts) {
+      return [];
+    }
     const entries = cardioWorkouts
       .map((w) => {
         const date = format(new Date(w.createdAt).getTime(), 'dd/MM/yyyy');
@@ -123,13 +131,13 @@ const DaysView: React.FC<DaysViewProps> = ({ year, month }) => {
       day: ''
     });
 
-    const entriesStrength = strengthWorkoutMap(allStrength);
+    const entriesStrength = strengthWorkoutMap(strength);
 
     createCombineEntriesStrength(entriesStrength).forEach((entry) => {
       newDays.splice(entry.day - 1, 1, entry);
     });
 
-    const entriesCardio = cardioWorkoutMap(allCardio);
+    const entriesCardio = cardioWorkoutMap(cardio);
 
     createCombineEntriesCardio(entriesCardio).forEach((entry) => {
       if (newDays[entry.day - 1].day === '') {
@@ -139,7 +147,7 @@ const DaysView: React.FC<DaysViewProps> = ({ year, month }) => {
       }
     });
     setDays(newDays);
-  }, [allCardio, allStrength, month, year]);
+  }, [cardio, strength, month, year]);
 
   const getWhatDayIsTheFirst = (year: number, month: number) => {
     return new Date(year, month - 1, 1).toString().split(' ')[0];

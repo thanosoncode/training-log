@@ -1,14 +1,15 @@
 import Box from '@mui/material/Box';
 
 import { useStyles } from './YearsView.styles';
+import { useAppState } from '../../../context/AppContext';
 
 interface YearsViewProps {
-  year: number;
   handleYearClick: (year: number) => void;
 }
 
-const YearsView: React.FC<YearsViewProps> = ({ year, handleYearClick }) => {
+const YearsView: React.FC<YearsViewProps> = ({ handleYearClick }) => {
   const { classes, cx } = useStyles();
+  const { year } = useAppState();
 
   const getAllYears = (start: number, end: number) => {
     const array: number[] = [];
@@ -21,11 +22,11 @@ const YearsView: React.FC<YearsViewProps> = ({ year, handleYearClick }) => {
   return (
     <Box className={classes.years}>
       {getAllYears(2000, 2050).map((y) => {
-        const isCurrentYear = y + 1 === year;
+        const isCurrentYear = y === year;
         return (
           <span
             key={y}
-            onClick={() => handleYearClick(y + 1)}
+            onClick={() => handleYearClick(y)}
             className={cx({
               [classes.year]: !isCurrentYear,
               [classes.isCurrentYear]: isCurrentYear

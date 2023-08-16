@@ -1,55 +1,59 @@
-import { Box, CircularProgress, Typography } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
 import { getSingleWorkoutStrength, getAllStrength } from '../../api/workouts';
 import Calendar from '../../components/calendar/Calendar.component';
 import ExercisesList from '../../components/exerciseList/ExercisesList.component';
-import { LONG_CACHE } from '../../utils/constants';
 import { useStyles } from './Home.styles';
 import { getAllCardio, getSingleCardio } from '../../api/cardio';
 import SingleCardioTable from '../../components/singleCardioTable/SingleCardioTable.component';
 import { useAppDispatch, useAppState } from '../../context/AppContext';
+import { LONG_CACHE } from '../../utils/constants';
+import SkeletonCalendar from '../../components/calendar/skeletonCalendar/SkeletonCalendar.component';
 
 const Home = () => {
   const { classes } = useStyles();
-  const appDispatch = useAppDispatch();
-  const { selectedStrengthId, selectedCardioId } = useAppState();
+  const { selectedStrengthId, selectedCardioId, month, year } = useAppState();
 
-  const { isLoading: isStrengthLoading } = useQuery(['strength'], getAllStrength, {
+  const { isLoading: isStrengthLoading, data: strength } = useQuery(['strength', month, year], () => getAllStrength({ month, year }), {
     refetchOnWindowFocus: false,
-    onSuccess: (data) => appDispatch({ type: 'SET_ALL_STRENGTH', payload: data })
+    staleTime: LONG_CACHE
   });
 
-  const { isLoading: isCardioLoading } = useQuery(['cardio'], getAllCardio, {
+  const { isLoading: isCardioLoading, data: cardio } = useQuery(['cardio', month, year], () => getAllCardio({ month, year }), {
     refetchOnWindowFocus: false,
-    staleTime: LONG_CACHE,
-    onSuccess: (data) => appDispatch({ type: 'SET_ALL_CARDIO', payload: data })
+    staleTime: LONG_CACHE
   });
 
-  const { data: workout, isLoading: isSingleStrengthLoading } = useQuery(['single-workout', selectedStrengthId], () =>
-    getSingleWorkoutStrength(selectedStrengthId)
+  const { data: singleWorkout, isLoading: isSingleStrengthLoading } = useQuery(
+    ['single-workout', selectedStrengthId],
+    () => getSingleWorkoutStrength(selectedStrengthId),
+    {
+      staleTime: LONG_CACHE
+    }
   );
 
-  const { data: cardio, isLoading: isSingleCardioLoading } = useQuery(['single-cardio', selectedCardioId], () => getSingleCardio(selectedCardioId));
+  const { data: singleCardio, isLoading: isSingleCardioLoading } = useQuery(['single-cardio', selectedCardioId], () => getSingleCardio(selectedCardioId), {
+    staleTime: LONG_CACHE
+  });
 
   const rightSideContent = () => {
     if (isSingleStrengthLoading || isSingleCardioLoading) {
       return <CircularProgress />;
     }
-    if (selectedStrengthId && workout) {
+    if (selectedStrengthId && singleWorkout) {
       return (
         <>
           <Box className={classes.tableContainer}>
-            <ExercisesList exercises={workout?.exercises ?? []} workout={workout} showTitle={true} />
+            <ExercisesList exercises={singleWorkout?.exercises ?? []} workout={singleWorkout} showTitle={true} />
           </Box>
         </>
       );
     }
-    if (selectedCardioId && cardio) {
+    if (selectedCardioId && singleCardio) {
       return (
         <>
           <Box className={classes.tableContainer}>
-            <SingleCardioTable cardio={cardio} />
+            <SingleCardioTable cardio={singleCardio} />
           </Box>
         </>
       );
@@ -59,8 +63,11 @@ const Home = () => {
   return (
     <Box className={classes.root}>
       <Box className={classes.container}>
-        {isStrengthLoading || isCardioLoading ? <CircularProgress /> : <Calendar />}
-        <Box className={classes.details}>{rightSideContent()}</Box>
+        {isStrengthLoading || isCardioLoading ? <SkeletonCalendar /> : <Calendar />}
+        <Box className={classes.details}>
+          {cardio && cardio.length > 0 && <Box>{cardio.length} cardio workouts this month</Box>}
+          {strength && strength.length > 0 && <Box>{strength.length} strength workouts this month</Box>}
+        </Box>
       </Box>
     </Box>
   );

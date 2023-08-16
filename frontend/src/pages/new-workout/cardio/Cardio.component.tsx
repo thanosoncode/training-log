@@ -13,15 +13,12 @@ const Cardio = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [cardioLabel, setCardioLabel] = useState('');
-  const [cardioLabelSelected, setCardioLabelSelected] = useState(false);
   const [exercise, setExercise] = useState({ distance: '', minutes: '' });
   const readyToSave = cardioLabel && exercise.distance && exercise.minutes;
 
   const handleCardioTypeChange = (event: SelectChangeEvent<string>) => {
     setCardioLabel(event.target.value);
   };
-
-  const handleWorkoutTypeAdd = () => setCardioLabelSelected(true);
 
   const { mutate, isLoading: isSavingCardio } = useMutation(
     ['post-strength'],
@@ -31,14 +28,13 @@ const Cardio = () => {
         queryClient.invalidateQueries({ queryKey: ['cardio'] });
         setExercise({ distance: '', minutes: '' });
         setCardioLabel('');
-        setCardioLabelSelected(false);
       }
     }
   );
 
   return (
     <Box className={classes.root}>
-      {cardioLabelSelected ? (
+      {cardioLabel ? (
         <Box sx={{}}>
           <Typography variant="h3" sx={{ textTransform: 'capitalize', lineHeight: 'intial', marginBottom: '64px' }}>
             {cardioLabel}
@@ -63,7 +59,7 @@ const Cardio = () => {
           </Box>
         </Box>
       ) : (
-        <AddLabel title="What type of cardio?" label={cardioLabel} labels={cardioLabels} onChange={handleCardioTypeChange} onAdd={handleWorkoutTypeAdd} />
+        <AddLabel title="What type of cardio?" label={cardioLabel} labels={cardioLabels} onChange={handleCardioTypeChange} />
       )}
 
       {readyToSave && (
