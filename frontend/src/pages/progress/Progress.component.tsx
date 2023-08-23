@@ -75,7 +75,7 @@ const Progress = () => {
             Select exercise
           </Typography>
         )}
-        <SelectByExercise value={selectedExercise} onChange={handleSelectChange} options={options} showExercisesCount={true} />
+        <SelectByExercise value={selectedExercise} onChange={handleSelectChange} options={options} label="" showExercisesCount={true} />
       </Box>
       <Box className={classes.graphsContainer}>
         <Box>

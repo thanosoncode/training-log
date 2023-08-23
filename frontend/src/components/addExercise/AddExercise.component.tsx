@@ -15,6 +15,7 @@ import SelectByExercise from '../selectByExercise/SelectByExercise.component';
 
 interface AddExerciseProps {
   exercises: Exercise[];
+  label: string;
   setExercises: React.Dispatch<React.SetStateAction<Exercise[]>>;
 }
 
@@ -63,7 +64,7 @@ const AddExercise: React.FC<AddExerciseProps> = (props) => {
           flexWrap: 'wrap',
           justifyContent: 'center'
         }}>
-        <SelectByExercise value={exercise.name} onChange={handleSelectChange} showExercisesCount={false} />
+        <SelectByExercise value={exercise.name} onChange={handleSelectChange} showExercisesCount={false} label={props.label} />
         <FormControl>
           <TextField
             id="sets"

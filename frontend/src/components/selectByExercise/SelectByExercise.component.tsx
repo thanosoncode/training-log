@@ -10,9 +10,10 @@ interface SelectByExerciseProps {
   value: string;
   options?: string[];
   showExercisesCount: boolean;
+  label: string;
 }
 
-const SelectByExercise: React.FC<SelectByExerciseProps> = ({ onChange, value, options = strengthExercises, showExercisesCount }) => {
+const SelectByExercise: React.FC<SelectByExerciseProps> = ({ onChange, value, options, showExercisesCount, label }) => {
   const { classes } = useStyles();
   const queryClient = useQueryClient();
   const workouts = queryClient.getQueryData(['workouts']) as Workout[];
@@ -24,13 +25,17 @@ const SelectByExercise: React.FC<SelectByExerciseProps> = ({ onChange, value, op
     return acc;
   }, {});
 
+  const filterStrengthExercises = strengthExercises.filter((ex) => ex.type.includes(label)).map((x) => x.name);
+
+  const optionsToShow = options ? options : filterStrengthExercises;
+
   return (
     <FormControl variant="standard" sx={{ minWidth: 200 }}>
       <InputLabel id="name" sx={{ width: 200 }}>
         Exercise
       </InputLabel>
       <Select id="name" name="name" label="name" labelId="name" value={value} onChange={onChange} autoWidth>
-        {options.map((ex) => {
+        {optionsToShow.map((ex) => {
           const count = exercisePerTime[ex];
           return (
             <MenuItem key={ex} value={ex} className={classes.menuItem}>

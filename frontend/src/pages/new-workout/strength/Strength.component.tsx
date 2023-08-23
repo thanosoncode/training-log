@@ -58,7 +58,7 @@ const NewStrength = () => {
           <Box sx={{ marginBottom: '64px' }}>
             <ExercisesList exercises={exercises} showTitle={true} onDelete={handleRemoveExercise} />
           </Box>
-          <AddExercise exercises={exercises} setExercises={setExercises} />
+          <AddExercise exercises={exercises} setExercises={setExercises} label={workoutLabel} />
         </>
       ) : null}
       <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={isSavingWorkout}>
