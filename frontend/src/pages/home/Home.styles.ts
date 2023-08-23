@@ -1,7 +1,5 @@
 import { makeStyles } from 'tss-react/mui';
 
-import theme from '../../theme';
-
 export const useStyles = makeStyles()(() => ({
   root: {
     display: 'flex',

@@ -1,18 +1,15 @@
 import Box from '@mui/material/Box';
 import { useStyles } from './CardioList.styles';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import FIlterBy from '../../../components/filterBy/FIlterBy.component';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { LONG_CACHE, cardioLabels } from '../../../utils/constants';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { deleteCardio, getAllCardio } from '../../../api/cardio';
 import { Backdrop, Button, CircularProgress, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import theme from '../../../theme';
-import CancelPresentationIcon from '@mui/icons-material/CancelPresentation';
 import { format, parseISO } from 'date-fns';
 import ConfirmationDialog from '../../../components/confirmationDialog/ConfirmationDialog.component';
 import DeleteForever from '@mui/icons-material/DeleteForever';
-import { Cardio } from '../../../utils/models';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
 import { useAppState } from '../../../context/AppContext';
 

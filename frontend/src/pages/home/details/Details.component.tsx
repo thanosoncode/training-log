@@ -3,9 +3,9 @@ import { CardioWorkoutFromServer, StrengthWorkoutServer } from '../../../utils/m
 import Box from '@mui/material/Box';
 import { useCountdown } from '../../../utils/useCountdown';
 import { useStyles } from './Details.styles';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Legend, Tooltip } from 'recharts';
 import { CARDIO_COLOR, STRENGTH_COLOR } from '../../../utils/constants';
-
+import DetailsTooltip from './detailsTooltip/DetailsTooltip.component';
 export interface DetailsProps {
   isStrengthLoading: boolean;
   isCardioLoading: boolean;
@@ -33,7 +33,7 @@ const Details: React.FC<DetailsProps> = ({ cardio, strength, isStrengthLoading, 
       <BarChart width={360} height={320} data={data}>
         <XAxis dataKey="type" />
         <YAxis width={40} />
-        <Tooltip />
+        <Tooltip content={<DetailsTooltip />} wrapperStyle={{ outline: 'none' }} cursor={{ fill: 'none' }} />
         <Bar dataKey="amount" name="Cardio" barSize={16} />
       </BarChart>
 

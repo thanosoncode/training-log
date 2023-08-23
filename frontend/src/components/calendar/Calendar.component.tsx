@@ -68,7 +68,6 @@ const Calendar: React.FC<CalendarProps> = () => {
   const toggleYearOptions = () => setYearsOpen(!isYearsOpen);
 
   const handleYearClick = (year: number) => {
-    console.log('year', year);
     appDispatch({ type: 'SET_YEAR', payload: year });
     setYearsOpen(false);
   };

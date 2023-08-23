@@ -1,6 +1,5 @@
 import { makeStyles } from 'tss-react/mui';
 import theme from '../../../theme';
-import { DetailsProps } from './Details.component';
 import { CardioWorkoutFromServer, StrengthWorkoutServer } from '../../../utils/models';
 
 export const useStyles = makeStyles<{
@@ -9,8 +8,6 @@ export const useStyles = makeStyles<{
   isCardioLoading: boolean;
 }>()((_, { cardio, isCardioLoading }) => {
   const cardioPercent = cardio && (cardio.length / 30) * 100;
-  console.log('cardioPercent', cardioPercent);
-  console.log('isCardioLoading', isCardioLoading);
 
   return {
     container: { display: 'flex', gap: '40px' },
