@@ -6,7 +6,7 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 import Error from './components/error/Error.component';
 import RootLayout from './components/rootLayout/RootLayout.component';
 import Home from './pages/home/Home.component';
-import Progression from './pages/progression/Progression.component';
+import Progression from './pages/progress/Progress.component';
 import { useState } from 'react';
 import Strength from './pages/new-workout/strength/Strength.component';
 import Cardio from './pages/new-workout/cardio/Cardio.component';
@@ -30,7 +30,9 @@ const App = () => {
         topGradient: '#404040',
         bottomGradient: '#282828',
         primaryText: '#ffffff',
-        secondaryText: '#b3b3b3'
+        secondaryText: '#b3b3b3',
+        cardio: '	#a9d6a9',
+        mixed: '#9fe0ce'
       }
     },
     components: {

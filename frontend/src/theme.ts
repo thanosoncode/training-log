@@ -9,7 +9,9 @@ const theme = createTheme({
       topGradient: '#404040',
       bottomGradient: '#282828',
       primaryText: '#ffffff',
-      secondaryText: '#b3b3b3'
+      secondaryText: '#b3b3b3',
+      cardio: '	#a9d6a9',
+      mixed: '#9fe0ce'
     }
   },
   components: {

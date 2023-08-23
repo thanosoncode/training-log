@@ -7,5 +7,7 @@ declare module '@mui/material/styles/createPalette' {
     bottomGradient: string;
     primaryText: string;
     secondaryText: string;
+    cardio: string;
+    mixed: string;
   }
 }

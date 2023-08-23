@@ -14,8 +14,8 @@ export const useStyles = makeStyles()(() => ({
   container: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'flex-start',
-    gap: '32px'
+    alignItems: 'center',
+    gap: '60px'
   },
   date: { marginBottom: 2 },
   details: {

@@ -14,19 +14,21 @@ import ConfirmationDialog from '../../../components/confirmationDialog/Confirmat
 import DeleteForever from '@mui/icons-material/DeleteForever';
 import { Cardio } from '../../../utils/models';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
+import { useAppState } from '../../../context/AppContext';
 
 type OrderBy = 'name' | 'time' | 'distance' | 'date';
 
 const CardioList = () => {
   const { classes } = useStyles();
   const queryClient = useQueryClient();
+  const { month, year } = useAppState();
   const [selectedLabel, setSelectedLabel] = useState('');
   const [cardioToDelete, setCardioToDelete] = useState('');
   const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = useState(false);
 
   const handleLabelChange = (event: SelectChangeEvent<string>) => setSelectedLabel(event.target.value);
 
-  const { data: cardio, isLoading } = useQuery(['cardio'], getAllCardio, {
+  const { data: cardio, isLoading } = useQuery(['cardio'], () => getAllCardio({ month, year }), {
     refetchOnWindowFocus: false,
     staleTime: LONG_CACHE
   });

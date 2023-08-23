@@ -6,9 +6,10 @@ import ExercisesList from '../../components/exerciseList/ExercisesList.component
 import { useStyles } from './Home.styles';
 import { getAllCardio, getSingleCardio } from '../../api/cardio';
 import SingleCardioTable from '../../components/singleCardioTable/SingleCardioTable.component';
-import { useAppDispatch, useAppState } from '../../context/AppContext';
+import { useAppState } from '../../context/AppContext';
 import { LONG_CACHE } from '../../utils/constants';
 import SkeletonCalendar from '../../components/calendar/skeletonCalendar/SkeletonCalendar.component';
+import Details from './details/Details.component';
 
 const Home = () => {
   const { classes } = useStyles();
@@ -65,8 +66,7 @@ const Home = () => {
       <Box className={classes.container}>
         {isStrengthLoading || isCardioLoading ? <SkeletonCalendar /> : <Calendar />}
         <Box className={classes.details}>
-          {cardio && cardio.length > 0 && <Box>{cardio.length} cardio workouts this month</Box>}
-          {strength && strength.length > 0 && <Box>{strength.length} strength workouts this month</Box>}
+          <Details isCardioLoading={isCardioLoading} isStrengthLoading={isStrengthLoading} cardio={cardio} strength={strength} />
         </Box>
       </Box>
     </Box>

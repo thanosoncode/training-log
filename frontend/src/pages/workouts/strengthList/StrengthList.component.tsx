@@ -13,17 +13,19 @@ import FIlterBy from '../../../components/filterBy/FIlterBy.component';
 import { LONG_CACHE, strengthLabels } from '../../../utils/constants';
 import { Workout } from '../../../utils/models';
 import { useStyles } from './StrengthList.styles';
+import { useAppState } from '../../../context/AppContext';
 
 const StrengthList = () => {
   const { classes } = useStyles();
   const queryClient = useQueryClient();
+  const { month, year } = useAppState();
   const [selectedLabel, setSelectedLabel] = useState('');
   const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = useState(false);
   const [workoutToDelete, setWorkoutToDelete] = useState('');
 
   const handleLabelChange = (event: SelectChangeEvent<string>) => setSelectedLabel(event.target.value);
 
-  const { data: workouts, isLoading } = useQuery(['strength'], getAllStrength, {
+  const { data: workouts, isLoading } = useQuery(['strength'], () => getAllStrength({ month, year }), {
     refetchOnWindowFocus: false,
     staleTime: LONG_CACHE
   });

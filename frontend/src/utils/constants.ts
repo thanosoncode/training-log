@@ -23,3 +23,6 @@ export const strengthExercises = [
   'Hip Thrust',
   'Ghd'
 ];
+
+export const STRENGTH_COLOR = '#7AC0F7';
+export const CARDIO_COLOR = '#a9d6a9';

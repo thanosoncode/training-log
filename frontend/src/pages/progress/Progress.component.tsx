@@ -10,18 +10,18 @@ import LineChart from '../../components/charts/LineChart';
 import SelectByExercise from '../../components/selectByExercise/SelectByExercise.component';
 import { LONG_CACHE } from '../../utils/constants';
 import { Exercise } from '../../utils/models';
-import { useStyles } from './Progression.styles';
+import { useStyles } from './Progress.styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import theme from '../../theme';
 
-const Progression = () => {
+const Progress = () => {
   const { classes } = useStyles();
   const [selectedExercise, setSelectedExercise] = useState('bulgarian split squats');
   const showTitle = useMediaQuery(theme.breakpoints.up('sm'));
 
   const handleSelectChange = (event: SelectChangeEvent) => setSelectedExercise(event.target.value);
 
-  const { data: workouts } = useQuery(['workouts'], getAllStrength, {
+  const { data: workouts } = useQuery(['workouts'], () => getAllStrength({ month: 0, year: 0 }), {
     staleTime: LONG_CACHE,
     refetchOnWindowFocus: false
   });
@@ -94,4 +94,4 @@ const Progression = () => {
     </Box>
   );
 };
-export default Progression;
+export default Progress;
