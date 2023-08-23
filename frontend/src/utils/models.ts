@@ -65,3 +65,5 @@ export type Cardio = {
   updatedAt?: string;
   exercise: CardioExercise;
 };
+
+export type SelectedType = 'cardio' | 'strength';

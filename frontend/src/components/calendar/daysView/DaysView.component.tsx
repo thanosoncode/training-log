@@ -44,8 +44,10 @@ const DaysView: React.FC<DaysViewProps> = () => {
     const isCardioWorkout = cardioLabels.includes(workout.label);
     if (isCardioWorkout) {
       appDispatch({ type: 'SET_SELECTED_CARDIO_ID', payload: workout.id });
+      appDispatch({ type: 'SET_SELECTED_TYPE', payload: 'cardio' });
     } else {
       appDispatch({ type: 'SET_SELECTED_STRENGTH_ID', payload: workout.id });
+      appDispatch({ type: 'SET_SELECTED_TYPE', payload: 'strength' });
     }
   };
 

@@ -21,7 +21,8 @@ export default DetailsTooltip;
 
 const useStyles = makeStyles<{ label: any }>()((_, { label }) => ({
   root: {
-    padding: theme.spacing(0, 2),
+    margin: 0,
+    padding: theme.spacing(0, 1),
     border: `1px solid ${label === 'Strength' ? theme.palette.primary.main : theme.palette.common.cardio}`,
     borderRadius: '4px'
   },

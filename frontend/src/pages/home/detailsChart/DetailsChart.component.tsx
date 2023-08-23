@@ -2,7 +2,7 @@ import React from 'react';
 import { CardioWorkoutFromServer, StrengthWorkoutServer } from '../../../utils/models';
 import Box from '@mui/material/Box';
 import { useCountdown } from '../../../utils/useCountdown';
-import { useStyles } from './Details.styles';
+import { useStyles } from './DetailsChart.styles';
 import { BarChart, Bar, XAxis, YAxis, Legend, Tooltip } from 'recharts';
 import { CARDIO_COLOR, STRENGTH_COLOR } from '../../../utils/constants';
 import DetailsTooltip from './detailsTooltip/DetailsTooltip.component';
@@ -13,15 +13,15 @@ export interface DetailsProps {
   strength: StrengthWorkoutServer[] | undefined;
 }
 
-const Details: React.FC<DetailsProps> = ({ cardio, strength, isStrengthLoading, isCardioLoading }) => {
+const DetailsChart: React.FC<DetailsProps> = ({ cardio, strength, isStrengthLoading, isCardioLoading }) => {
   const { classes } = useStyles({ cardio, isCardioLoading, strength });
 
   const cardioCount = useCountdown(1000, cardio ? cardio.length : 0);
   const strengthCount = useCountdown(1000, strength ? strength.length : 0);
 
   const data = [
-    { type: 'Cardio', amount: 8, fill: CARDIO_COLOR },
-    { type: 'Strength', amount: 12, fill: STRENGTH_COLOR }
+    { type: 'Cardio', amount: cardio ? cardio.length : 0, fill: CARDIO_COLOR },
+    { type: 'Strength', amount: strength ? strength.length : 0, fill: STRENGTH_COLOR }
   ];
 
   if (isCardioLoading || isStrengthLoading) {
@@ -52,4 +52,4 @@ const Details: React.FC<DetailsProps> = ({ cardio, strength, isStrengthLoading, 
     </>
   );
 };
-export default Details;
+export default DetailsChart;

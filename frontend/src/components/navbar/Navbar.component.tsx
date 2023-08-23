@@ -101,13 +101,13 @@ const Navbar: React.FC<NavbarProps> = ({ handleThemeMode, mode }) => {
                 <IconButton onClick={handleThemeMode} className={classes.modeButton}>
                   {mode === 'light' ? (
                     <Box className={classes.listItemContainer}>
-                      <DarkModeIcon fontSize="small" />
-                      <Typography variant="subtitle1">Light mode</Typography>
+                      <WbSunnyIcon fontSize="small" />
+                      <Typography variant="subtitle1">Dark mode</Typography>
                     </Box>
                   ) : (
                     <Box className={classes.listItemContainer}>
-                      <WbSunnyIcon fontSize="small" />
-                      <Typography variant="subtitle1">Dark mode</Typography>
+                      <DarkModeIcon fontSize="small" />
+                      <Typography variant="subtitle1">Light mode</Typography>
                     </Box>
                   )}
                 </IconButton>

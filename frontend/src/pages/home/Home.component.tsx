@@ -9,11 +9,11 @@ import SingleCardioTable from '../../components/singleCardioTable/SingleCardioTa
 import { useAppState } from '../../context/AppContext';
 import { LONG_CACHE } from '../../utils/constants';
 import SkeletonCalendar from '../../components/calendar/skeletonCalendar/SkeletonCalendar.component';
-import Details from './details/Details.component';
+import DetailsChart from './detailsChart/DetailsChart.component';
 
 const Home = () => {
   const { classes } = useStyles();
-  const { selectedStrengthId, selectedCardioId, month, year } = useAppState();
+  const { selectedStrengthId, selectedCardioId, month, year, selectedType } = useAppState();
 
   const { isLoading: isStrengthLoading, data: strength } = useQuery(['strength', month, year], () => getAllStrength({ month, year }), {
     refetchOnWindowFocus: false,
@@ -37,11 +37,11 @@ const Home = () => {
     staleTime: LONG_CACHE
   });
 
-  const rightSideContent = () => {
+  const selectedWorkoutDetails = () => {
     if (isSingleStrengthLoading || isSingleCardioLoading) {
       return <CircularProgress />;
     }
-    if (selectedStrengthId && singleWorkout) {
+    if (selectedStrengthId && singleWorkout && selectedType === 'strength') {
       return (
         <>
           <Box className={classes.tableContainer}>
@@ -50,7 +50,7 @@ const Home = () => {
         </>
       );
     }
-    if (selectedCardioId && singleCardio) {
+    if (selectedCardioId && singleCardio && selectedType === 'cardio') {
       return (
         <>
           <Box className={classes.tableContainer}>
@@ -66,9 +66,10 @@ const Home = () => {
       <Box className={classes.container}>
         {isStrengthLoading || isCardioLoading ? <SkeletonCalendar /> : <Calendar />}
         <Box className={classes.details}>
-          <Details isCardioLoading={isCardioLoading} isStrengthLoading={isStrengthLoading} cardio={cardio} strength={strength} />
+          <DetailsChart isCardioLoading={isCardioLoading} isStrengthLoading={isStrengthLoading} cardio={cardio} strength={strength} />
         </Box>
       </Box>
+      {selectedWorkoutDetails()}
     </Box>
   );
 };

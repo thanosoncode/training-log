@@ -1,11 +1,12 @@
 import { createContext, useContext, useReducer } from 'react';
-import { CardioWorkoutFromServer, StrengthWorkoutServer } from '../utils/models';
+import { CardioWorkoutFromServer, SelectedType, StrengthWorkoutServer } from '../utils/models';
 
 export type AppState = {
   allCardio: CardioWorkoutFromServer[];
   allStrength: StrengthWorkoutServer[];
   selectedStrengthId: string;
   selectedCardioId: string;
+  selectedType: SelectedType;
   month: number;
   year: number;
 };
@@ -15,6 +16,7 @@ const defaultState: AppState = {
   allStrength: [],
   selectedStrengthId: '',
   selectedCardioId: '',
+  selectedType: 'cardio',
   month: new Date().getMonth() + 1,
   year: new Date().getFullYear()
 };
@@ -25,6 +27,7 @@ type Action =
   | { type: 'SET_ALL_STRENGTH'; payload: StrengthWorkoutServer[] }
   | { type: 'SET_SELECTED_CARDIO_ID'; payload: string }
   | { type: 'SET_SELECTED_STRENGTH_ID'; payload: string }
+  | { type: 'SET_SELECTED_TYPE'; payload: SelectedType }
   | { type: 'MONTH_INCREASE' }
   | { type: 'MONTH_DECREASE' }
   | { type: 'SET_MONTH'; payload: number }
@@ -43,6 +46,8 @@ const appReducer = (state: AppState, action: Action) => {
       return { ...state, selectedStrengthId: action.payload };
     case 'SET_SELECTED_CARDIO_ID':
       return { ...state, selectedCardioId: action.payload };
+    case 'SET_SELECTED_TYPE':
+      return { ...state, selectedType: action.payload };
     case 'MONTH_INCREASE':
       return { ...state, month: state.month + 1 };
     case 'MONTH_DECREASE':
