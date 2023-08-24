@@ -2,7 +2,7 @@ import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@m
 import { useQueryClient } from '@tanstack/react-query';
 
 import { strengthExercises } from '../../utils/constants';
-import { Exercise, Workout } from '../../utils/models';
+import { Exercise, StrengthLabel, Workout } from '../../utils/models';
 import { useStyles } from './SelectByExercise.styles';
 
 interface SelectByExerciseProps {
@@ -10,7 +10,7 @@ interface SelectByExerciseProps {
   value: string;
   options?: string[];
   showExercisesCount: boolean;
-  label: string;
+  label?: StrengthLabel;
 }
 
 const SelectByExercise: React.FC<SelectByExerciseProps> = ({ onChange, value, options, showExercisesCount, label }) => {
@@ -25,7 +25,7 @@ const SelectByExercise: React.FC<SelectByExerciseProps> = ({ onChange, value, op
     return acc;
   }, {});
 
-  const filterStrengthExercises = strengthExercises.filter((ex) => ex.type.includes(label)).map((x) => x.name);
+  const filterStrengthExercises = label ? strengthExercises.filter((ex) => ex.type.includes(label)).map((x) => x.name) : strengthExercises.map((x) => x.name);
 
   const optionsToShow = options ? options : filterStrengthExercises;
 

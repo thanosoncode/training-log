@@ -67,3 +67,12 @@ export type Cardio = {
 };
 
 export type SelectedType = 'cardio' | 'strength';
+
+export type StrengthLabel = 'Push' | 'Pull' | 'Upper Body' | 'Legs Pull' | 'Legs Push' | 'Lower Body' | 'Shouldres' | 'Calisthenics';
+
+export type StrengthExercise = {
+  name: string;
+  type: StrengthLabel[];
+};
+
+export type CardioLabel = 'Running' | 'Swimming' | 'Cycling' | 'Walking' | 'Hiking';

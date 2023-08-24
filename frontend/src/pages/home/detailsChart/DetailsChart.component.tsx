@@ -6,6 +6,7 @@ import { useStyles } from './DetailsChart.styles';
 import { BarChart, Bar, XAxis, YAxis, Legend, Tooltip } from 'recharts';
 import { CARDIO_COLOR, STRENGTH_COLOR } from '../../../utils/constants';
 import DetailsTooltip from './detailsTooltip/DetailsTooltip.component';
+import DetailsChartSkeleton from './detailsChartSkeleton/DetailsChartSkeleton.component';
 export interface DetailsProps {
   isStrengthLoading: boolean;
   isCardioLoading: boolean;
@@ -14,19 +15,33 @@ export interface DetailsProps {
 }
 
 const DetailsChart: React.FC<DetailsProps> = ({ cardio, strength, isStrengthLoading, isCardioLoading }) => {
-  const { classes } = useStyles({ cardio, isCardioLoading, strength });
-
-  const cardioCount = useCountdown(1000, cardio ? cardio.length : 0);
-  const strengthCount = useCountdown(1000, strength ? strength.length : 0);
+  const { classes, cx } = useStyles();
 
   const data = [
     { type: 'Cardio', amount: cardio ? cardio.length : 0, fill: CARDIO_COLOR },
     { type: 'Strength', amount: strength ? strength.length : 0, fill: STRENGTH_COLOR }
   ];
 
-  if (isCardioLoading || isStrengthLoading) {
-    return <div>loading</div>;
+  if (isStrengthLoading || isCardioLoading) {
+    return <DetailsChartSkeleton />;
   }
+
+  const summaryMessage = () => {
+    if (cardio && cardio.length === 0 && strength && strength.length === 0) {
+      return <div>No many workouts this month</div>;
+    }
+    if (cardio && strength) {
+      return (
+        <div style={{ maxWidth: '360px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div> This month you're rocking</div>{' '}
+          <div>
+            <span className={cx({ [classes.highlight]: true, [classes.cardio]: true })}>{cardio && cardio.length} cardio</span> and{' '}
+            <span className={cx({ [classes.highlight]: true, [classes.strength]: true })}>{strength && strength.length} strength</span> workouts
+          </div>
+        </div>
+      );
+    }
+  };
 
   return (
     <>
@@ -34,21 +49,9 @@ const DetailsChart: React.FC<DetailsProps> = ({ cardio, strength, isStrengthLoad
         <XAxis dataKey="type" />
         <YAxis width={40} />
         <Tooltip content={<DetailsTooltip />} wrapperStyle={{ outline: 'none' }} cursor={{ fill: 'none' }} />
-        <Bar dataKey="amount" name="Cardio" barSize={16} />
+        <Bar dataKey="amount" name="Cardio" barSize={40} />
       </BarChart>
-
-      <Box className={classes.container}>
-        {cardio && cardio.length > 0 && (
-          <Box className={classes.cardio}>
-            <span className={classes.highlight}>{cardioCount}</span> Cardio
-          </Box>
-        )}
-        {strength && strength.length > 0 && (
-          <Box className={classes.strength}>
-            <span className={classes.highlight}>{strengthCount}</span> Strength
-          </Box>
-        )}
-      </Box>
+      {summaryMessage()}
     </>
   );
 };
