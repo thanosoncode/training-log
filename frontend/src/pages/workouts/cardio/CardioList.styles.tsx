@@ -23,5 +23,8 @@ export const useStyles = makeStyles()(() => ({
   deleteIcon: { cursor: 'pointer', '&:hover': { color: 'gray' }, fontSize: '16px' },
   headCell: { color: theme.palette.text.secondary },
   headCellButton: { color: 'inherit', width: '100%', textTransform: 'none' },
-  cellName: { fontWeight: 500, textAlign: 'center' }
+  cellName: { fontWeight: 500, textAlign: 'center' },
+  monthButton: { textTransform: 'none', color: 'inherit' },
+  monthButtonActive: { color: theme.palette.primary.main },
+  buttonsContainer: { marginLeft: 'auto', display: 'flex', alignItems: 'flex-end', justifyItems: 'center', gap: '16px' }
 }));

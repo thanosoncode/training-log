@@ -20,7 +20,7 @@ const FIlterBy: React.FC<FilterByProps> = ({ handleLabelChange, selectedLabel, l
 
   return (
     <FormControl variant="standard" sx={{ minWidth: 120 }}>
-      <InputLabel id="filter-by-label">Filter by</InputLabel>
+      <InputLabel id="filter-by-label">Filter by type</InputLabel>
       <Select id="filter-by-label" label="Filter by" labelId="filter-by-label" value={selectedLabel} onChange={handleLabelChange}>
         {filteredLabels &&
           filteredLabels.map((label) => {

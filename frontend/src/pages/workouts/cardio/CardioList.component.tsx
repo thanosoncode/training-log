@@ -16,12 +16,15 @@ import { useAppState } from '../../../context/AppContext';
 type OrderBy = 'name' | 'time' | 'distance' | 'date';
 
 const CardioList = () => {
-  const { classes } = useStyles();
+  const { classes, cx } = useStyles();
   const queryClient = useQueryClient();
   const { month, year } = useAppState();
   const [selectedLabel, setSelectedLabel] = useState('');
   const [cardioToDelete, setCardioToDelete] = useState('');
   const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = useState(false);
+  const [orderDirection, setOrderDirection] = useState<'asc' | 'desc'>('desc');
+  const [orderBy, setOrderBy] = useState<OrderBy>('date');
+  const [showCurrentMonth, setShowCurrentMonth] = useState(false);
 
   const handleLabelChange = (event: SelectChangeEvent<string>) => setSelectedLabel(event.target.value);
 
@@ -67,12 +70,7 @@ const CardioList = () => {
     return formattedDate;
   };
 
-  const filteredCardio = selectedLabel ? cardio && cardio.filter((c) => c.exercise.name === selectedLabel) : cardio;
-
-  console.log('filteredCardio', filteredCardio && filteredCardio.map((c) => new Date(c.createdAt).getMonth()));
-
-  const [orderDirection, setOrderDirection] = useState<'asc' | 'desc'>('asc');
-  const [orderBy, setOrderBy] = useState<OrderBy>('name');
+  const filteredByLabel = selectedLabel ? cardio && cardio.filter((c) => c.exercise.name === selectedLabel) : cardio;
 
   const handleTypeClick = (orderBy: OrderBy) => {
     setOrderDirection((prev) => (prev === 'asc' ? 'desc' : 'asc'));
@@ -80,8 +78,8 @@ const CardioList = () => {
   };
 
   const sortedCardio = () => {
-    if (filteredCardio) {
-      const sorted = [...filteredCardio];
+    if (filteredByLabel) {
+      const sorted = [...filteredByLabel];
       sorted.sort((a, b) => {
         switch (orderBy) {
           case 'name':
@@ -103,15 +101,22 @@ const CardioList = () => {
     return [];
   };
 
+  const cardioToShow = showCurrentMonth ? sortedCardio().filter((c) => new Date(c.createdAt).getMonth() !== new Date().getMonth()) : sortedCardio();
+
   return (
     <div>
       <Box className={classes.titleContainer}>
-        <Box sx={{ marginLeft: 'auto' }}>
+        <Box className={classes.buttonsContainer}>
+          <Button
+            onClick={() => setShowCurrentMonth(!showCurrentMonth)}
+            className={cx({ [classes.monthButton]: true, [classes.monthButtonActive]: showCurrentMonth })}>
+            Show only this month
+          </Button>
           <FIlterBy labels={cardioLabels} workoutsMap={cardioMap} selectedLabel={selectedLabel} handleLabelChange={handleLabelChange} />
         </Box>
       </Box>
 
-      {filteredCardio && (
+      {filteredByLabel && (
         <TableContainer component={Paper} sx={{ height: 'min-content', border: '1px solid #464646' }}>
           <Table size="small">
             <TableHead className={classes.head}>
@@ -144,7 +149,7 @@ const CardioList = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {sortedCardio().map((c) => {
+              {cardioToShow.map((c) => {
                 return (
                   <TableRow key={c.id} className={classes.row}>
                     <TableCell className={classes.cellName} sx={{ fontSize: '16px' }}>
