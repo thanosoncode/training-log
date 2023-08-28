@@ -10,7 +10,7 @@ interface SelectByExerciseProps {
   value: string;
   options?: string[];
   showExercisesCount: boolean;
-  label?: StrengthLabel;
+  label?: string;
 }
 
 const SelectByExercise: React.FC<SelectByExerciseProps> = ({ onChange, value, options, showExercisesCount, label }) => {
@@ -25,7 +25,9 @@ const SelectByExercise: React.FC<SelectByExerciseProps> = ({ onChange, value, op
     return acc;
   }, {});
 
-  const filterStrengthExercises = label ? strengthExercises.filter((ex) => ex.type.includes(label)).map((x) => x.name) : strengthExercises.map((x) => x.name);
+  const filterStrengthExercises = label
+    ? strengthExercises.filter((ex) => ex.type.includes(label as StrengthLabel)).map((x) => x.name)
+    : strengthExercises.map((x) => x.name);
 
   const optionsToShow = options ? options : filterStrengthExercises;
 

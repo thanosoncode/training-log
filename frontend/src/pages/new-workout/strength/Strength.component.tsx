@@ -4,7 +4,6 @@ import AddExercise from '../../../components/addExercise/AddExercise.component';
 import { useState } from 'react';
 import { Exercise } from '../../../utils/models';
 import ExercisesList from '../../../components/exerciseList/ExercisesList.component';
-import AddStrengthLabel from '../../../components/addLabel/AddLabel.component';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { Backdrop, Button, CircularProgress, Typography } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';

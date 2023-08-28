@@ -2,13 +2,10 @@ import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { SelectChangeEvent } from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-
 import theme from '../../theme';
 import { Exercise } from '../../utils/models';
 import SelectByExercise from '../selectByExercise/SelectByExercise.component';

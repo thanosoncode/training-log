@@ -10,6 +10,7 @@ import { useAppState } from '../../context/AppContext';
 import { LONG_CACHE } from '../../utils/constants';
 import SkeletonCalendar from '../../components/calendar/skeletonCalendar/SkeletonCalendar.component';
 import DetailsChart from './detailsChart/DetailsChart.component';
+import WorkoutSkeletonTable from './workoutSkeletonTable/WorkoutSkeletonTable.component';
 
 const Home = () => {
   const { classes } = useStyles();
@@ -39,7 +40,7 @@ const Home = () => {
 
   const selectedWorkoutDetails = () => {
     if (isSingleStrengthLoading || isSingleCardioLoading) {
-      return <CircularProgress />;
+      return <WorkoutSkeletonTable />;
     }
     if (selectedStrengthId && singleWorkout && selectedType === 'strength') {
       return (

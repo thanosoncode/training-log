@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 
-import { CardioWorkoutFromServer, StrengthWorkoutServer } from '../../../utils/models';
+import { CardioLabel, CardioWorkoutFromServer, StrengthWorkoutServer } from '../../../utils/models';
 import { useStyles } from './DaysView.styles';
 import { cardioLabels } from '../../../utils/constants';
 import { useAppDispatch, useAppState } from '../../../context/AppContext';
@@ -14,10 +14,10 @@ type Entry = {
   day: number;
   month: number;
   year: number;
-  label: string;
+  label: CardioLabel;
 };
 
-export type CombinedEntryWorkout = { id: string; month: number; year: number; label: string };
+export type CombinedEntryWorkout = { id: string; month: number; year: number; label: CardioLabel };
 
 export type CombinedEntry = {
   day: number;
@@ -41,7 +41,7 @@ const DaysView: React.FC<DaysViewProps> = () => {
   const [days, setDays] = useState<CombinedEntry[]>(new Array(getDaysInMonth(year, month)).fill({ day: 0, workouts: [] }));
 
   const handleDayClick = (workout: CombinedEntryWorkout) => {
-    const isCardioWorkout = cardioLabels.includes(workout.label);
+    const isCardioWorkout = cardioLabels.includes(workout.label as CardioLabel);
     if (isCardioWorkout) {
       appDispatch({ type: 'SET_SELECTED_CARDIO_ID', payload: workout.id });
       appDispatch({ type: 'SET_SELECTED_TYPE', payload: 'cardio' });
@@ -64,7 +64,7 @@ const DaysView: React.FC<DaysViewProps> = () => {
           day: Number(day),
           month: Number(month),
           year: Number(year),
-          label: w.label
+          label: w.label as CardioLabel
         };
         return entry;
       })
@@ -102,7 +102,7 @@ const DaysView: React.FC<DaysViewProps> = () => {
           day: Number(day),
           month: Number(month),
           year: Number(year),
-          label: w.exercise.name
+          label: w.exercise.name as CardioLabel
         };
         return entry;
       })
@@ -175,6 +175,8 @@ const DaysView: React.FC<DaysViewProps> = () => {
         return 0;
     }
   };
+
+  console.log('days', days);
 
   return (
     <Box className={classes.days}>

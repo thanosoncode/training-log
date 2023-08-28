@@ -2,12 +2,13 @@ import { Theme } from '@mui/material';
 import { makeStyles } from 'tss-react/mui';
 import { CombinedEntry } from '../DaysView.component';
 import { cardioLabels, strengthLabels } from '../../../../utils/constants';
+import { StrengthLabel } from '../../../../utils/models';
 
 export const useStyles = makeStyles<{ entry: CombinedEntry }>()((theme: Theme, { entry }) => {
   const getDayColor = (entry: CombinedEntry) => {
     if (entry.workouts) {
       const isOnlyCardio = entry.workouts.every((w) => cardioLabels.includes(w.label));
-      const isOnlyStrength = entry.workouts.every((w) => strengthLabels.includes(w.label));
+      const isOnlyStrength = entry.workouts.every((w) => strengthLabels.includes(w.label as StrengthLabel));
 
       const baseLightness = 75;
       const increase = entry.workouts.length * 5;

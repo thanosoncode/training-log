@@ -42,9 +42,6 @@ const Calendar: React.FC<CalendarProps> = () => {
         return 'November';
       case 12:
         return 'December';
-
-      default:
-        break;
     }
   };
 

@@ -69,6 +69,8 @@ const CardioList = () => {
 
   const filteredCardio = selectedLabel ? cardio && cardio.filter((c) => c.exercise.name === selectedLabel) : cardio;
 
+  console.log('filteredCardio', filteredCardio && filteredCardio.map((c) => new Date(c.createdAt).getMonth()));
+
   const [orderDirection, setOrderDirection] = useState<'asc' | 'desc'>('asc');
   const [orderBy, setOrderBy] = useState<OrderBy>('name');
 
