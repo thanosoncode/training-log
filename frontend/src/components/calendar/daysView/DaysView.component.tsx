@@ -176,8 +176,6 @@ const DaysView: React.FC<DaysViewProps> = () => {
     }
   };
 
-  console.log('days', days);
-
   return (
     <Box className={classes.days}>
       <span className={classes.daysName}>S</span>

@@ -1,6 +1,6 @@
 import { Add } from '@mui/icons-material';
 import DeleteForever from '@mui/icons-material/DeleteForever';
-import { Box, IconButton, SelectChangeEvent, Typography } from '@mui/material';
+import { Box, Button, IconButton, SelectChangeEvent, Typography } from '@mui/material';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -16,12 +16,13 @@ import { useStyles } from './StrengthList.styles';
 import { useAppState } from '../../../context/AppContext';
 
 const StrengthList = () => {
-  const { classes } = useStyles();
+  const { classes, cx } = useStyles();
   const queryClient = useQueryClient();
   const { month, year } = useAppState();
   const [selectedLabel, setSelectedLabel] = useState('');
   const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = useState(false);
   const [workoutToDelete, setWorkoutToDelete] = useState('');
+  const [showCurrentMonth, setShowCurrentMonth] = useState(false);
 
   const handleLabelChange = (event: SelectChangeEvent<string>) => setSelectedLabel(event.target.value);
 
@@ -62,39 +63,50 @@ const StrengthList = () => {
       return acc;
     }, {});
 
+  const strengthToShow = showCurrentMonth
+    ? filteredWorkouts && filteredWorkouts.filter((w) => new Date(w.createdAt).getMonth() !== new Date().getMonth())
+    : filteredWorkouts;
+
   return (
     <Box>
       <>
         <Box className={classes.titleContainer}>
-          <Box sx={{ marginLeft: 'auto' }}>
+          <Box className={classes.buttonsContainer}>
+            <Button
+              onClick={() => setShowCurrentMonth(!showCurrentMonth)}
+              className={cx({ [classes.monthButton]: true, [classes.monthButtonActive]: showCurrentMonth })}>
+              Show only this month
+            </Button>
             <FIlterBy selectedLabel={selectedLabel} labels={strengthLabels} workoutsMap={strengthMap} handleLabelChange={handleLabelChange} />
           </Box>
         </Box>
         <Box className={classes.workoutsContainer}>
           {isLoading && <CircularProgress />}
-          {filteredWorkouts
-            ? filteredWorkouts.map((workout: Workout) => {
-                const { id, label, exercises } = workout;
-                return (
-                  <Box key={id} className={classes.workout}>
-                    <Box className={classes.workoutTitle}>
-                      <Box>
-                        <Typography variant="h6" className={classes.workoutLabel}>
-                          {label}
-                        </Typography>
-                        <Typography variant="subtitle2">{workout?.createdAt ? format(new Date(workout?.createdAt).getTime(), 'dd/MM/yyyy') : ''} </Typography>
-                      </Box>
-                      <IconButton onClick={() => handleDelete(id)} sx={{ padding: 0 }}>
-                        <DeleteForever sx={{ fontSize: 16 }} />
-                      </IconButton>
+          {strengthToShow && strengthToShow.length > 0 ? (
+            strengthToShow.map((workout: Workout) => {
+              const { id, label, exercises } = workout;
+              return (
+                <Box key={id} className={classes.workout}>
+                  <Box className={classes.workoutTitle}>
+                    <Box>
+                      <Typography variant="h6" className={classes.workoutLabel}>
+                        {label}
+                      </Typography>
+                      <Typography variant="subtitle2">{workout?.createdAt ? format(new Date(workout?.createdAt).getTime(), 'dd/MM/yyyy') : ''} </Typography>
                     </Box>
-                    <Box className={classes.exercisesListContainer}>
-                      <ExercisesList exercises={exercises} showTitle={false} />
-                    </Box>
+                    <IconButton onClick={() => handleDelete(id)} sx={{ padding: 0 }}>
+                      <DeleteForever sx={{ fontSize: 16 }} />
+                    </IconButton>
                   </Box>
-                );
-              })
-            : null}
+                  <Box className={classes.exercisesListContainer}>
+                    <ExercisesList exercises={exercises} showTitle={false} />
+                  </Box>
+                </Box>
+              );
+            })
+          ) : (
+            <Typography sx={{ marginTop: '16px' }}>Not many things to show.</Typography>
+          )}
         </Box>
       </>
 

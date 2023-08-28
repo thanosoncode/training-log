@@ -9,7 +9,7 @@ export const useStyles = makeStyles()(() => ({
     justifyContent: 'cetner',
     alignItems: 'center',
     gap: '16px',
-    margin: theme.spacing(2, 0),
+    margin: theme.spacing(3, 0, 4, 0),
     height: 40,
     padding: theme.spacing(0, 1)
   },
@@ -39,5 +39,8 @@ export const useStyles = makeStyles()(() => ({
     justifyContent: 'center',
     alignItems: 'center',
     gap: '36px'
-  }
+  },
+  monthButton: { textTransform: 'none', color: 'inherit' },
+  monthButtonActive: { color: theme.palette.primary.main },
+  buttonsContainer: { marginLeft: 'auto', display: 'flex', alignItems: 'flex-end', justifyItems: 'center', gap: '16px' }
 }));

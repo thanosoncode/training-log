@@ -23,5 +23,6 @@ export const useStyles = makeStyles()(() => ({
   clearFilters: {
     '&.Mui-selected': { backgroundColor: 'transparent !important' },
     '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.08) !important' }
-  }
+  },
+  select: { '& > div': { display: 'flex', gap: '16px' } }
 }));

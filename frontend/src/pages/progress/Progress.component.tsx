@@ -1,6 +1,6 @@
 import { Box, SelectChangeEvent } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { useState } from 'react';
 
@@ -9,22 +9,24 @@ import BarChart from '../../components/charts/BarChart';
 import LineChart from '../../components/charts/LineChart';
 import SelectByExercise from '../../components/selectByExercise/SelectByExercise.component';
 import { LONG_CACHE } from '../../utils/constants';
-import { Exercise } from '../../utils/models';
+import { Exercise, StrengthWorkoutServer } from '../../utils/models';
 import { useStyles } from './Progress.styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import theme from '../../theme';
 
 const Progress = () => {
   const { classes } = useStyles();
-  const [selectedExercise, setSelectedExercise] = useState('bulgarian split squats');
-  const showTitle = useMediaQuery(theme.breakpoints.up('sm'));
+  const queryClient = useQueryClient();
+  const strengthQueryCache = queryClient.getQueryData(['strength']) as StrengthWorkoutServer[] | undefined;
+  const [selectedExercise, setSelectedExercise] = useState(strengthQueryCache ? strengthQueryCache[0].exercises[0].name : '');
+
+  const { data: workouts } = useQuery(['strength'], () => getAllStrength({ month: 0, year: 0 }), {
+    staleTime: LONG_CACHE,
+    refetchOnWindowFocus: false,
+    onSuccess: (data) => {
+      setSelectedExercise(data[0].exercises[0].name);
+    }
+  });
 
   const handleSelectChange = (event: SelectChangeEvent) => setSelectedExercise(event.target.value);
-
-  const { data: workouts } = useQuery(['workouts'], () => getAllStrength({ month: 0, year: 0 }), {
-    staleTime: LONG_CACHE,
-    refetchOnWindowFocus: false
-  });
 
   const getRecordsPerExercise = (name: string) => {
     return workouts
@@ -70,11 +72,6 @@ const Progress = () => {
   return (
     <Box className={classes.root}>
       <Box className={classes.titleContainer}>
-        {showTitle && (
-          <Typography variant="h6" className={classes.title}>
-            Select exercise
-          </Typography>
-        )}
         <SelectByExercise value={selectedExercise} onChange={handleSelectChange} options={options} showExercisesCount={true} />
       </Box>
       <Box className={classes.graphsContainer}>

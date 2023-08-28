@@ -19,5 +19,6 @@ export const useStyles = makeStyles()(() => ({
     justifyContent: 'center',
     alignItems: 'center',
     fontSize: 14
-  }
+  },
+  select: { '& > div': { display: 'flex', gap: '16px' } }
 }));

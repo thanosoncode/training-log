@@ -2,7 +2,7 @@ import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@m
 import { useQueryClient } from '@tanstack/react-query';
 
 import { strengthExercises } from '../../utils/constants';
-import { Exercise, StrengthLabel, Workout } from '../../utils/models';
+import { Exercise, StrengthLabel, StrengthWorkoutServer, Workout } from '../../utils/models';
 import { useStyles } from './SelectByExercise.styles';
 
 interface SelectByExerciseProps {
@@ -16,9 +16,9 @@ interface SelectByExerciseProps {
 const SelectByExercise: React.FC<SelectByExerciseProps> = ({ onChange, value, options, showExercisesCount, label }) => {
   const { classes } = useStyles();
   const queryClient = useQueryClient();
-  const workouts = queryClient.getQueryData(['workouts']) as Workout[];
+  const strengthWorkouts = queryClient.getQueryData(['strength']) as StrengthWorkoutServer[] | undefined;
 
-  const allExercises = workouts ? (workouts.flatMap((w) => w.exercises) as Exercise[]) : [];
+  const allExercises = strengthWorkouts ? (strengthWorkouts.flatMap((w) => w.exercises) as Exercise[]) : [];
 
   const exercisePerTime = allExercises.reduce((acc: { [key: string]: number }, ex) => {
     acc[ex.name] ? acc[ex.name]++ : (acc[ex.name] = 1);
@@ -36,7 +36,7 @@ const SelectByExercise: React.FC<SelectByExerciseProps> = ({ onChange, value, op
       <InputLabel id="name" sx={{ width: 200 }}>
         Exercise
       </InputLabel>
-      <Select id="name" name="name" label="name" labelId="name" value={value} onChange={onChange} autoWidth>
+      <Select id="name" name="name" label="name" labelId="name" value={value} onChange={onChange} autoWidth className={classes.select}>
         {optionsToShow.map((ex) => {
           const count = exercisePerTime[ex];
           return (
