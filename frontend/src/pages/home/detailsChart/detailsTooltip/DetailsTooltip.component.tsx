@@ -1,7 +1,7 @@
+import { Theme } from '@mui/material';
 import { TooltipProps } from 'recharts';
 import { ValueType, NameType } from 'recharts/types/component/DefaultTooltipContent';
 import { makeStyles } from 'tss-react/mui';
-import theme from '../../../../theme';
 
 const DetailsTooltip = ({ active, payload, label }: TooltipProps<ValueType, NameType>) => {
   const { classes } = useStyles({ label });
@@ -19,7 +19,7 @@ const DetailsTooltip = ({ active, payload, label }: TooltipProps<ValueType, Name
 
 export default DetailsTooltip;
 
-const useStyles = makeStyles<{ label: any }>()((_, { label }) => ({
+const useStyles = makeStyles<{ label: any }>()((theme: Theme, { label }) => ({
   root: {
     margin: 0,
     padding: theme.spacing(0, 1),

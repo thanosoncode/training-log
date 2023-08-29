@@ -5,6 +5,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import { useStyles } from './FilterBy.styles';
 import Divider from '@mui/material/Divider';
+import { Typography } from '@mui/material';
 
 interface FilterByProps {
   selectedLabel: string;
@@ -27,8 +28,8 @@ const FIlterBy: React.FC<FilterByProps> = ({ handleLabelChange, selectedLabel, l
             const amount = workoutsMap && workoutsMap[label];
             return (
               <MenuItem key={label} value={label} className={classes.menuItem}>
-                <span> {label}</span>
-                <span className={amount ? classes.amount : ''}>{amount}</span>
+                <Typography>{label}</Typography>
+                <Typography className={amount ? classes.amount : ''}>{amount}</Typography>
               </MenuItem>
             );
           })}

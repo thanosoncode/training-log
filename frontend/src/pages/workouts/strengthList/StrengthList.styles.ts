@@ -1,8 +1,7 @@
+import { Theme } from '@mui/material';
 import { makeStyles } from 'tss-react/mui';
 
-import theme from '../../../theme';
-
-export const useStyles = makeStyles()(() => ({
+export const useStyles = makeStyles()((theme: Theme) => ({
   root: { overflowX: 'hidden' },
   newWorkoutButton: { height: 'min-content', marginLeft: 'auto' },
   titleContainer: {
@@ -35,6 +34,7 @@ export const useStyles = makeStyles()(() => ({
   workoutLabel: {
     textTransform: 'capitalize'
   },
+  workoutDate: { opacity: 0.6 },
   exercisesListContainer: {
     display: 'flex',
     justifyContent: 'center',

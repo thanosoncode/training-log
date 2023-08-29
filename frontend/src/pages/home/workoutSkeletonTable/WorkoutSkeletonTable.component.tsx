@@ -34,7 +34,7 @@ const useStyles = makeStyles()(() => ({
   },
   title: { padding: theme.spacing(0, 4), marginBottom: '8px', display: 'flex', gap: '40px' },
   table: {
-    border: `1px solid ${theme.palette.common.bottomGradient}`,
+    border: `1px solid ${theme.palette.grey[400]}`,
     padding: theme.spacing(1, 2),
     borderRadius: '4px',
     width: '100%',

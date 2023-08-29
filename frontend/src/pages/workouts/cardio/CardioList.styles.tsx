@@ -1,8 +1,7 @@
+import { Theme } from '@mui/material';
 import { makeStyles } from 'tss-react/mui';
 
-import theme from '../../../theme';
-
-export const useStyles = makeStyles()(() => ({
+export const useStyles = makeStyles()((theme: Theme) => ({
   titleContainer: {
     display: 'flex',
     justifyContent: 'cetner',
@@ -13,7 +12,7 @@ export const useStyles = makeStyles()(() => ({
     padding: theme.spacing(0, 1)
   },
   head: {
-    backgroundColor: 'black'
+    backgroundColor: theme.palette.background.paper
   },
   row: {
     '&:nth-of-type(odd)': {
@@ -22,8 +21,8 @@ export const useStyles = makeStyles()(() => ({
   },
   rowTotal: { border: `1px solid ${theme.palette.primary.main}` },
   deleteIcon: { cursor: 'pointer', '&:hover': { color: 'gray' }, fontSize: '16px' },
-  headCell: { color: theme.palette.text.secondary },
-  headCellButton: { color: 'inherit', width: '100%', textTransform: 'none' },
+  headCell: {},
+  headCellButton: { width: '100%', textTransform: 'none' },
   cellName: { fontWeight: 500, textAlign: 'center' },
   monthButton: { textTransform: 'none', color: 'inherit' },
   monthButtonActive: { color: theme.palette.primary.main },

@@ -92,14 +92,16 @@ const StrengthList = () => {
                       <Typography variant="h6" className={classes.workoutLabel}>
                         {label}
                       </Typography>
-                      <Typography variant="subtitle2">{workout?.createdAt ? format(new Date(workout?.createdAt).getTime(), 'dd/MM/yyyy') : ''} </Typography>
+                      <Typography variant="subtitle2" className={classes.workoutDate}>
+                        {workout?.createdAt ? format(new Date(workout?.createdAt).getTime(), 'dd/MM/yyyy') : ''}{' '}
+                      </Typography>
                     </Box>
                     <IconButton onClick={() => handleDelete(id)} sx={{ padding: 0 }}>
                       <DeleteForever sx={{ fontSize: 16 }} />
                     </IconButton>
                   </Box>
                   <Box className={classes.exercisesListContainer}>
-                    <ExercisesList exercises={exercises} showTitle={false} />
+                    <ExercisesList exercises={exercises} showTitle={false} colorLabel={true} />
                   </Box>
                 </Box>
               );

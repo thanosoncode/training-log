@@ -1,8 +1,8 @@
 import { makeStyles } from 'tss-react/mui';
 
-import theme from '../../theme';
+import { Theme } from '@mui/material';
 
-export const useStyles = makeStyles()(() => ({
+export const useStyles = makeStyles()((theme: Theme) => ({
   menuItem: {
     display: 'flex',
     justifyContent: 'space-between',

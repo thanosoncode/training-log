@@ -1,8 +1,7 @@
-import { Box } from '@mui/material';
+import { Box, Theme } from '@mui/material';
 import { Link, Outlet } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { makeStyles } from 'tss-react/mui';
-import theme from '../../theme';
 
 const WorkoutsLayout = () => {
   const { pathname } = useLocation();
@@ -23,7 +22,7 @@ const WorkoutsLayout = () => {
 };
 export default WorkoutsLayout;
 
-const useStyles = makeStyles()(() => ({
+const useStyles = makeStyles()((theme: Theme) => ({
   linksContainer: { display: 'flex', justifyContent: 'center', marginTop: '32px', gap: '16px' },
   link: {
     textDecoration: 'none',
