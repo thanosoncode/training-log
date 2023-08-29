@@ -46,7 +46,7 @@ const Home = () => {
       return (
         <>
           <Box className={classes.tableContainer}>
-            <ExercisesList exercises={singleWorkout?.exercises ?? []} workout={singleWorkout} showTitle={true} />
+            <ExercisesList exercises={singleWorkout?.exercises ?? []} workout={singleWorkout} showTitle={true} colorLabel={true} />
           </Box>
         </>
       );

@@ -68,7 +68,7 @@ const StrengthList = () => {
     : filteredWorkouts;
 
   return (
-    <Box>
+    <Box className={classes.root}>
       <>
         <Box className={classes.titleContainer}>
           <Box className={classes.buttonsContainer}>

@@ -3,6 +3,7 @@ import { makeStyles } from 'tss-react/mui';
 import theme from '../../../theme';
 
 export const useStyles = makeStyles()(() => ({
+  root: { overflowX: 'hidden' },
   newWorkoutButton: { height: 'min-content', marginLeft: 'auto' },
   titleContainer: {
     display: 'flex',

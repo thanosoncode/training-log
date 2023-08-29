@@ -28,7 +28,7 @@ const SingleCardioTable: React.FC<SingleCardioTableProps> = ({ cardio, onDelete 
         <Typography variant="subtitle2" sx={{ paddingLeft: theme.spacing(1) }}>
           {cardio?.createdAt ? format(new Date(cardio?.createdAt).getTime(), 'dd/MM/yyyy') : ''}{' '}
         </Typography>
-        <Typography variant="h6" className={classes.workoutLabel}>
+        <Typography variant="h6" className={classes.workoutLabel} sx={{ color: '#A9D6A9' }}>
           {cardio?.exercise.name}
         </Typography>
       </Box>

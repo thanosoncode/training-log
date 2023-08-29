@@ -20,6 +20,7 @@ export const useStyles = makeStyles()(() => ({
       backgroundColor: theme.palette.action.hover
     }
   },
+  rowTotal: { border: `1px solid ${theme.palette.primary.main}` },
   deleteIcon: { cursor: 'pointer', '&:hover': { color: 'gray' }, fontSize: '16px' },
   headCell: { color: theme.palette.text.secondary },
   headCellButton: { color: 'inherit', width: '100%', textTransform: 'none' },

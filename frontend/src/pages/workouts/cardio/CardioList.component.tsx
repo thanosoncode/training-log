@@ -6,7 +6,7 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import { LONG_CACHE, cardioLabels } from '../../../utils/constants';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { deleteCardio, getAllCardio } from '../../../api/cardio';
-import { Backdrop, Button, CircularProgress, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Backdrop, Button, CircularProgress, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { format, parseISO } from 'date-fns';
 import ConfirmationDialog from '../../../components/confirmationDialog/ConfirmationDialog.component';
 import DeleteForever from '@mui/icons-material/DeleteForever';
@@ -103,6 +103,16 @@ const CardioList = () => {
 
   const cardioToShow = showCurrentMonth ? sortedCardio().filter((c) => new Date(c.createdAt).getMonth() !== new Date().getMonth()) : sortedCardio();
 
+  const totalDistance = cardioToShow.reduce((acc, curr) => {
+    return (acc += Number(curr.exercise.distance));
+  }, 0);
+
+  const totalTime = cardioToShow.reduce((acc, curr) => {
+    return (acc += Number(curr.exercise.minutes));
+  }, 0);
+
+  const averageKmH = totalDistance / 1000 / (totalTime / 60);
+
   return (
     <div>
       <Box className={classes.titleContainer}>
@@ -116,7 +126,7 @@ const CardioList = () => {
         </Box>
       </Box>
 
-      {filteredByLabel && (
+      {cardioToShow && cardioToShow.length > 0 ? (
         <TableContainer component={Paper} sx={{ height: 'min-content', border: '1px solid #464646' }}>
           <Table size="small">
             <TableHead className={classes.head}>
@@ -164,9 +174,20 @@ const CardioList = () => {
                   </TableRow>
                 );
               })}
+              {selectedLabel && cardioToShow.length > 0 ? (
+                <TableRow className={classes.rowTotal}>
+                  <TableCell sx={{ textAlign: 'center', fontSize: '15px' }}>{selectedLabel}</TableCell>
+                  <TableCell sx={{ textAlign: 'center', fontSize: '15px' }}>Avg. {isNaN(averageKmH) ? 0 : averageKmH.toFixed(2)}km/h</TableCell>
+                  <TableCell sx={{ textAlign: 'center', fontSize: '15px' }}>{totalDistance}</TableCell>
+                  <TableCell sx={{ textAlign: 'center', fontSize: '15px' }}>{totalTime}</TableCell>
+                  <TableCell sx={{ textAlign: 'center', fontSize: '15px' }}> </TableCell>
+                </TableRow>
+              ) : null}
             </TableBody>
           </Table>
         </TableContainer>
+      ) : (
+        <Typography sx={{ marginTop: '16px', textAlign: 'center' }}>Not many things to show.</Typography>
       )}
       <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={isDeleting}>
         <CircularProgress color="inherit" />

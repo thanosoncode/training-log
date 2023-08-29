@@ -19,10 +19,11 @@ interface ExercisesListProps {
   workout?: Workout | null;
   showTitle: boolean;
   onDelete?: (id: string) => void;
+  colorLabel?: boolean;
 }
 
-const ExercisesList: React.FC<ExercisesListProps> = ({ exercises, workout, showTitle, onDelete }) => {
-  const { classes } = useStyles();
+const ExercisesList: React.FC<ExercisesListProps> = ({ exercises, workout, showTitle, onDelete, colorLabel }) => {
+  const { classes, cx } = useStyles();
 
   return (
     <>
@@ -31,7 +32,7 @@ const ExercisesList: React.FC<ExercisesListProps> = ({ exercises, workout, showT
           <Typography variant="subtitle2" sx={{ paddingLeft: theme.spacing(1) }}>
             {workout?.createdAt ? format(new Date(workout?.createdAt).getTime(), 'dd/MM/yyyy') : ''}{' '}
           </Typography>
-          <Typography variant="h6" className={classes.workoutLabel}>
+          <Typography variant="h6" className={cx({ [classes.workoutLabel]: true, [classes.colorLabel]: colorLabel })}>
             {workout?.label}
           </Typography>
         </Box>
@@ -81,6 +82,7 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     gap: '16px',
     marginBottom: '4px'
   },
+  colorLabel: { color: theme.palette.primary.main },
   workoutLabel: {
     textTransform: 'capitalize',
     marginLeft: theme.spacing(7)
