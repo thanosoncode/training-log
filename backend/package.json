@@ -8,7 +8,8 @@
     "start": "node dist/index.js",
     "server": "npx prisma generate && nodemon index.ts",
     "client": "npm run dev --prefix frontend",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "vercel-build": "echo hello"
   },
   "keywords": [],
   "author": "",
