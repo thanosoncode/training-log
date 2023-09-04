@@ -21,6 +21,8 @@ model Strength {
   updatedAt DateTime   @updatedAt
   label     String
   exercises Exercise[]
+  User      User?      @relation(fields: [userId], references: [id])
+  userId    String?    @db.ObjectId
 }
 
 type CardioExercise {
@@ -34,4 +36,16 @@ model Cardio {
   createdAt DateTime       @default(now())
   updatedAt DateTime       @updatedAt
   exercise  CardioExercise
+  User      User?          @relation(fields: [userId], references: [id])
+  userId    String?        @db.ObjectId
+}
+
+model User {
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  email     String     @unique
+  password  String
+  cardio    Cardio[]
+  strength  Strength[]
 }
