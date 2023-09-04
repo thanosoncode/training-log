@@ -28,6 +28,7 @@ export const strengthExercises: StrengthExercise[] = [
   { name: 'Bulgarian Split Squats', type: ['Legs Push', 'Legs Pull', 'Lower Body'] },
   { name: 'Trap Deadlifts', type: ['Legs Push', 'Legs Pull', 'Lower Body'] },
   { name: 'Deadlifts', type: ['Legs Push', 'Legs Pull', 'Lower Body'] },
+  { name: 'Romanian Deadlifts', type: ['Legs Pull', 'Lower Body'] },
   { name: 'Lunges', type: ['Legs Push', 'Legs Pull', 'Lower Body'] },
   { name: 'Hack Squat', type: ['Legs Push', 'Lower Body'] },
   { name: 'Back Squat', type: ['Legs Push', 'Lower Body'] },

@@ -76,3 +76,19 @@ export type StrengthExercise = {
 };
 
 export type CardioLabel = 'Running' | 'Swimming' | 'Cycling' | 'Walking' | 'Hiking';
+
+export type User = {
+  email: string;
+  password: string;
+};
+
+export type NotificationMessage = {
+  name: string;
+  open: boolean;
+  severity: 'error' | 'success';
+};
+
+export type UserFromServer = {
+  email: string;
+  token: string;
+};

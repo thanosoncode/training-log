@@ -1,9 +1,9 @@
 import { Box } from '@mui/material';
 import { Outlet } from 'react-router-dom';
-import theme from '../../theme';
 import Navbar from '../navbar/Navbar.component';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import { useStyles } from './RootLayout.styles';
+import { useAppState } from '../../context/AppContext';
+import Auth from '../../pages/auth/Auth.component';
 
 interface RootLayoutProps {
   mode: 'light' | 'dark';
@@ -12,19 +12,17 @@ interface RootLayoutProps {
 
 const RootLayout: React.FC<RootLayoutProps> = ({ mode, handleThemeMode }) => {
   const { classes } = useStyles();
-  const isDesktopView = useMediaQuery(theme.breakpoints.up('sm'));
-  return (
+  const { user } = useAppState();
+
+  const app = (
     <Box className={classes.container}>
-      {isDesktopView && <Navbar mode={mode} handleThemeMode={handleThemeMode} />}
+      <Navbar mode={mode} handleThemeMode={handleThemeMode} />
       <Box className={classes.outletContainer}>
         <Outlet />
       </Box>
-      {!isDesktopView && (
-        <Box className={classes.mobileNavbarContainer}>
-          <Navbar mode={mode} handleThemeMode={handleThemeMode} />
-        </Box>
-      )}
     </Box>
   );
+
+  return user ? app : <Auth />;
 };
 export default RootLayout;

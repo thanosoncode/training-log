@@ -1,7 +1,8 @@
 import { createContext, useContext, useReducer } from 'react';
-import { CardioWorkoutFromServer, SelectedType, StrengthWorkoutServer } from '../utils/models';
+import { CardioWorkoutFromServer, SelectedType, StrengthWorkoutServer, UserFromServer } from '../utils/models';
 
 export type AppState = {
+  user: UserFromServer | null;
   allCardio: CardioWorkoutFromServer[];
   allStrength: StrengthWorkoutServer[];
   selectedStrengthId: string;
@@ -12,6 +13,7 @@ export type AppState = {
 };
 
 const defaultState: AppState = {
+  user: null,
   allCardio: [],
   allStrength: [],
   selectedStrengthId: '',
@@ -23,6 +25,7 @@ const defaultState: AppState = {
 
 type Dispatch = (action: Action) => void;
 type Action =
+  | { type: 'SET_USER'; payload: UserFromServer }
   | { type: 'SET_ALL_CARDIO'; payload: CardioWorkoutFromServer[] }
   | { type: 'SET_ALL_STRENGTH'; payload: StrengthWorkoutServer[] }
   | { type: 'SET_SELECTED_CARDIO_ID'; payload: string }
@@ -38,6 +41,8 @@ const AppDispatchContext = createContext<Dispatch | null>(null);
 
 const appReducer = (state: AppState, action: Action) => {
   switch (action.type) {
+    case 'SET_USER':
+      return { ...state, user: action.payload };
     case 'SET_ALL_CARDIO':
       return { ...state, allCardio: action.payload };
     case 'SET_ALL_STRENGTH':
