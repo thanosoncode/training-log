@@ -9,7 +9,8 @@ import {
 
 const cardioRouter = express.Router();
 
-cardioRouter.route("/").get(getAllCardio).post(createCardio);
+cardioRouter.route("/").post(getAllCardio);
+cardioRouter.route("/new").post(createCardio);
 cardioRouter
   .route("/:id")
   .get(getSingleCardio)

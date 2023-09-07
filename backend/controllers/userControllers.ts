@@ -39,6 +39,7 @@ export const registerUser = async (req: Request, res: Response) => {
       message: "User has successfully being registered",
       email,
       token,
+      id: userCreated.id,
     });
   }
 
@@ -65,7 +66,7 @@ export const loginUser = async (req: Request, res: Response) => {
   const verified = await bcrypt.compare(password, user.password);
 
   if (!verified) {
-    return res.status(401).json({ message: "Error. User not verified" });
+    return res.status(401).json({ message: "Incorrect password" });
   }
 
   if (process.env.SECRET) {
@@ -75,7 +76,12 @@ export const loginUser = async (req: Request, res: Response) => {
 
     return res
       .status(200)
-      .json({ message: "You have successfully logged in", email, token });
+      .json({
+        message: "You have successfully logged in",
+        email,
+        token,
+        id: user.id,
+      });
   }
   res.json({ message: "Something went terribly wrong" });
 };

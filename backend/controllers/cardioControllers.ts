@@ -3,6 +3,11 @@ import { prisma } from "../prisma/prisma";
 import { isValidMonth, isValidYear } from "../utils/helpers";
 
 const getAllCardio = async (req: Request, res: Response) => {
+  const { userId } = req.body as { userId: string };
+
+  if (!userId) {
+    return res.status(400).json({ message: "UserId is required" });
+  }
   const { month, year } = req.query as { month: string; year: string };
 
   if (isValidMonth(month) && isValidYear(year)) {
@@ -15,6 +20,7 @@ const getAllCardio = async (req: Request, res: Response) => {
           gte: new Date(`${year}-${month}-1`).toISOString(),
           lte: new Date(`${year}-${month}-31`).toISOString(),
         },
+        userId,
       },
     });
     if (!cardio) {
@@ -26,6 +32,7 @@ const getAllCardio = async (req: Request, res: Response) => {
   }
 
   const cardio = await prisma.cardio.findMany({
+    where: { userId },
     orderBy: {
       createdAt: "desc",
     },
@@ -41,20 +48,22 @@ const createCardio = async (req: Request, res: Response) => {
     name,
     minutes,
     distance,
-  }: { name: string; minutes: string; distance: string } = req.body;
+    userId,
+  }: { name: string; minutes: string; distance: string; userId: string } =
+    req.body;
 
-  if (!name || !minutes || !distance) {
+  if (!name || !minutes || !distance || !userId) {
     return res
       .status(400)
-      .json({ message: "Name, minutes and distance are required" });
+      .json({ message: "Name, minutes, distance and userId are required" });
   }
 
   const cardio = await prisma.cardio.create({
     data: {
       exercise: { name, minutes, distance },
+      userId,
     },
   });
-
   res.status(201).json(cardio);
 };
 

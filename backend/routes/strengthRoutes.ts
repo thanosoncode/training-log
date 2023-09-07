@@ -9,7 +9,8 @@ import {
 
 const strengthRouter = express.Router();
 
-strengthRouter.route("/").get(getAllStrength).post(createStrength);
+strengthRouter.route("/").post(getAllStrength);
+strengthRouter.route("/new").post(createStrength);
 strengthRouter
   .route("/:id")
   .get(getSingleStrength)

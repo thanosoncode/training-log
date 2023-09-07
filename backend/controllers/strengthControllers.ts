@@ -4,7 +4,16 @@ import { isValidMonth, isValidYear, workoutIsValid } from "../utils/helpers";
 import { Exercise } from "@prisma/client";
 
 const getAllStrength = async (req: Request, res: Response) => {
-  const { month, year } = req.query as { month: string; year: string };
+  const { month, year } = req.query as {
+    month: string;
+    year: string;
+  };
+
+  const { userId } = req.body as { userId: string };
+
+  if (!userId) {
+    return res.status(400).json({ message: "Missing user id" });
+  }
 
   if (isValidMonth(month) && isValidYear(year)) {
     const strength = await prisma.strength.findMany({
@@ -12,6 +21,7 @@ const getAllStrength = async (req: Request, res: Response) => {
         createdAt: "desc",
       },
       where: {
+        userId,
         createdAt: {
           gte: new Date(`${year}-${month}-1`).toISOString(),
           lte: new Date(`${year}-${month}-31`).toISOString(),
@@ -28,6 +38,7 @@ const getAllStrength = async (req: Request, res: Response) => {
     orderBy: {
       createdAt: "desc",
     },
+    where: { userId },
   });
   if (!strength) {
     return res.status(400).json({ message: "no strength workouts" });
@@ -39,6 +50,12 @@ const createStrength = async (req: Request, res: Response) => {
   const { label, exercises }: { label: string; exercises: Exercise[] } =
     req.body;
 
+  const { userId } = req.body as { userId: string };
+
+  if (!userId) {
+    return res.status(400).json({ message: "Missing user id" });
+  }
+
   if (!workoutIsValid(label, exercises)) {
     return res
       .status(400)
@@ -49,6 +66,7 @@ const createStrength = async (req: Request, res: Response) => {
     data: {
       label,
       exercises,
+      userId,
     },
   });
 
