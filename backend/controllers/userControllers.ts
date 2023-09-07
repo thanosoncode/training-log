@@ -33,8 +33,15 @@ export const registerUser = async (req: Request, res: Response) => {
 
   if (userCreated && process.env.SECRET) {
     const token = jwt.sign(userCreated, process.env.SECRET, {
-      expiresIn: "1h",
+      expiresIn: "24h",
     });
+
+    res.cookie("authToken", token, {
+      httpOnly: false,
+      path: "/",
+      secure: true,
+    });
+
     return res.status(201).json({
       message: "User has successfully being registered",
       email,
@@ -71,17 +78,37 @@ export const loginUser = async (req: Request, res: Response) => {
 
   if (process.env.SECRET) {
     const token = jwt.sign(user, process.env.SECRET, {
-      expiresIn: "1h",
+      expiresIn: "24h",
     });
 
-    return res
-      .status(200)
-      .json({
-        message: "You have successfully logged in",
-        email,
-        token,
-        id: user.id,
-      });
+    res.cookie("authToken", token, {
+      httpOnly: false,
+      path: "/",
+      secure: true,
+    });
+
+    return res.status(200).json({
+      message: "You have successfully logged in",
+      email,
+      token,
+      id: user.id,
+    });
   }
-  res.json({ message: "Something went terribly wrong" });
+  return res.status(500);
+};
+
+export const authenticateToken = async (req: Request, res: Response) => {
+  const { token } = req.body;
+
+  if (!token || token.length !== 392) {
+    return res.status(401).json({ message: "Invalid token" });
+  }
+
+  const user = jwt.verify(token, process.env.SECRET ?? "");
+
+  if (!user) {
+    return res.status(400).json({ message: "User not verified" });
+  }
+
+  return res.json(user);
 };

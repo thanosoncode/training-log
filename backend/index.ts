@@ -5,6 +5,7 @@ import cors from "cors";
 import { cardioRouter } from "./routes/cardioRoutes";
 import { registerUserRouter } from "./routes/registerUserRoutes";
 import { loginUserRouter } from "./routes/loginUserRoutes";
+import { authenticateToken } from "./controllers/userControllers";
 dotenv.config();
 
 const app: Express = express();
@@ -17,6 +18,7 @@ app.use("/api/strength", strengthRouter);
 app.use("/api/cardio", cardioRouter);
 app.use("/api/user/register", registerUserRouter);
 app.use("/api/user/login", loginUserRouter);
+app.use("/api/user/token", authenticateToken);
 
 app.get("/", (req, res) => {
   res.send("API is running....");
