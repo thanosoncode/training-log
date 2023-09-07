@@ -18,7 +18,7 @@ import { useAppState } from '../../../context/AppContext';
 const StrengthList = () => {
   const { classes, cx } = useStyles();
   const queryClient = useQueryClient();
-  const { month, year } = useAppState();
+  const { month, year, user } = useAppState();
   const [selectedLabel, setSelectedLabel] = useState('');
   const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = useState(false);
   const [workoutToDelete, setWorkoutToDelete] = useState('');
@@ -26,7 +26,7 @@ const StrengthList = () => {
 
   const handleLabelChange = (event: SelectChangeEvent<string>) => setSelectedLabel(event.target.value);
 
-  const { data: workouts, isLoading } = useQuery(['strength'], () => getAllStrength({ month, year }), {
+  const { data: workouts, isLoading } = useQuery(['strength'], () => getAllStrength({ month, year, userId: user?.id ?? '' }), {
     refetchOnWindowFocus: false,
     staleTime: LONG_CACHE
   });

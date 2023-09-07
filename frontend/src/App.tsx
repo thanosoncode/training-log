@@ -15,8 +15,7 @@ import StrengthList from './pages/workouts/strengthList/StrengthList.component';
 import CardioList from './pages/workouts/cardio/CardioList.component';
 import WorkoutsLayout from './pages/workouts/WorkoutsLayout.component';
 import AppProvider from './context/AppContext';
-import Auth from './pages/auth/Auth.component';
-import { UserFromServer } from './utils/models';
+import NotFound from './components/notfound/NotFound.component';
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -44,20 +43,18 @@ const App = () => {
 
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <>
-        <Route path="/auth" element={<Auth />} />
-        <Route path="/" element={<RootLayout mode={mode} handleThemeMode={handleThemeMode} />} errorElement={<Error />}>
-          <Route index element={<Home />} errorElement={<Error />} />
-          <Route path="/workouts" element={<WorkoutsLayout />} errorElement={<Error />}>
-            <Route path="/workouts/strength" element={<StrengthList />} errorElement={<Error />} />
-            <Route path="/workouts/cardio" element={<CardioList />} errorElement={<Error />} />
-          </Route>
-          <Route path="/progress" element={<Progression />} errorElement={<Error />} />
-          <Route path="/new-workout" element={<NewWorkout />} errorElement={<Error />} />
-          <Route path="/new-workout/strength" element={<Strength />} errorElement={<Error />} />
-          <Route path="/new-workout/cardio" element={<Cardio />} errorElement={<Error />} />
+      <Route path="/" element={<RootLayout mode={mode} handleThemeMode={handleThemeMode} />} errorElement={<Error />}>
+        <Route index element={<Home />} errorElement={<Error />} />
+        <Route path="/workouts" element={<WorkoutsLayout />} errorElement={<Error />}>
+          <Route path="/workouts/strength" element={<StrengthList />} errorElement={<Error />} />
+          <Route path="/workouts/cardio" element={<CardioList />} errorElement={<Error />} />
         </Route>
-      </>
+        <Route path="/progress" element={<Progression />} errorElement={<Error />} />
+        <Route path="/new-workout" element={<NewWorkout />} errorElement={<Error />} />
+        <Route path="/new-workout/strength" element={<Strength />} errorElement={<Error />} />
+        <Route path="/new-workout/cardio" element={<Cardio />} errorElement={<Error />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
     )
   );
 

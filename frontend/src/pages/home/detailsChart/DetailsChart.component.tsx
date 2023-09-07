@@ -1,7 +1,5 @@
 import React from 'react';
 import { CardioWorkoutFromServer, StrengthWorkoutServer } from '../../../utils/models';
-import Box from '@mui/material/Box';
-import { useCountdown } from '../../../utils/useCountdown';
 import { useStyles } from './DetailsChart.styles';
 import { BarChart, Bar, XAxis, YAxis, Legend, Tooltip } from 'recharts';
 import { CARDIO_COLOR, STRENGTH_COLOR } from '../../../utils/constants';

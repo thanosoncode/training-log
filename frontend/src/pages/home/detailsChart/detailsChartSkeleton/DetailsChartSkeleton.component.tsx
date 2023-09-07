@@ -24,7 +24,7 @@ const useStyles = makeStyles()(() => ({
   flex: {
     width: 300,
     height: 280,
-    border: `1px solid ${theme.palette.grey[400]}`,
+    border: `1px solid ${theme.palette.grey[800]}`,
     borderTop: 'none',
     borderRight: 'none',
     display: 'flex',
@@ -35,14 +35,14 @@ const useStyles = makeStyles()(() => ({
   cardio: {
     height: '140px',
     width: '40px',
-    background: theme.palette.grey[400],
+    background: theme.palette.grey[900],
     borderTopLeftRadius: '2px',
     borderTopRightRadius: '2px'
   },
   strength: {
     height: '100%',
     width: '40px',
-    background: theme.palette.grey[400],
+    background: theme.palette.grey[900],
     borderTopLeftRadius: '2px',
     borderTopRightRadius: '2px'
   },

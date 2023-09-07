@@ -11,10 +11,12 @@ import { postWorkoutStrength } from '../../../api/workouts';
 import { useNavigate } from 'react-router-dom';
 import { strengthLabels } from '../../../utils/constants';
 import AddLabel from '../../../components/addLabel/AddLabel.component';
+import { useAppState } from '../../../context/AppContext';
 
 const NewStrength = () => {
   const { classes } = useStyles();
   const queryClient = useQueryClient();
+  const { user } = useAppState();
   const navigate = useNavigate();
   const [workoutLabel, setWorkoutLabel] = useState('');
   const [exercises, setExercises] = useState<Exercise[]>([]);
@@ -27,14 +29,18 @@ const NewStrength = () => {
     setExercises(exercises.filter((x) => x.id !== id));
   };
 
-  const { mutate, isLoading: isSavingWorkout } = useMutation(['post-strength'], () => postWorkoutStrength({ label: workoutLabel, exercises }), {
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['strength'] });
-      setExercises([]);
-      setWorkoutLabel('');
-      navigate('/workouts/strength');
+  const { mutate, isLoading: isSavingWorkout } = useMutation(
+    ['create-strength'],
+    () => postWorkoutStrength({ label: workoutLabel, exercises, userId: user?.id ?? '' }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['strength'] });
+        setExercises([]);
+        setWorkoutLabel('');
+        navigate('/workouts/strength');
+      }
     }
-  });
+  );
 
   return (
     <Box className={classes.root}>

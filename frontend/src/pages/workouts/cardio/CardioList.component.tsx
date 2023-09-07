@@ -18,7 +18,7 @@ type OrderBy = 'name' | 'time' | 'distance' | 'date';
 const CardioList = () => {
   const { classes, cx } = useStyles();
   const queryClient = useQueryClient();
-  const { month, year } = useAppState();
+  const { month, year, user } = useAppState();
   const [selectedLabel, setSelectedLabel] = useState('');
   const [cardioToDelete, setCardioToDelete] = useState('');
   const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = useState(false);
@@ -28,7 +28,7 @@ const CardioList = () => {
 
   const handleLabelChange = (event: SelectChangeEvent<string>) => setSelectedLabel(event.target.value);
 
-  const { data: cardio, isLoading } = useQuery(['cardio'], () => getAllCardio({ month, year }), {
+  const { data: cardio, isLoading } = useQuery(['cardio'], () => getAllCardio({ month, year, userId: user?.id ?? '' }), {
     refetchOnWindowFocus: false,
     staleTime: LONG_CACHE
   });

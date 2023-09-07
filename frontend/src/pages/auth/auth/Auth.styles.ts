@@ -6,14 +6,13 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100%',
-    marginTop: '128px'
+    height: '100%'
   },
   root: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    width: 320,
+    width: 360,
     padding: '24px',
     borderTop: `4px solid ${theme.palette.primary.main}`
   },

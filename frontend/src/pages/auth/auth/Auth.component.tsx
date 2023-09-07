@@ -2,13 +2,13 @@ import { Alert, Box, Button, Container, FormControl, Paper, Snackbar, TextField 
 import Typography from '@mui/material/Typography';
 import { useMutation } from '@tanstack/react-query';
 import React, { useState } from 'react';
-import { loginUser, registerUser } from '../../api/user';
-import { NotificationMessage, UserFromServer } from '../../utils/models';
+import { loginUser, registerUser } from '../../../api/user';
+import { NotificationMessage, UserFromServer } from '../../../utils/models';
 import { useStyles } from './Auth.styles';
 import { useNavigate } from 'react-router-dom';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { AxiosError } from 'axios';
-import { useAppDispatch, useAppState } from '../../context/AppContext';
+import { useAppDispatch, useAppState } from '../../../context/AppContext';
 
 type ResponseData = {
   message: string;

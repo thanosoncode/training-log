@@ -14,14 +14,16 @@ import WorkoutSkeletonTable from './workoutSkeletonTable/WorkoutSkeletonTable.co
 
 const Home = () => {
   const { classes } = useStyles();
-  const { selectedStrengthId, selectedCardioId, month, year, selectedType } = useAppState();
+  const { selectedStrengthId, selectedCardioId, month, year, selectedType, user } = useAppState();
 
-  const { isLoading: isStrengthLoading, data: strength } = useQuery(['strength', month, year], () => getAllStrength({ month, year }), {
+  console.log('userid', user?.id);
+
+  const { isLoading: isStrengthLoading, data: strength } = useQuery(['strength', month, year], () => getAllStrength({ month, year, userId: user?.id ?? '' }), {
     refetchOnWindowFocus: false,
     staleTime: LONG_CACHE
   });
 
-  const { isLoading: isCardioLoading, data: cardio } = useQuery(['cardio', month, year], () => getAllCardio({ month, year }), {
+  const { isLoading: isCardioLoading, data: cardio } = useQuery(['cardio', month, year], () => getAllCardio({ month, year, userId: user?.id ?? '' }), {
     refetchOnWindowFocus: false,
     staleTime: LONG_CACHE
   });

@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import Navbar from '../navbar/Navbar.component';
 import { useStyles } from './RootLayout.styles';
 import { useAppState } from '../../context/AppContext';
-import Auth from '../../pages/auth/Auth.component';
+import AuthPage from '../../pages/auth/AuthPage.component';
 
 interface RootLayoutProps {
   mode: 'light' | 'dark';
@@ -23,6 +23,6 @@ const RootLayout: React.FC<RootLayoutProps> = ({ mode, handleThemeMode }) => {
     </Box>
   );
 
-  return user ? app : <Auth />;
+  return user ? app : <AuthPage />;
 };
 export default RootLayout;

@@ -12,6 +12,7 @@ export interface Workout {
   createdAt?: string;
   updatedAt?: string;
   exercises: Exercise[];
+  userId?: string;
 }
 
 export interface StrengthWorkoutServer {
@@ -50,6 +51,7 @@ export type CardioExercise = {
   name: string;
   minutes: string;
   distance: string;
+  userId: string;
 };
 
 export type CardioWorkoutFromServer = {
@@ -91,4 +93,5 @@ export type NotificationMessage = {
 export type UserFromServer = {
   email: string;
   token: string;
+  id: string;
 };
