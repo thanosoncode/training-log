@@ -11,8 +11,15 @@ dotenv.config();
 const app: Express = express();
 const port = process.env.PORT || 5000;
 
+const corsOptions = {
+  origin: "https://traininglog.netlify.app",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
-app.use(cors());
 
 app.use("/api/strength", strengthRouter);
 app.use("/api/cardio", cardioRouter);
