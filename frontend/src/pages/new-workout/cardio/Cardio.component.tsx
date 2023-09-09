@@ -6,14 +6,12 @@ import { useState } from 'react';
 import { Backdrop, Button, CircularProgress, SelectChangeEvent, TextField, Typography } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postCardio } from '../../../api/cardio';
-import { useNavigate } from 'react-router-dom';
 import { useAppState } from '../../../context/AppContext';
 
 const Cardio = () => {
   const { classes } = useStyles();
   const queryClient = useQueryClient();
   const { user } = useAppState();
-  const navigate = useNavigate();
   const [cardioLabel, setCardioLabel] = useState('');
   const [exercise, setExercise] = useState({ distance: '', minutes: '' });
   const readyToSave = cardioLabel && exercise.distance && exercise.minutes;
