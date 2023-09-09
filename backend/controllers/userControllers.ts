@@ -32,7 +32,7 @@ export const registerUser = async (req: Request, res: Response) => {
     res.cookie("authToken", token, {
       domain:
         process.env.NODE_ENV === "production"
-          ? "https://traininglog.netlify.app"
+          ? "https://training-log-be.vercel.app/"
           : undefined,
       httpOnly: false,
       path: "/",
@@ -73,7 +73,7 @@ export const loginUser = async (req: Request, res: Response) => {
     res.cookie("authToken", token, {
       domain:
         process.env.NODE_ENV === "production"
-          ? "https://traininglog.netlify.app"
+          ? "https://training-log-be.vercel.app/"
           : undefined,
       httpOnly: false,
       path: "/",
