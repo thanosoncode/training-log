@@ -28,7 +28,7 @@ const AuthPage = () => {
         open: true,
         severity: 'success'
       });
-
+      document.cookie = `authToken=${data.token}`;
       appDispatch({ type: 'SET_USER', payload: data });
     },
     onError: (data: AxiosError<ResponseData>) => {
