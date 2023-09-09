@@ -30,9 +30,12 @@ export const registerUser = async (req: Request, res: Response) => {
       expiresIn: "24h",
     });
     res.cookie("authToken", token, {
+      domain:
+        process.env.NODE_ENV === "production" ? ".netlify.app" : undefined,
       httpOnly: false,
       path: "/",
       secure: true,
+      sameSite: "none",
     });
     return res.status(201).json({
       message: "User has successfully being registered",
@@ -66,9 +69,12 @@ export const loginUser = async (req: Request, res: Response) => {
       expiresIn: "24h",
     });
     res.cookie("authToken", token, {
+      domain:
+        process.env.NODE_ENV === "production" ? ".netlify.app" : undefined,
       httpOnly: false,
       path: "/",
       secure: true,
+      sameSite: "none",
     });
     return res.status(200).json({
       message: "You have successfully logged in",
