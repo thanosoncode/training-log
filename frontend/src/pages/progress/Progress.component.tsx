@@ -11,14 +11,16 @@ import SelectByExercise from '../../components/selectByExercise/SelectByExercise
 import { LONG_CACHE } from '../../utils/constants';
 import { Exercise, StrengthWorkoutServer } from '../../utils/models';
 import { useStyles } from './Progress.styles';
+import { useAppState } from '../../context/AppContext';
 
 const Progress = () => {
   const { classes } = useStyles();
   const queryClient = useQueryClient();
+  const { user } = useAppState();
   const strengthQueryCache = queryClient.getQueryData(['strength']) as StrengthWorkoutServer[] | undefined;
   const [selectedExercise, setSelectedExercise] = useState(strengthQueryCache ? strengthQueryCache[0].exercises[0].name : '');
 
-  const { data: workouts } = useQuery(['strength'], () => getAllStrength({ month: 0, year: 0 }), {
+  const { data: workouts } = useQuery(['strength'], () => getAllStrength({ month: 0, year: 0, userId: user?.id ?? '' }), {
     staleTime: LONG_CACHE,
     refetchOnWindowFocus: false,
     onSuccess: (data) => {

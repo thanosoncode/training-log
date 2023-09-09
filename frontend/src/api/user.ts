@@ -13,4 +13,10 @@ const loginUser = async (user: User): Promise<UserFromServer> => {
   return data;
 };
 
-export { loginUser, registerUser };
+const authenticateUserToken = async (token: string): Promise<UserFromServer> => {
+  const response = await axios.post('/api/user/token', { token });
+  const data = await response.data;
+  return data;
+};
+
+export { loginUser, registerUser, authenticateUserToken };

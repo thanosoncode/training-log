@@ -30,7 +30,13 @@ const Navbar: React.FC<NavbarProps> = ({ handleThemeMode, mode }) => {
     setIsUserMenuOpen(false);
   };
 
-  const handleAddButtonClick = () => {};
+  const handleLogout = () => {
+    const token = document.cookie.split('authToken=')[1];
+    if (token) {
+      document.cookie = 'authToken=; path=/;';
+      window.location.href = '/';
+    }
+  };
 
   return (
     <Box className={classes.navbarRoot}>
@@ -78,7 +84,7 @@ const Navbar: React.FC<NavbarProps> = ({ handleThemeMode, mode }) => {
         <Box className={classes.rightSide}>
           {pathname === '/new-workout' ? null : (
             <NavLink to="/new-workout">
-              <Button variant="contained" onClick={handleAddButtonClick} className={classes.newWorkoutButton} endIcon={<Add />}>
+              <Button variant="contained" className={classes.newWorkoutButton} endIcon={<Add />}>
                 New
               </Button>
             </NavLink>
@@ -112,7 +118,7 @@ const Navbar: React.FC<NavbarProps> = ({ handleThemeMode, mode }) => {
                   )}
                 </IconButton>
               </MenuItem>
-              <MenuItem onClick={handleCloseUserMenu}>
+              <MenuItem onClick={handleLogout}>
                 <IconButton className={classes.modeButton}>
                   <Box className={classes.listItemContainer}>
                     <LogoutIcon fontSize="small" />

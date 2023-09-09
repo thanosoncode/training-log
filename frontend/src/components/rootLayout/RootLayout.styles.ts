@@ -11,5 +11,10 @@ export const useStyles = makeStyles()(() => ({
     transform: 'translateX(-50%)',
     background: theme.palette.background.default,
     width: '100%'
+  },
+  circularRoot: {
+    marginTop: '128px',
+    display: 'flex',
+    justifyContent: 'center'
   }
 }));

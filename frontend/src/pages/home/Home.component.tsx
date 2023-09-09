@@ -16,8 +16,6 @@ const Home = () => {
   const { classes } = useStyles();
   const { selectedStrengthId, selectedCardioId, month, year, selectedType, user } = useAppState();
 
-  console.log('userid', user?.id);
-
   const { isLoading: isStrengthLoading, data: strength } = useQuery(['strength', month, year], () => getAllStrength({ month, year, userId: user?.id ?? '' }), {
     refetchOnWindowFocus: false,
     staleTime: LONG_CACHE
