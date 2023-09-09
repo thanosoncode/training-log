@@ -31,7 +31,9 @@ export const registerUser = async (req: Request, res: Response) => {
     });
     res.cookie("authToken", token, {
       domain:
-        process.env.NODE_ENV === "production" ? ".netlify.app" : undefined,
+        process.env.NODE_ENV === "production"
+          ? "https://traininglog.netlify.app/"
+          : undefined,
       httpOnly: false,
       path: "/",
       secure: true,
@@ -70,7 +72,9 @@ export const loginUser = async (req: Request, res: Response) => {
     });
     res.cookie("authToken", token, {
       domain:
-        process.env.NODE_ENV === "production" ? ".netlify.app" : undefined,
+        process.env.NODE_ENV === "production"
+          ? "https://traininglog.netlify.app/"
+          : undefined,
       httpOnly: false,
       path: "/",
       secure: true,
