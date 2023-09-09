@@ -1,7 +1,7 @@
 import express, { Express } from "express";
 import dotenv from "dotenv";
 import { strengthRouter } from "./routes/strengthRoutes";
-import cors from "cors";
+import cors, { CorsOptions } from "cors";
 import { cardioRouter } from "./routes/cardioRoutes";
 import { registerUserRouter } from "./routes/registerUserRoutes";
 import { loginUserRouter } from "./routes/loginUserRoutes";
@@ -11,8 +11,20 @@ dotenv.config();
 const app: Express = express();
 const port = process.env.PORT || 5000;
 
+const allowedOrigins: string[] = ["https://traininglog.netlify.app"];
+
+const corsOptions: CorsOptions = {
+  origin: (origin, callback) => {
+    if (allowedOrigins.includes(origin as string) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+};
+
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use("/api/strength", strengthRouter);
 app.use("/api/cardio", cardioRouter);
