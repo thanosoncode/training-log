@@ -101,7 +101,7 @@ const CardioList = () => {
     return [];
   };
 
-  const cardioToShow = showCurrentMonth ? sortedCardio().filter((c) => new Date(c.createdAt).getMonth() !== new Date().getMonth()) : sortedCardio();
+  const cardioToShow = showCurrentMonth ? sortedCardio().filter((c) => new Date(c.createdAt).getMonth() + 1 !== new Date().getMonth()) : sortedCardio();
 
   const totalDistance = cardioToShow.reduce((acc, curr) => {
     return (acc += Number(curr.exercise.distance));

@@ -63,7 +63,7 @@ const NewStrength = () => {
           <Box sx={{ marginBottom: '64px' }}>
             <ExercisesList exercises={exercises} showTitle={true} onDelete={handleRemoveExercise} />
           </Box>
-          {exercises.length > 0 ? <Typography>Keep going</Typography> : <Typography>Add exercises to create your workout</Typography>}
+          {exercises.length > 0 ? <Typography>Keep going!</Typography> : <Typography>Add exercises to create your workout!</Typography>}
           <AddExercise exercises={exercises} setExercises={setExercises} label={workoutLabel} />
         </>
       ) : null}

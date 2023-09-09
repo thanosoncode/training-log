@@ -3,7 +3,7 @@ import theme from '../../theme';
 
 export const useStyles = makeStyles()(() => ({
   container: { minHeight: '100vh', overflowX: 'hidden', marginRight: 'calc(-1 * (100vw - 100%))', paddingBottom: theme.spacing(8) },
-  outletContainer: { maxWidth: 1000, margin: '0 auto' },
+  outletContainer: { maxWidth: 1000, margin: '0 auto', padding: theme.spacing(6, 3, 0, 3) },
   mobileNavbarContainer: {
     position: 'fixed',
     bottom: 0,

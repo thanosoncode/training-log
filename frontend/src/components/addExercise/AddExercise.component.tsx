@@ -49,7 +49,7 @@ const AddExercise: React.FC<AddExerciseProps> = (props) => {
 
   return (
     <Box>
-      <Typography variant="h6" sx={{ marginTop: 4, color: theme.palette.warning.main }}>
+      <Typography variant="subtitle1" sx={{ marginTop: 4, color: theme.palette.warning.main }}>
         {inValidExercise ? 'All fields are required' : ''}
       </Typography>
       <Box

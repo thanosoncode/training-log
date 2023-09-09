@@ -1,4 +1,4 @@
-import { Box, CircularProgress } from '@mui/material';
+import { Box, CircularProgress, useMediaQuery } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { getSingleWorkoutStrength, getAllStrength } from '../../api/workouts';
 import Calendar from '../../components/calendar/Calendar.component';
@@ -13,7 +13,8 @@ import DetailsChart from './detailsChart/DetailsChart.component';
 import WorkoutSkeletonTable from './workoutSkeletonTable/WorkoutSkeletonTable.component';
 
 const Home = () => {
-  const { classes } = useStyles();
+  const { classes, cx } = useStyles();
+  const mobileView = useMediaQuery('(max-width:800px)');
   const { selectedStrengthId, selectedCardioId, month, year, selectedType, user } = useAppState();
 
   const { isLoading: isStrengthLoading, data: strength } = useQuery(['strength', month, year], () => getAllStrength({ month, year, userId: user?.id ?? '' }), {
@@ -64,7 +65,7 @@ const Home = () => {
 
   return (
     <Box className={classes.root}>
-      <Box className={classes.container}>
+      <Box className={cx({ [classes.container]: true, [classes.mobileContainer]: mobileView })}>
         {isStrengthLoading || isCardioLoading ? <SkeletonCalendar /> : <Calendar />}
         <Box className={classes.details}>
           <DetailsChart isCardioLoading={isCardioLoading} isStrengthLoading={isStrengthLoading} cardio={cardio} strength={strength} />

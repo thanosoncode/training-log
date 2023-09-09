@@ -12,7 +12,7 @@ export const useStyles = makeStyles()(() => ({
   titleContainer: {
     display: 'flex',
     gap: '32px',
-    margin: theme.spacing(6, 0, 10, 0)
+    margin: theme.spacing(0, 0, 10, 0)
   },
   title: { marginBottom: theme.spacing(2) },
   graphsContainer: {

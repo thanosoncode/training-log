@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const NewWorkout = () => {
   return (
-    <Box sx={{ display: 'flex', gap: '24px', justifyContent: 'center', width: '100%', paddingTop: '100px', alignItems: 'center' }}>
+    <Box sx={{ display: 'flex', gap: '24px', justifyContent: 'center', width: '100%', alignItems: 'center' }}>
       <Link to="/new-workout/strength">
         <Button variant="contained" sx={{ fontWeight: 'bold', padding: '12px 18px' }}>
           Strength

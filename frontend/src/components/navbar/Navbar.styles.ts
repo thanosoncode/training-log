@@ -3,8 +3,8 @@ import { makeStyles } from 'tss-react/mui';
 
 export const useStyles = makeStyles()((theme: Theme) => ({
   navbarRoot: {
-    paddingTop: '24px',
-    borderBottom: '1px solid #474747'
+    borderBottom: '1px solid #474747',
+    padding: theme.spacing(2, 3, 0, 3)
   },
   navbarContainer: {
     display: 'flex',
@@ -68,5 +68,16 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     gap: '12px',
     padding: '0 8px',
     alignItems: 'center'
+  },
+  userEmail: { padding: theme.spacing(1), textAlign: 'center' },
+  userLetter: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 28,
+    height: 28,
+    background: theme.palette.grey[500],
+    borderRadius: '50%',
+    textTransform: 'uppercase'
   }
 }));

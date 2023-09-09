@@ -23,7 +23,7 @@ const WorkoutsLayout = () => {
 export default WorkoutsLayout;
 
 const useStyles = makeStyles()((theme: Theme) => ({
-  linksContainer: { display: 'flex', justifyContent: 'center', marginTop: '32px', gap: '16px' },
+  linksContainer: { display: 'flex', justifyContent: 'center', gap: '16px' },
   link: {
     textDecoration: 'none',
     color: 'inherit',

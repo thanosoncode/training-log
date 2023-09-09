@@ -1,5 +1,5 @@
 import { CalendarMonth, FitnessCenter, Insights } from '@mui/icons-material';
-import { Box, Button, IconButton, Menu, MenuItem, Typography } from '@mui/material';
+import { Box, Button, Divider, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useStyles } from './Navbar.styles';
@@ -8,6 +8,7 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { useState } from 'react';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Add } from '@mui/icons-material';
+import { useAppState } from '../../context/AppContext';
 
 interface NavbarProps {
   mode: 'light' | 'dark';
@@ -17,7 +18,7 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ handleThemeMode, mode }) => {
   const { classes, cx } = useStyles();
   const { pathname } = useLocation();
-
+  const { user } = useAppState();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
@@ -91,7 +92,7 @@ const Navbar: React.FC<NavbarProps> = ({ handleThemeMode, mode }) => {
           )}
           <Box>
             <IconButton className={classes.userIcon} onClick={handleUserMenuClick}>
-              <AccountCircleIcon />
+              {user?.email ? <Typography className={classes.userLetter}>{user?.email.slice(0, 1)}</Typography> : <AccountCircleIcon />}
             </IconButton>
             <Menu
               id="user-menu"
@@ -103,6 +104,8 @@ const Navbar: React.FC<NavbarProps> = ({ handleThemeMode, mode }) => {
               MenuListProps={{
                 'aria-labelledby': 'user-menu'
               }}>
+              <Typography className={classes.userEmail}>{user?.email}</Typography>
+              <Divider />
               <MenuItem>
                 <IconButton onClick={handleThemeMode} className={classes.modeButton}>
                   {mode === 'light' ? (

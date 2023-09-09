@@ -7,7 +7,7 @@ export const useStyles = makeStyles()(() => ({
     alignItems: 'center',
     flexDirection: 'column',
     gap: '32px',
-    marginTop: '64px'
+    marginTop: '24px'
   },
   container: {
     display: 'flex',
@@ -15,6 +15,7 @@ export const useStyles = makeStyles()(() => ({
     alignItems: 'center',
     gap: '60px'
   },
+  mobileContainer: { flexDirection: 'column-reverse' },
   date: { marginBottom: 2 },
   details: {
     display: 'flex',

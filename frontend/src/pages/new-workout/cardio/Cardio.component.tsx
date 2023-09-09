@@ -7,11 +7,13 @@ import { Backdrop, Button, CircularProgress, SelectChangeEvent, TextField, Typog
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postCardio } from '../../../api/cardio';
 import { useAppState } from '../../../context/AppContext';
+import { useNavigate } from 'react-router-dom';
 
 const Cardio = () => {
   const { classes } = useStyles();
   const queryClient = useQueryClient();
   const { user } = useAppState();
+  const navigate = useNavigate();
   const [cardioLabel, setCardioLabel] = useState('');
   const [exercise, setExercise] = useState({ distance: '', minutes: '' });
   const readyToSave = cardioLabel && exercise.distance && exercise.minutes;
@@ -28,6 +30,7 @@ const Cardio = () => {
         queryClient.invalidateQueries({ queryKey: ['cardio'] });
         setExercise({ distance: '', minutes: '' });
         setCardioLabel('');
+        navigate('/workouts/cardio');
       }
     }
   );
