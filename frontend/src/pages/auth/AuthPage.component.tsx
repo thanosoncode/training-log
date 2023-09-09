@@ -60,6 +60,6 @@ const AuthPage = () => {
 export default AuthPage;
 
 const useStyles = makeStyles()((theme: Theme) => ({
-  root: { display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'center', marginTop: '120px' },
+  root: { display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'center', marginTop: '128px' },
   button: { fontSize: 18, border: `1px solid ${theme.palette.primary.main}`, padding: theme.spacing(1, 4) }
 }));
