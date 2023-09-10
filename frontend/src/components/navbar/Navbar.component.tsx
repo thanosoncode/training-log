@@ -54,19 +54,49 @@ const Navbar: React.FC<NavbarProps> = ({ handleThemeMode, mode }) => {
   };
 
   const mobileLinks = [
-    { name: 'Calendar', to: '/' },
-    { name: 'Workout', to: '/workouts/strength' },
-    { name: 'Progress', to: '/progress' },
-    { name: 'New', to: '/new-workout' }
+    { name: 'Calendar', to: '/', icon: <CalendarMonth fontSize="small" /> },
+    { name: 'Workout', to: '/workouts/strength', icon: <FitnessCenter fontSize="small" /> },
+    { name: 'Progress', to: '/progress', icon: <Insights fontSize="small" /> }
   ];
 
   return (
     <Box className={cx({ [classes.navbarRoot]: true, [classes.navbarRootMobile]: mobileView })}>
       <Box className={cx({ [classes.navbarContainer]: true, [classes.navbarContainerMobile]: mobileView })}>
         <Box className={classes.leftSide}>
-          <Link to="/" className={classes.logo}>
+          <Link to="/" className={cx({ [classes.logo]: true, [classes.logoHide]: mobileView })}>
             Training log
           </Link>
+          <Box className={cx({ [classes.mobileMenuButton]: true, [classes.mobileMenuButtonShow]: mobileView })}>
+            <IconButton onClick={handleMobileMenuClick}>
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="mobile-menu"
+              anchorEl={mobileMenuAnchorEl}
+              open={isMobileMenuOpen}
+              onClose={handleMobileMenuClose}
+              transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+              anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+              MenuListProps={{
+                'aria-labelledby': 'mobile-menu'
+              }}>
+              {mobileLinks.map((link) => (
+                <MenuItem key={link.name}>
+                  <NavLink
+                    to={link.to}
+                    className={cx({
+                      [classes.linkMobile]: true,
+                      [classes.linkMobileActive]: pathname === link.to
+                    })}>
+                    <Box className={classes.mobileLinkContainer}>
+                      <span>{link.icon}</span>
+                      <span> {link.name}</span>
+                    </Box>
+                  </NavLink>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
           <Box className={cx({ [classes.links]: true, [classes.linksHide]: mobileView })}>
             <NavLink
               to="/"
@@ -104,37 +134,9 @@ const Navbar: React.FC<NavbarProps> = ({ handleThemeMode, mode }) => {
           </Box>
         </Box>
         <Box className={cx({ [classes.rightSide]: true, [classes.rightSideMobile]: mobileView })}>
-          <Box className={cx({ [classes.mobileMenuButton]: true, [classes.mobileMenuButtonShow]: mobileView })}>
-            <IconButton onClick={handleMobileMenuClick}>
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="mobile-menu"
-              anchorEl={mobileMenuAnchorEl}
-              open={isMobileMenuOpen}
-              onClose={handleMobileMenuClose}
-              transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-              anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-              MenuListProps={{
-                'aria-labelledby': 'mobile-menu'
-              }}>
-              {mobileLinks.map((link) => (
-                <MenuItem key={link.name}>
-                  <NavLink
-                    to={link.to}
-                    className={cx({
-                      [classes.linkMobile]: true,
-                      [classes.linkMobileActive]: pathname === link.to
-                    })}>
-                    {link.name}
-                  </NavLink>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
           {pathname === '/new-workout' ? null : (
             <NavLink to="/new-workout">
-              <Button variant="contained" className={cx({ [classes.newWorkoutButton]: true, [classes.newWorkoutButtonHide]: mobileView })} endIcon={<Add />}>
+              <Button variant="contained" className={cx({ [classes.newWorkoutButton]: true })} endIcon={<Add />}>
                 New
               </Button>
             </NavLink>

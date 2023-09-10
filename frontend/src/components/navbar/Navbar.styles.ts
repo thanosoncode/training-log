@@ -26,6 +26,7 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     fontSize: '24px',
     lineHeight: 'initial'
   },
+  logoHide: { display: 'none' },
   links: {
     display: 'flex',
     gap: 20,
@@ -47,7 +48,7 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     height: 'min-content',
     fontWeight: 'bolder'
   },
-  linkMobile: { textDecoration: 'none', color: theme.palette.text.primary, padding: '0px 10px', fontWeight: 'bold' },
+  linkMobile: { textDecoration: 'none', color: theme.palette.text.primary, fontWeight: 'bold' },
   linkMobileActive: { color: theme.palette.primary.main },
   active: {
     borderBottom: `1px solid ${theme.palette.primary.main}`,
@@ -55,7 +56,7 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     transition: '0.2s ease-out'
   },
   rightSide: { display: 'flex', gap: '24px', alignItems: 'flex-start' },
-  rightSideMobile: { alignItems: 'center', gap: '8px' },
+  rightSideMobile: { alignItems: 'center' },
   newWorkoutButton: { height: 'min-content', marginLeft: 'auto', padding: '2px 12px', textTransform: 'capitalize', fontWeight: 'bolder' },
   newWorkoutButtonHide: { display: 'none' },
   userIcon: {
@@ -91,5 +92,11 @@ export const useStyles = makeStyles()((theme: Theme) => ({
   mobileMenuButton: {
     display: 'none'
   },
-  mobileMenuButtonShow: { display: 'block' }
+  mobileMenuButtonShow: { display: 'block' },
+  mobileLinkContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    gap: '10px'
+  }
 }));

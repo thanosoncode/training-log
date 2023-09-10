@@ -39,11 +39,10 @@ const CardioList = () => {
   const [orderBy, setOrderBy] = useState<OrderBy>('date');
   const [showCurrentMonth, setShowCurrentMonth] = useState(false);
   const mobileView = useMediaQuery('(max-width:800px)');
-  console.log('mobile view', mobileView);
 
   const handleLabelChange = (event: SelectChangeEvent<string>) => setSelectedLabel(event.target.value);
 
-  const { data: cardio, isLoading } = useQuery(['cardio'], () => getAllCardio({ month, year, userId: user?.id ?? '' }), {
+  const { data: cardio, isLoading } = useQuery(['cardio'], () => getAllCardio({ month: 0, year: 0, userId: user?.id ?? '' }), {
     refetchOnWindowFocus: false,
     staleTime: LONG_CACHE
   });
