@@ -6,7 +6,20 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import { LONG_CACHE, cardioLabels } from '../../../utils/constants';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { deleteCardio, getAllCardio } from '../../../api/cardio';
-import { Backdrop, Button, CircularProgress, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import {
+  Backdrop,
+  Button,
+  CircularProgress,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+  useMediaQuery
+} from '@mui/material';
 import { format, parseISO } from 'date-fns';
 import ConfirmationDialog from '../../../components/confirmationDialog/ConfirmationDialog.component';
 import DeleteForever from '@mui/icons-material/DeleteForever';
@@ -25,6 +38,8 @@ const CardioList = () => {
   const [orderDirection, setOrderDirection] = useState<'asc' | 'desc'>('desc');
   const [orderBy, setOrderBy] = useState<OrderBy>('date');
   const [showCurrentMonth, setShowCurrentMonth] = useState(false);
+  const mobileView = useMediaQuery('(max-width:800px)');
+  console.log('mobile view', mobileView);
 
   const handleLabelChange = (event: SelectChangeEvent<string>) => setSelectedLabel(event.target.value);
 
@@ -131,27 +146,27 @@ const CardioList = () => {
           <Table size="small">
             <TableHead className={classes.head}>
               <TableRow>
-                <TableCell className={classes.headCell} onClick={() => handleTypeClick('name')}>
+                <TableCell className={cx({ [classes.cellMobile]: mobileView })} onClick={() => handleTypeClick('name')}>
                   <Button variant="text" endIcon={<ImportExportIcon />} className={classes.headCellButton}>
                     Type
                   </Button>
                 </TableCell>
-                <TableCell className={classes.headCell} onClick={() => handleTypeClick('date')}>
+                <TableCell className={cx({ [classes.cellMobile]: mobileView })} onClick={() => handleTypeClick('date')}>
                   <Button variant="text" endIcon={<ImportExportIcon />} className={classes.headCellButton}>
                     Date
                   </Button>
                 </TableCell>
-                <TableCell className={classes.headCell} onClick={() => handleTypeClick('distance')}>
+                <TableCell className={cx({ [classes.cellMobile]: mobileView })} onClick={() => handleTypeClick('distance')}>
                   <Button variant="text" endIcon={<ImportExportIcon />} className={classes.headCellButton}>
                     Distance &#40;m&#41;
                   </Button>
                 </TableCell>
-                <TableCell className={classes.headCell} onClick={() => handleTypeClick('time')}>
+                <TableCell className={cx({ [classes.cellMobile]: mobileView })} onClick={() => handleTypeClick('time')}>
                   <Button variant="text" endIcon={<ImportExportIcon />} className={classes.headCellButton}>
                     Time &#40;m&#41;
                   </Button>
                 </TableCell>
-                <TableCell className={classes.headCell}>
+                <TableCell className={cx({ [classes.cellMobile]: mobileView })}>
                   <Button variant="text" className={classes.headCellButton}>
                     Remove
                   </Button>
@@ -162,13 +177,19 @@ const CardioList = () => {
               {cardioToShow.map((c) => {
                 return (
                   <TableRow key={c.id} className={classes.row}>
-                    <TableCell className={classes.cellName} sx={{ fontSize: '16px' }}>
+                    <TableCell sx={{ fontSize: '16px' }} className={cx({ [classes.cellName]: true, [classes.cellMobile]: mobileView })}>
                       {c.exercise.name}
                     </TableCell>
-                    <TableCell sx={{ textAlign: 'center', fontSize: '15px' }}>{c.createdAt && createDate(c.createdAt)}</TableCell>
-                    <TableCell sx={{ textAlign: 'center', fontSize: '16px' }}>{c.exercise.distance}</TableCell>
-                    <TableCell sx={{ textAlign: 'center', fontSize: '16px' }}>{c.exercise.minutes}</TableCell>
-                    <TableCell sx={{ textAlign: 'center', fontSize: '16px' }}>
+                    <TableCell sx={{ textAlign: 'center', fontSize: '15px' }} className={cx({ [classes.cellMobile]: mobileView })}>
+                      {c.createdAt && createDate(c.createdAt)}
+                    </TableCell>
+                    <TableCell sx={{ textAlign: 'center', fontSize: '16px' }} className={cx({ [classes.cellMobile]: mobileView })}>
+                      {c.exercise.distance}
+                    </TableCell>
+                    <TableCell sx={{ textAlign: 'center', fontSize: '16px' }} className={cx({ [classes.cellMobile]: mobileView })}>
+                      {c.exercise.minutes}
+                    </TableCell>
+                    <TableCell sx={{ textAlign: 'center', fontSize: '16px' }} className={cx({ [classes.cellMobile]: mobileView })}>
                       <DeleteForever fontSize="small" onClick={() => c.id && handleDelete(c.id)} className={classes.deleteIcon} />
                     </TableCell>
                   </TableRow>

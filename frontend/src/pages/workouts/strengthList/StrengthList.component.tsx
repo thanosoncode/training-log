@@ -1,6 +1,6 @@
 import { Add } from '@mui/icons-material';
 import DeleteForever from '@mui/icons-material/DeleteForever';
-import { Box, Button, IconButton, SelectChangeEvent, Typography } from '@mui/material';
+import { Box, Button, IconButton, SelectChangeEvent, Typography, useMediaQuery } from '@mui/material';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -23,6 +23,7 @@ const StrengthList = () => {
   const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = useState(false);
   const [workoutToDelete, setWorkoutToDelete] = useState('');
   const [showCurrentMonth, setShowCurrentMonth] = useState(false);
+  const mobileView = useMediaQuery('(max-width:800px)');
 
   const handleLabelChange = (event: SelectChangeEvent<string>) => setSelectedLabel(event.target.value);
 

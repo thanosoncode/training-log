@@ -26,8 +26,6 @@ const Navbar: React.FC<NavbarProps> = ({ handleThemeMode, mode }) => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  console.log('mobileview', mobileView);
-
   const handleUserMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setUserMenuAnchorEl(event.currentTarget);
     setIsUserMenuOpen(true);

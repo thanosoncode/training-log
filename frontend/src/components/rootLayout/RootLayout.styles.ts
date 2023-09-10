@@ -4,6 +4,7 @@ import theme from '../../theme';
 export const useStyles = makeStyles()(() => ({
   container: { minHeight: '100vh', overflowX: 'hidden', marginRight: 'calc(-1 * (100vw - 100%))', paddingBottom: theme.spacing(8) },
   outletContainer: { maxWidth: 1000, margin: '0 auto', padding: theme.spacing(6, 3, 0, 3) },
+  outletContainerMobile: { padding: theme.spacing(6, 1, 0, 1) },
   mobileNavbarContainer: {
     position: 'fixed',
     bottom: 0,

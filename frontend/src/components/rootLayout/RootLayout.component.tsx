@@ -1,4 +1,4 @@
-import { Box, CircularProgress } from '@mui/material';
+import { Box, CircularProgress, useMediaQuery } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 import Navbar from '../navbar/Navbar.component';
 import { useStyles } from './RootLayout.styles';
@@ -14,9 +14,10 @@ interface RootLayoutProps {
 }
 
 const RootLayout: React.FC<RootLayoutProps> = ({ mode, handleThemeMode }) => {
-  const { classes } = useStyles();
+  const { classes, cx } = useStyles();
   const { user } = useAppState();
   const dispatch = useAppDispatch();
+  const mobileView = useMediaQuery('(max-width:800px)');
 
   const token = document.cookie.split('authToken=')[1];
 
@@ -28,7 +29,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ mode, handleThemeMode }) => {
   const app = (
     <Box className={classes.container}>
       <Navbar mode={mode} handleThemeMode={handleThemeMode} />
-      <Box className={classes.outletContainer}>
+      <Box className={cx({ [classes.outletContainer]: true, [classes.outletContainerMobile]: mobileView })}>
         <Outlet />
       </Box>
     </Box>

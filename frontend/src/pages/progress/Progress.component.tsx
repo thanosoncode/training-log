@@ -18,13 +18,16 @@ const Progress = () => {
   const queryClient = useQueryClient();
   const { user } = useAppState();
   const strengthQueryCache = queryClient.getQueryData(['strength']) as StrengthWorkoutServer[] | undefined;
-  const [selectedExercise, setSelectedExercise] = useState(strengthQueryCache ? strengthQueryCache[0].exercises[0].name : '');
+  const strengthExersiceCache = strengthQueryCache && strengthQueryCache[0] && strengthQueryCache[0].exercises[0];
+  const [selectedExercise, setSelectedExercise] = useState(strengthExersiceCache ? strengthQueryCache[0].exercises[0].name : '');
 
   const { data: workouts } = useQuery(['strength'], () => getAllStrength({ month: 0, year: 0, userId: user?.id ?? '' }), {
     staleTime: LONG_CACHE,
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
-      setSelectedExercise(data[0].exercises[0].name);
+      if (data.length > 0) {
+        setSelectedExercise(data[0].exercises[0].name);
+      }
     }
   });
 
