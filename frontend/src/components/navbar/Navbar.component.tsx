@@ -1,5 +1,5 @@
 import { CalendarMonth, FitnessCenter, Insights } from '@mui/icons-material';
-import { Box, Button, Divider, IconButton, Menu, MenuItem, Typography } from '@mui/material';
+import { Box, Button, Divider, IconButton, Menu, MenuItem, Typography, useMediaQuery } from '@mui/material';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useStyles } from './Navbar.styles';
@@ -9,6 +9,7 @@ import { useState } from 'react';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Add } from '@mui/icons-material';
 import { useAppState } from '../../context/AppContext';
+import MenuIcon from '@mui/icons-material/Menu';
 
 interface NavbarProps {
   mode: 'light' | 'dark';
@@ -19,16 +20,31 @@ const Navbar: React.FC<NavbarProps> = ({ handleThemeMode, mode }) => {
   const { classes, cx } = useStyles();
   const { pathname } = useLocation();
   const { user } = useAppState();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const mobileView = useMediaQuery('(max-width:800px)');
+  const [userMenuAnchorEl, setUserMenuAnchorEl] = useState<null | HTMLElement>(null);
+  const [mobileMenuAnchorEl, setMobileMenuAnchorEl] = useState<null | HTMLElement>(null);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  console.log('mobileview', mobileView);
 
   const handleUserMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
+    setUserMenuAnchorEl(event.currentTarget);
     setIsUserMenuOpen(true);
   };
   const handleCloseUserMenu = () => {
-    setAnchorEl(null);
+    setUserMenuAnchorEl(null);
     setIsUserMenuOpen(false);
+  };
+
+  const handleMobileMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setMobileMenuAnchorEl(event.currentTarget);
+    setIsMobileMenuOpen(true);
+  };
+
+  const handleMobileMenuClose = () => {
+    setMobileMenuAnchorEl(null);
+    setIsMobileMenuOpen(false);
   };
 
   const handleLogout = () => {
@@ -39,14 +55,21 @@ const Navbar: React.FC<NavbarProps> = ({ handleThemeMode, mode }) => {
     }
   };
 
+  const mobileLinks = [
+    { name: 'Calendar', to: '/' },
+    { name: 'Workout', to: '/workouts/strength' },
+    { name: 'Progress', to: '/progress' },
+    { name: 'New', to: '/new-workout' }
+  ];
+
   return (
-    <Box className={classes.navbarRoot}>
-      <Box className={classes.navbarContainer}>
+    <Box className={cx({ [classes.navbarRoot]: true, [classes.navbarRootMobile]: mobileView })}>
+      <Box className={cx({ [classes.navbarContainer]: true, [classes.navbarContainerMobile]: mobileView })}>
         <Box className={classes.leftSide}>
           <Link to="/" className={classes.logo}>
             Training log
           </Link>
-          <Box className={classes.links}>
+          <Box className={cx({ [classes.links]: true, [classes.linksHide]: mobileView })}>
             <NavLink
               to="/"
               className={cx({
@@ -82,10 +105,38 @@ const Navbar: React.FC<NavbarProps> = ({ handleThemeMode, mode }) => {
             </NavLink>
           </Box>
         </Box>
-        <Box className={classes.rightSide}>
+        <Box className={cx({ [classes.rightSide]: true, [classes.rightSideMobile]: mobileView })}>
+          <Box className={cx({ [classes.mobileMenuButton]: true, [classes.mobileMenuButtonShow]: mobileView })}>
+            <IconButton onClick={handleMobileMenuClick}>
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="mobile-menu"
+              anchorEl={mobileMenuAnchorEl}
+              open={isMobileMenuOpen}
+              onClose={handleMobileMenuClose}
+              transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+              anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+              MenuListProps={{
+                'aria-labelledby': 'mobile-menu'
+              }}>
+              {mobileLinks.map((link) => (
+                <MenuItem key={link.name}>
+                  <NavLink
+                    to={link.to}
+                    className={cx({
+                      [classes.linkMobile]: true,
+                      [classes.linkMobileActive]: pathname === link.to
+                    })}>
+                    {link.name}
+                  </NavLink>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
           {pathname === '/new-workout' ? null : (
             <NavLink to="/new-workout">
-              <Button variant="contained" className={classes.newWorkoutButton} endIcon={<Add />}>
+              <Button variant="contained" className={cx({ [classes.newWorkoutButton]: true, [classes.newWorkoutButtonHide]: mobileView })} endIcon={<Add />}>
                 New
               </Button>
             </NavLink>
@@ -96,7 +147,7 @@ const Navbar: React.FC<NavbarProps> = ({ handleThemeMode, mode }) => {
             </IconButton>
             <Menu
               id="user-menu"
-              anchorEl={anchorEl}
+              anchorEl={userMenuAnchorEl}
               open={isUserMenuOpen}
               onClose={handleCloseUserMenu}
               transformOrigin={{ horizontal: 'right', vertical: 'top' }}
