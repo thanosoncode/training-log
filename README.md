@@ -1,5 +1,6 @@
 # Training-log
 A MERN app to keep track and check the progress of your strength and cardio sessions.
+[live version](https://traininglog.netlify.app/)
 
 ## Backend
 <ul>
