@@ -1,5 +1,5 @@
 # Training-log
-A MERN app to track and analyse your strength and cardio sessions.
+A MERN app to keep track and check the progress of your strength and cardio sessions.
 
 ## Backend
 <ul>
