@@ -22,5 +22,5 @@ export const useStyles = makeStyles()(() => ({
     flexWrap: 'wrap',
     gap: '36px'
   },
-  graphTitle: { marginBottom: theme.spacing(2) }
+  graphTitle: { marginBottom: theme.spacing(2), fontWeight: 'bold' }
 }));

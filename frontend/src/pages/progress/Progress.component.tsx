@@ -82,13 +82,13 @@ const Progress = () => {
       <Box className={classes.graphsContainer}>
         <Box>
           <Typography variant="subtitle1" className={classes.graphTitle}>
-            Volume per exercise
+            Total Volume used
           </Typography>
           <BarChart data={volumePerExercise} />
         </Box>
         <Box>
           <Typography variant="subtitle1" className={classes.graphTitle}>
-            Top weight
+            Top weight used
           </Typography>
           <LineChart data={topWeigtPerExercise} />
         </Box>

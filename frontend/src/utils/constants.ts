@@ -3,6 +3,7 @@ import { CardioLabel, StrengthExercise, StrengthLabel } from './models';
 export const LONG_CACHE = 3600000;
 export const STRENGTH_COLOR = '#7AC0F7';
 export const CARDIO_COLOR = '#a9d6a9';
+export const STRENGTH_WORKOUTS_TITLE_WIDTH = 808;
 
 export const strengthLabels: StrengthLabel[] = ['Push', 'Pull', 'Upper Body', 'Lower Body', 'Shoulders', 'Calisthenics', 'Arms'];
 

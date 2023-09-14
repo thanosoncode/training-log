@@ -1,17 +1,19 @@
 import { Theme } from '@mui/material';
 import { makeStyles } from 'tss-react/mui';
+import { STRENGTH_WORKOUTS_TITLE_WIDTH } from '../../../utils/constants';
 
 export const useStyles = makeStyles()((theme: Theme) => ({
-  root: { overflowX: 'hidden' },
+  root: {},
   newWorkoutButton: { height: 'min-content', marginLeft: 'auto' },
   titleContainer: {
     display: 'flex',
     justifyContent: 'cetner',
     alignItems: 'center',
     gap: '16px',
-    margin: theme.spacing(3, 0, 4, 0),
+    margin: theme.spacing(3, 'auto', 8, 'auto'),
     height: 40,
-    padding: theme.spacing(0, 1)
+    padding: theme.spacing(0, 1),
+    width: STRENGTH_WORKOUTS_TITLE_WIDTH
   },
   title: {
     margin: theme.spacing(2, 0)

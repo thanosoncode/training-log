@@ -46,7 +46,7 @@ const appReducer = (state: AppState, action: Action) => {
     case 'SET_ALL_CARDIO':
       return { ...state, allCardio: action.payload };
     case 'SET_ALL_STRENGTH':
-      return { ...state, allStrength: action.payload };
+      return { ...state, allStrength: [...state.allStrength, ...action.payload] };
     case 'SET_SELECTED_STRENGTH_ID':
       return { ...state, selectedStrengthId: action.payload };
     case 'SET_SELECTED_CARDIO_ID':
