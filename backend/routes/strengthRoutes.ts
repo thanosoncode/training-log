@@ -5,11 +5,13 @@ import {
   getSingleStrength,
   updateStrength,
   deleteStrength,
+  countAllStrength,
 } from "../controllers/strengthControllers";
 
 const strengthRouter = express.Router();
 
 strengthRouter.route("/").post(getAllStrength);
+strengthRouter.route("/").get(countAllStrength);
 strengthRouter.route("/new").post(createStrength);
 strengthRouter
   .route("/:id")
