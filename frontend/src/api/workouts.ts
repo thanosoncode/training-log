@@ -11,12 +11,15 @@ export const getAllStrength = async ({
   month: number;
   year: number;
   userId: string;
-  skip: number;
-  take: number;
+  skip?: number;
+  take?: number;
 }): Promise<StrengthWorkoutServer[]> => {
-  const response = await axios.post(`/api/strength?month=${month.toString()}&year=${year.toString()}&skip=${skip.toString()}&take=${take.toString()}`, {
-    userId
-  });
+  const response = await axios.post(
+    `/api/strength?month=${month.toString()}&year=${year.toString()}&skip=${skip ? skip.toString() : ''}&take=${take ? take.toString() : ''}`,
+    {
+      userId
+    }
+  );
   const data = await response.data;
   return data;
 };
