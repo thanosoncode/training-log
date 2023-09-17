@@ -1,11 +1,11 @@
 import { FormControl, InputLabel, Select, MenuItem, SelectChangeEvent, Divider, Theme } from '@mui/material';
-import { MONTHS } from '../../../utils/constants';
-import { StrengthWorkoutServer } from '../../../utils/models';
+import { MONTHS } from '../../utils/constants';
+import { CardioWorkoutFromServer, StrengthWorkoutServer } from '../../utils/models';
 import { makeStyles } from 'tss-react/mui';
 
 interface SelectByMonthProps {
   setSelectedMonth: React.Dispatch<React.SetStateAction<string>>;
-  workouts: StrengthWorkoutServer[] | undefined;
+  workouts: StrengthWorkoutServer[] | CardioWorkoutFromServer[] | undefined;
   selectedMonth: string;
 }
 

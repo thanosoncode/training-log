@@ -25,6 +25,7 @@ import ConfirmationDialog from '../../../components/confirmationDialog/Confirmat
 import DeleteForever from '@mui/icons-material/DeleteForever';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
 import { useAppState } from '../../../context/AppContext';
+import SelectByMonth from '../../../components/selectByMonth/SelectByMonth.component';
 
 type OrderBy = 'name' | 'time' | 'distance' | 'date';
 
@@ -37,7 +38,7 @@ const CardioList = () => {
   const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = useState(false);
   const [orderDirection, setOrderDirection] = useState<'asc' | 'desc'>('desc');
   const [orderBy, setOrderBy] = useState<OrderBy>('date');
-  const [showCurrentMonth, setShowCurrentMonth] = useState(false);
+  const [selectedMonth, setSelectedMonth] = useState('');
   const mobileView = useMediaQuery('(max-width:800px)');
 
   const handleLabelChange = (event: SelectChangeEvent<string>) => setSelectedLabel(event.target.value);
@@ -59,9 +60,11 @@ const CardioList = () => {
     setIsConfirmationDialogOpen(false);
   };
 
+  const filterdByMonth = selectedMonth ? cardio && cardio.filter((c) => new Date(c.createdAt).getMonth() + 1 === Number(selectedMonth)) : cardio;
+
   const cardioMap =
-    cardio &&
-    cardio.reduce((acc: { [key: string]: number }, current) => {
+    filterdByMonth &&
+    filterdByMonth.reduce((acc: { [key: string]: number }, current) => {
       if (acc[current.exercise.name]) {
         acc[current.exercise.name]++;
       } else {
@@ -115,7 +118,7 @@ const CardioList = () => {
     return [];
   };
 
-  const cardioToShow = showCurrentMonth ? sortedCardio().filter((c) => new Date(c.createdAt).getMonth() + 1 !== new Date().getMonth()) : sortedCardio();
+  const cardioToShow = selectedMonth ? sortedCardio().filter((w) => new Date(w.createdAt).getMonth() + 1 === Number(selectedMonth)) : sortedCardio();
 
   const totalDistance = cardioToShow.reduce((acc, curr) => {
     return (acc += Number(curr.exercise.distance));
@@ -131,15 +134,10 @@ const CardioList = () => {
     <div>
       <Box className={classes.titleContainer}>
         <Box className={classes.buttonsContainer}>
-          <Button
-            onClick={() => setShowCurrentMonth(!showCurrentMonth)}
-            className={cx({ [classes.monthButton]: true, [classes.monthButtonActive]: showCurrentMonth })}>
-            Show only this month
-          </Button>
+          <SelectByMonth setSelectedMonth={setSelectedMonth} workouts={cardio} selectedMonth={selectedMonth} />
           <FIlterBy labels={cardioLabels} workoutsMap={cardioMap} selectedLabel={selectedLabel} handleLabelChange={handleLabelChange} />
         </Box>
       </Box>
-
       {cardioToShow && cardioToShow.length > 0 ? (
         <TableContainer component={Paper} sx={{ height: 'min-content', border: '1px solid #464646' }}>
           <Table size="small">

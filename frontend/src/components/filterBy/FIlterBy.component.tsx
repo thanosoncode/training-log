@@ -12,7 +12,6 @@ interface FilterByProps {
   handleLabelChange: (event: SelectChangeEvent<string>) => void;
   labels: string[];
   workoutsMap: { [key: string]: number } | undefined;
-  selectedMonth?: string;
 }
 
 const FIlterBy: React.FC<FilterByProps> = ({ handleLabelChange, selectedLabel, labels, workoutsMap }) => {

@@ -13,7 +13,7 @@ import { LONG_CACHE, strengthLabels } from '../../../utils/constants';
 import { Workout } from '../../../utils/models';
 import { useStyles } from './StrengthList.styles';
 import { useAppDispatch, useAppState } from '../../../context/AppContext';
-import SelectByMonth from './SelectByMonth.component';
+import SelectByMonth from '../../../components/selectByMonth/SelectByMonth.component';
 
 const StrengthList = () => {
   const { classes } = useStyles();
@@ -82,13 +82,7 @@ const StrengthList = () => {
         <Box className={classes.titleContainer}>
           <Box className={classes.buttonsContainer}>
             <SelectByMonth setSelectedMonth={setSelectedMonth} workouts={workouts} selectedMonth={selectedMonth} />
-            <FIlterBy
-              selectedLabel={selectedLabel}
-              labels={strengthLabels}
-              workoutsMap={strengthMap}
-              handleLabelChange={handleLabelChange}
-              selectedMonth={selectedMonth}
-            />
+            <FIlterBy selectedLabel={selectedLabel} labels={strengthLabels} workoutsMap={strengthMap} handleLabelChange={handleLabelChange} />
           </Box>
         </Box>
         <Box className={classes.workoutsContainer}>
