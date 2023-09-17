@@ -41,17 +41,17 @@ export const strengthExercises: StrengthExercise[] = [
   { name: 'Ghd', type: ['Lower Body'] }
 ];
 
-export const Months = [
-  { name: 'January', value: 0 },
-  { name: 'February', value: 1 },
-  { name: 'March', value: 2 },
-  { name: 'April', value: 3 },
-  { name: 'May', value: 4 },
-  { name: 'June', value: 5 },
-  { name: 'July', value: 6 },
-  { name: 'August', value: 7 },
-  { name: 'Semptember', value: 8 },
-  { name: 'October', value: 9 },
-  { name: 'November', value: 10 },
-  { name: 'December', value: 11 }
+export const MONTHS = [
+  { name: 'January', value: 1 },
+  { name: 'February', value: 2 },
+  { name: 'March', value: 3 },
+  { name: 'April', value: 4 },
+  { name: 'May', value: 5 },
+  { name: 'June', value: 6 },
+  { name: 'July', value: 7 },
+  { name: 'August', value: 8 },
+  { name: 'Semptember', value: 9 },
+  { name: 'October', value: 10 },
+  { name: 'November', value: 11 },
+  { name: 'December', value: 12 }
 ];

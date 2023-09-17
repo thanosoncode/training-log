@@ -1,25 +1,10 @@
 import { StrengthWorkoutServer, Workout } from '../utils/models';
 import axios from './axios';
 
-export const getAllStrength = async ({
-  month,
-  year,
-  userId,
-  skip,
-  take
-}: {
-  month: number;
-  year: number;
-  userId: string;
-  skip?: number;
-  take?: number;
-}): Promise<StrengthWorkoutServer[]> => {
-  const response = await axios.post(
-    `/api/strength?month=${month.toString()}&year=${year.toString()}&skip=${skip ? skip.toString() : ''}&take=${take ? take.toString() : ''}`,
-    {
-      userId
-    }
-  );
+export const getAllStrength = async ({ month, year, userId }: { month: number; year: number; userId: string }): Promise<StrengthWorkoutServer[]> => {
+  const response = await axios.post(`/api/strength?month=${month.toString()}&year=${year.toString()}`, {
+    userId
+  });
   const data = await response.data;
   return data;
 };

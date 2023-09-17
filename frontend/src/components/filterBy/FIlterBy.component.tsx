@@ -12,6 +12,7 @@ interface FilterByProps {
   handleLabelChange: (event: SelectChangeEvent<string>) => void;
   labels: string[];
   workoutsMap: { [key: string]: number } | undefined;
+  selectedMonth?: string;
 }
 
 const FIlterBy: React.FC<FilterByProps> = ({ handleLabelChange, selectedLabel, labels, workoutsMap }) => {
@@ -21,7 +22,7 @@ const FIlterBy: React.FC<FilterByProps> = ({ handleLabelChange, selectedLabel, l
 
   return (
     <FormControl variant="standard" sx={{ minWidth: 120 }}>
-      <InputLabel id="filter-by-label">Filter by type</InputLabel>
+      <InputLabel id="filter-by-label">Type</InputLabel>
       <Select id="filter-by-label" label="Filter by" labelId="filter-by-label" value={selectedLabel} onChange={handleLabelChange} className={classes.select}>
         {filteredLabels &&
           filteredLabels.map((label) => {

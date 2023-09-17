@@ -44,6 +44,7 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     textDecoration: 'none',
     color: theme.palette.text.primary,
     borderBottom: `1px solid transparent`,
+    transition: '0.5s ease',
     padding: '0px 4px 16px 4px',
     height: 'min-content',
     fontWeight: 'bolder'
