@@ -130,11 +130,13 @@ const CardioList = () => {
 
   const averageKmH = totalDistance / 1000 / (totalTime / 60);
 
+  const workoutsPerMonth = cardio && cardio.map((c) => new Date(c.createdAt).getMonth());
+
   return (
     <div>
       <Box className={classes.titleContainer}>
         <Box className={cx({ [classes.buttonsContainer]: true, [classes.buttonsContainerMobile]: mobileView })}>
-          <SelectByMonth setSelectedMonth={setSelectedMonth} workouts={cardio} selectedMonth={selectedMonth} />
+          <SelectByMonth setSelectedMonth={setSelectedMonth} workoutsPerMonth={workoutsPerMonth} selectedMonth={selectedMonth} />
           <FIlterBy labels={cardioLabels} workoutsMap={cardioMap} selectedLabel={selectedLabel} handleLabelChange={handleLabelChange} />
         </Box>
       </Box>

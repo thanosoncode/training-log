@@ -5,11 +5,11 @@ import { makeStyles } from 'tss-react/mui';
 
 interface SelectByMonthProps {
   setSelectedMonth: React.Dispatch<React.SetStateAction<string>>;
-  workouts: StrengthWorkoutServer[] | CardioWorkoutFromServer[] | undefined;
+  workoutsPerMonth: number[] | undefined;
   selectedMonth: string;
 }
 
-const SelectByMonth: React.FC<SelectByMonthProps> = ({ setSelectedMonth, selectedMonth, workouts }) => {
+const SelectByMonth: React.FC<SelectByMonthProps> = ({ setSelectedMonth, selectedMonth, workoutsPerMonth }) => {
   const { classes } = useStyles();
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -23,7 +23,7 @@ const SelectByMonth: React.FC<SelectByMonthProps> = ({ setSelectedMonth, selecte
       </InputLabel>
       <Select id="month" label="Month" labelId="month" value={selectedMonth} onChange={handleChange} className={classes.select}>
         {MONTHS.map((month) => {
-          const amountPerMonth = workouts ? workouts.filter((w) => new Date(w.createdAt).getMonth() + 1 === month.value).length : null;
+          const amountPerMonth = workoutsPerMonth ? workoutsPerMonth.filter((w) => w + 1 === month.value).length : null;
           return (
             <MenuItem key={month.name} value={month.value} className={classes.menuItem}>
               {month.name}

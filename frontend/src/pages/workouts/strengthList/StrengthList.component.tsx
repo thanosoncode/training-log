@@ -77,12 +77,14 @@ const StrengthList = () => {
     ? filteredByLabel && filteredByLabel.filter((w) => new Date(w.createdAt).getMonth() + 1 === Number(selectedMonth))
     : filteredByLabel;
 
+  const workoutsPerMonth = workouts && workouts.map((w) => new Date(w.createdAt).getMonth());
+
   return (
     <Box className={classes.root}>
       <>
         <Box className={cx({ [classes.titleContainer]: true, [classes.titleContainerMobile]: mobileView })}>
           <Box className={cx({ [classes.buttonsContainer]: true, [classes.buttonsContainerMobile]: mobileView })}>
-            <SelectByMonth setSelectedMonth={setSelectedMonth} workouts={workouts} selectedMonth={selectedMonth} />
+            <SelectByMonth setSelectedMonth={setSelectedMonth} workoutsPerMonth={workoutsPerMonth} selectedMonth={selectedMonth} />
             <FIlterBy selectedLabel={selectedLabel} labels={strengthLabels} workoutsMap={strengthMap} handleLabelChange={handleLabelChange} />
           </Box>
         </Box>
