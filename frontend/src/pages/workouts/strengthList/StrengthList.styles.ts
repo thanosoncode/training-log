@@ -4,16 +4,18 @@ import { STRENGTH_WORKOUTS_TITLE_WIDTH } from '../../../utils/constants';
 
 export const useStyles = makeStyles()((theme: Theme) => ({
   root: {},
-  newWorkoutButton: { height: 'min-content', marginLeft: 'auto' },
   titleContainer: {
     display: 'flex',
-    justifyContent: 'cetner',
+    justifyContent: 'center',
     alignItems: 'center',
     gap: '16px',
     margin: theme.spacing(3, 'auto', 8, 'auto'),
     height: 40,
     padding: theme.spacing(0, 1),
     width: STRENGTH_WORKOUTS_TITLE_WIDTH
+  },
+  titleContainerMobile: {
+    width: 'auto'
   },
   title: {
     margin: theme.spacing(2, 0)
@@ -45,5 +47,6 @@ export const useStyles = makeStyles()((theme: Theme) => ({
   },
   monthButton: { textTransform: 'none', color: 'inherit' },
   monthButtonActive: { color: theme.palette.primary.main },
-  buttonsContainer: { marginLeft: 'auto', display: 'flex', alignItems: 'flex-end', justifyItems: 'center', gap: '16px' }
+  buttonsContainer: { marginLeft: 'auto', display: 'flex', alignItems: 'flex-end', justifyItems: 'center', gap: '16px' },
+  buttonsContainerMobile: { alignItems: 'center', margin: '0 auto' }
 }));

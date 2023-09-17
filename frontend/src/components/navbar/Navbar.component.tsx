@@ -87,7 +87,8 @@ const Navbar: React.FC<NavbarProps> = ({ handleThemeMode, mode }) => {
                     className={cx({
                       [classes.linkMobile]: true,
                       [classes.linkMobileActive]: pathname === link.to
-                    })}>
+                    })}
+                    onClick={handleMobileMenuClose}>
                     <Box className={classes.mobileLinkContainer}>
                       <span>{link.icon}</span>
                       <span> {link.name}</span>
@@ -157,8 +158,8 @@ const Navbar: React.FC<NavbarProps> = ({ handleThemeMode, mode }) => {
               }}>
               <Typography className={classes.userEmail}>{user?.email}</Typography>
               <Divider />
-              <MenuItem>
-                <IconButton onClick={handleThemeMode} className={classes.modeButton}>
+              <MenuItem onClick={handleThemeMode}>
+                <IconButton className={classes.modeButton}>
                   {mode === 'light' ? (
                     <Box className={classes.listItemContainer}>
                       <WbSunnyIcon fontSize="small" />

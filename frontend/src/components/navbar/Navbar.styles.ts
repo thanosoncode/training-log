@@ -6,7 +6,7 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     borderBottom: '1px solid #474747',
     padding: theme.spacing(2, 3, 0, 3)
   },
-  navbarRootMobile: { paddingTop: '10px' },
+  navbarRootMobile: { padding: '10px 8px 0 8px' },
   navbarContainer: {
     display: 'flex',
     justifyContent: 'space-between',

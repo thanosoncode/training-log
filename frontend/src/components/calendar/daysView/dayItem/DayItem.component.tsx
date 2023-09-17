@@ -20,9 +20,6 @@ const DayItem: React.FC<DayItemProps> = ({ entry, handleDayClick, index }) => {
     <ClickAwayListener onClickAway={handleTooltipClose}>
       <Tooltip
         open={tooltipOpen}
-        disableFocusListener
-        disableHoverListener
-        disableTouchListener
         classes={{ tooltip: classes.tooltipContainer }}
         title={
           <div>

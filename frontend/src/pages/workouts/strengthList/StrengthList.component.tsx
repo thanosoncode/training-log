@@ -1,5 +1,5 @@
 import DeleteForever from '@mui/icons-material/DeleteForever';
-import { Box, IconButton, SelectChangeEvent, Typography } from '@mui/material';
+import { Box, IconButton, SelectChangeEvent, Typography, useMediaQuery } from '@mui/material';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -16,7 +16,7 @@ import { useAppDispatch, useAppState } from '../../../context/AppContext';
 import SelectByMonth from '../../../components/selectByMonth/SelectByMonth.component';
 
 const StrengthList = () => {
-  const { classes } = useStyles();
+  const { classes, cx } = useStyles();
   const queryClient = useQueryClient();
   const appDispatch = useAppDispatch();
   const { user } = useAppState();
@@ -24,6 +24,7 @@ const StrengthList = () => {
   const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = useState(false);
   const [workoutToDelete, setWorkoutToDelete] = useState('');
   const [selectedMonth, setSelectedMonth] = useState('');
+  const mobileView = useMediaQuery('(max-width:800px)');
 
   const handleLabelChange = (event: SelectChangeEvent<string>) => setSelectedLabel(event.target.value);
 
@@ -79,8 +80,8 @@ const StrengthList = () => {
   return (
     <Box className={classes.root}>
       <>
-        <Box className={classes.titleContainer}>
-          <Box className={classes.buttonsContainer}>
+        <Box className={cx({ [classes.titleContainer]: true, [classes.titleContainerMobile]: mobileView })}>
+          <Box className={cx({ [classes.buttonsContainer]: true, [classes.buttonsContainerMobile]: mobileView })}>
             <SelectByMonth setSelectedMonth={setSelectedMonth} workouts={workouts} selectedMonth={selectedMonth} />
             <FIlterBy selectedLabel={selectedLabel} labels={strengthLabels} workoutsMap={strengthMap} handleLabelChange={handleLabelChange} />
           </Box>

@@ -133,7 +133,7 @@ const CardioList = () => {
   return (
     <div>
       <Box className={classes.titleContainer}>
-        <Box className={classes.buttonsContainer}>
+        <Box className={cx({ [classes.buttonsContainer]: true, [classes.buttonsContainerMobile]: mobileView })}>
           <SelectByMonth setSelectedMonth={setSelectedMonth} workouts={cardio} selectedMonth={selectedMonth} />
           <FIlterBy labels={cardioLabels} workoutsMap={cardioMap} selectedLabel={selectedLabel} handleLabelChange={handleLabelChange} />
         </Box>
@@ -144,30 +144,38 @@ const CardioList = () => {
             <TableHead className={classes.head}>
               <TableRow>
                 <TableCell className={cx({ [classes.cellMobile]: mobileView })} onClick={() => handleTypeClick('name')}>
-                  <Button variant="text" endIcon={<ImportExportIcon />} className={classes.headCellButton}>
+                  <Button
+                    variant="text"
+                    endIcon={<ImportExportIcon />}
+                    className={cx({ [classes.headCellButton]: true, [classes.headCellButtonMobile]: mobileView })}>
                     Type
                   </Button>
                 </TableCell>
                 <TableCell className={cx({ [classes.cellMobile]: mobileView })} onClick={() => handleTypeClick('date')}>
-                  <Button variant="text" endIcon={<ImportExportIcon />} className={classes.headCellButton}>
+                  <Button
+                    variant="text"
+                    endIcon={<ImportExportIcon />}
+                    className={cx({ [classes.headCellButton]: true, [classes.headCellButtonMobile]: mobileView })}>
                     Date
                   </Button>
                 </TableCell>
                 <TableCell className={cx({ [classes.cellMobile]: mobileView })} onClick={() => handleTypeClick('distance')}>
-                  <Button variant="text" endIcon={<ImportExportIcon />} className={classes.headCellButton}>
-                    Distance &#40;m&#41;
+                  <Button
+                    variant="text"
+                    endIcon={<ImportExportIcon />}
+                    className={cx({ [classes.headCellButton]: true, [classes.headCellButtonMobile]: mobileView })}>
+                    {mobileView ? 'Dist.' : 'Distance'} &#40;m&#41;
                   </Button>
                 </TableCell>
                 <TableCell className={cx({ [classes.cellMobile]: mobileView })} onClick={() => handleTypeClick('time')}>
-                  <Button variant="text" endIcon={<ImportExportIcon />} className={classes.headCellButton}>
+                  <Button
+                    variant="text"
+                    endIcon={<ImportExportIcon />}
+                    className={cx({ [classes.headCellButton]: true, [classes.headCellButtonMobile]: mobileView })}>
                     Time &#40;m&#41;
                   </Button>
                 </TableCell>
-                <TableCell className={cx({ [classes.cellMobile]: mobileView })}>
-                  <Button variant="text" className={classes.headCellButton}>
-                    Remove
-                  </Button>
-                </TableCell>
+                <TableCell className={cx({ [classes.cellMobile]: mobileView })}></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
