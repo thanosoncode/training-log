@@ -2,7 +2,6 @@ import { ExpandMore, NavigateBefore, NavigateNext } from '@mui/icons-material';
 import { Box, IconButton, Paper } from '@mui/material';
 import { useState } from 'react';
 
-import { CardioWorkoutFromServer, StrengthWorkoutServer } from '../../utils/models';
 import { useStyles } from './Calendar.styles';
 import DaysView from './daysView/DaysView.component';
 import YearsView from './yearsView/YearsView.component';

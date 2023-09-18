@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Exercise } from '../../../utils/models';
 import ExercisesList from '../../../components/exerciseList/ExercisesList.component';
 import { SelectChangeEvent } from '@mui/material/Select';
-import { Backdrop, Button, CircularProgress, Typography } from '@mui/material';
+import { Backdrop, Button, CircularProgress, Typography, useMediaQuery } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postWorkoutStrength } from '../../../api/workouts';
 import { useNavigate } from 'react-router-dom';
@@ -14,12 +14,13 @@ import AddLabel from '../../../components/addLabel/AddLabel.component';
 import { useAppState } from '../../../context/AppContext';
 
 const NewStrength = () => {
-  const { classes } = useStyles();
+  const { classes, cx } = useStyles();
   const queryClient = useQueryClient();
   const { user } = useAppState();
   const navigate = useNavigate();
   const [workoutLabel, setWorkoutLabel] = useState('');
   const [exercises, setExercises] = useState<Exercise[]>([]);
+  const mobileView = useMediaQuery('(max-width:800px)');
 
   const handleWorkoutTypeChange = (event: SelectChangeEvent<string>) => {
     setWorkoutLabel(event.target.value);
@@ -43,10 +44,10 @@ const NewStrength = () => {
   );
 
   return (
-    <Box className={classes.root}>
+    <Box className={cx({ [classes.mobileRoot]: mobileView })}>
       {workoutLabel ? (
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-          <Typography variant="h3" sx={{ textTransform: 'capitalize', lineHeight: 'intial' }}>
+        <Box className={classes.labelHeader}>
+          <Typography variant="h3" className={classes.label}>
             {workoutLabel}
           </Typography>
           {exercises.length > 0 && (
@@ -63,7 +64,11 @@ const NewStrength = () => {
           <Box sx={{ marginBottom: '64px' }}>
             <ExercisesList exercises={exercises} showTitle={true} onDelete={handleRemoveExercise} />
           </Box>
-          {exercises.length > 0 ? <Typography>Keep going!</Typography> : <Typography>Add exercises to create your workout!</Typography>}
+          {exercises.length > 0 ? (
+            <Typography sx={{ marginBottom: '24px' }}>Keep going!</Typography>
+          ) : (
+            <Typography sx={{ marginBottom: '24px' }}>Add exercises to create your workout!</Typography>
+          )}
           <AddExercise exercises={exercises} setExercises={setExercises} label={workoutLabel} />
         </>
       ) : null}

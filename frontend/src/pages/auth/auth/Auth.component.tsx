@@ -3,12 +3,11 @@ import Typography from '@mui/material/Typography';
 import { useMutation } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { loginUser, registerUser } from '../../../api/user';
-import { NotificationMessage, UserFromServer } from '../../../utils/models';
+import { NotificationMessage } from '../../../utils/models';
 import { useStyles } from './Auth.styles';
-import { useNavigate } from 'react-router-dom';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { AxiosError } from 'axios';
-import { useAppDispatch, useAppState } from '../../../context/AppContext';
+import { useAppDispatch } from '../../../context/AppContext';
 
 type ResponseData = {
   message: string;
@@ -16,7 +15,6 @@ type ResponseData = {
 
 const Auth = () => {
   const { classes } = useStyles();
-  const navigate = useNavigate();
   const appDispatch = useAppDispatch();
   const [isMember, setIsMember] = useState(true);
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -37,7 +35,6 @@ const Auth = () => {
         severity: 'success'
       });
       appDispatch({ type: 'SET_USER', payload: data });
-      //   navigate('/');
     },
     onError: (data: AxiosError<ResponseData>) => {
       setMessage({
@@ -56,9 +53,7 @@ const Auth = () => {
         open: true,
         severity: 'success'
       });
-
       appDispatch({ type: 'SET_USER', payload: data });
-      //   navigate('/');
     },
     onError: (data: AxiosError<ResponseData>) => {
       setMessage({

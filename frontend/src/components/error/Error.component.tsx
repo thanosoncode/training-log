@@ -13,12 +13,12 @@ const Error = () => {
         marginTop: theme.spacing(12),
         textAlign: 'center'
       }}>
-      <Typography variant="h6">Something went terribly wrong. Try again later.</Typography>
+      <Typography variant="h6">Oops! Something went wrong. Try again later.</Typography>
       <Typography variant="subtitle1">
         {error.status} {error.statusText}
       </Typography>
       <Link to="/">
-        <Button sx={{ color: theme.palette.text.primary, marginTop: '16px' }}> go back home</Button>
+        <Button sx={{ color: theme.palette.text.primary, marginTop: '16px' }}>Go back home</Button>
       </Link>
     </Box>
   );

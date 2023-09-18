@@ -3,20 +3,21 @@ import { useStyles } from './Cardio.styles';
 import AddLabel from '../../../components/addLabel/AddLabel.component';
 import { cardioLabels } from '../../../utils/constants';
 import { useState } from 'react';
-import { Backdrop, Button, CircularProgress, SelectChangeEvent, TextField, Typography } from '@mui/material';
+import { Backdrop, Button, CircularProgress, SelectChangeEvent, TextField, Typography, useMediaQuery } from '@mui/material';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postCardio } from '../../../api/cardio';
 import { useAppState } from '../../../context/AppContext';
 import { useNavigate } from 'react-router-dom';
 
 const Cardio = () => {
-  const { classes } = useStyles();
+  const { classes, cx } = useStyles();
   const queryClient = useQueryClient();
   const { user } = useAppState();
   const navigate = useNavigate();
   const [cardioLabel, setCardioLabel] = useState('');
   const [exercise, setExercise] = useState({ distance: '', minutes: '' });
   const readyToSave = cardioLabel && exercise.distance && exercise.minutes;
+  const mobileView = useMediaQuery('(max-width:800px)');
 
   const handleCardioTypeChange = (event: SelectChangeEvent<string>) => {
     setCardioLabel(event.target.value);
@@ -36,13 +37,13 @@ const Cardio = () => {
   );
 
   return (
-    <Box className={classes.root}>
+    <Box className={cx({ [classes.mobileRoot]: mobileView })}>
       {cardioLabel ? (
         <Box sx={{}}>
-          <Typography variant="h3" sx={{ textTransform: 'capitalize', lineHeight: 'intial', marginBottom: '64px' }}>
+          <Typography variant="h3" className={classes.label}>
             {cardioLabel}
           </Typography>
-          <Box sx={{ display: 'flex', gap: '24px' }}>
+          <Box className={cx({ [classes.fieldsContainer]: true, [classes.fieldsContainerMobile]: mobileView })}>
             <TextField
               label="Distance (meters)"
               variant="standard"

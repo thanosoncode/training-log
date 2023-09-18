@@ -7,7 +7,7 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     gap: '16px',
-    margin: theme.spacing(3, 0, 4, 0),
+    margin: theme.spacing(3, 0, 8, 0),
     height: 40,
     padding: theme.spacing(0, 1)
   },
@@ -20,7 +20,7 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     }
   },
   rowTotal: { border: `1px solid ${theme.palette.primary.main}` },
-  deleteIcon: { cursor: 'pointer', '&:hover': { color: 'gray' }, fontSize: '16px' },
+  deleteIcon: { cursor: 'pointer', '&:hover': { color: 'gray' }, fontSize: '16px', marginRight: 8 },
   cellMobile: { padding: theme.spacing(2, 0) },
   headCellButton: { width: '100%', textTransform: 'none', padding: 0, whiteSpace: 'nowrap' },
   headCellButtonMobile: { '& span': { margin: 0 } },

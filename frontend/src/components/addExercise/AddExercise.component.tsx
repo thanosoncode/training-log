@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Typography, useMediaQuery } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import theme from '../../theme';
 import { Exercise } from '../../utils/models';
 import SelectByExercise from '../selectByExercise/SelectByExercise.component';
+import { useStyles } from './AddExercise.styles';
 
 interface AddExerciseProps {
   exercises: Exercise[];
@@ -17,7 +18,9 @@ interface AddExerciseProps {
 }
 
 const AddExercise: React.FC<AddExerciseProps> = (props) => {
+  const { classes, cx } = useStyles();
   const emptyExercise = { id: '', name: '', sets: '0', reps: '0', weight: '' };
+  const mobileView = useMediaQuery('(max-width:800px)');
 
   const [exercise, setExercise] = useState<Exercise>(emptyExercise);
   const [inValidExercise, setInvalidExercise] = useState(false);
@@ -48,19 +51,11 @@ const AddExercise: React.FC<AddExerciseProps> = (props) => {
   };
 
   return (
-    <Box>
-      <Typography variant="subtitle1" sx={{ marginTop: 4, color: theme.palette.warning.main }}>
+    <Box className={cx({ [classes.rootMobile]: mobileView })}>
+      <Typography variant="subtitle1" className={classes.info}>
         {inValidExercise ? 'All fields are required' : ''}
       </Typography>
-      <Box
-        sx={{
-          display: 'flex',
-          gap: 4,
-          marginTop: 2,
-          marginBottom: 3,
-          flexWrap: 'wrap',
-          justifyContent: 'center'
-        }}>
+      <Box className={cx({ [classes.fieldsContainer]: true, [classes.fieldsContainerMobile]: mobileView })}>
         <SelectByExercise value={exercise.name} onChange={handleSelectChange} showExercisesCount={false} label={props.label} />
         <FormControl>
           <TextField
@@ -96,7 +91,7 @@ const AddExercise: React.FC<AddExerciseProps> = (props) => {
           onChange={handleInputChange}
           inputProps={{ min: 0 }}
         />
-        <Button variant="outlined" onClick={handleAddExercise}>
+        <Button variant="outlined" onClick={handleAddExercise} className={classes.button}>
           add
         </Button>
       </Box>
