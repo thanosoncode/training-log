@@ -6,7 +6,6 @@ import { useAppDispatch, useAppState } from '../../context/AppContext';
 import AuthPage from '../../pages/auth/AuthPage.component';
 import { useQuery } from '@tanstack/react-query';
 import { authenticateUserToken } from '../../api/user';
-import { makeStyles } from 'tss-react/mui';
 
 interface RootLayoutProps {
   mode: 'light' | 'dark';
@@ -34,6 +33,8 @@ const RootLayout: React.FC<RootLayoutProps> = ({ mode, handleThemeMode }) => {
       </Box>
     </Box>
   );
+
+  console.log('user', user);
 
   return user ? (
     app

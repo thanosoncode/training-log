@@ -23,7 +23,7 @@ const StrengthList = () => {
   const [selectedLabel, setSelectedLabel] = useState('');
   const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = useState(false);
   const [workoutToDelete, setWorkoutToDelete] = useState('');
-  const [selectedMonth, setSelectedMonth] = useState('');
+  const [selectedMonth, setSelectedMonth] = useState((new Date().getMonth() + 1).toString());
   const mobileView = useMediaQuery('(max-width:800px)');
 
   const handleLabelChange = (event: SelectChangeEvent<string>) => setSelectedLabel(event.target.value);

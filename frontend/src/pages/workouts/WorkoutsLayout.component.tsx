@@ -6,6 +6,7 @@ import { makeStyles } from 'tss-react/mui';
 const WorkoutsLayout = () => {
   const { pathname } = useLocation();
   const { classes, cx } = useStyles();
+
   return (
     <Box>
       <Box className={classes.linksContainer}>

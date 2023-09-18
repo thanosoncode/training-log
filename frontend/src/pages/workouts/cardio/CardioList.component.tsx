@@ -32,13 +32,13 @@ type OrderBy = 'name' | 'time' | 'distance' | 'date';
 const CardioList = () => {
   const { classes, cx } = useStyles();
   const queryClient = useQueryClient();
-  const { month, year, user } = useAppState();
+  const { user } = useAppState();
   const [selectedLabel, setSelectedLabel] = useState('');
   const [cardioToDelete, setCardioToDelete] = useState('');
   const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = useState(false);
   const [orderDirection, setOrderDirection] = useState<'asc' | 'desc'>('desc');
   const [orderBy, setOrderBy] = useState<OrderBy>('date');
-  const [selectedMonth, setSelectedMonth] = useState('');
+  const [selectedMonth, setSelectedMonth] = useState((new Date().getMonth() + 1).toString());
   const mobileView = useMediaQuery('(max-width:800px)');
 
   const handleLabelChange = (event: SelectChangeEvent<string>) => setSelectedLabel(event.target.value);
