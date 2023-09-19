@@ -1,4 +1,4 @@
-import { ClickAwayListener, Tooltip } from '@mui/material';
+import { ClickAwayListener, Menu, Tooltip } from '@mui/material';
 import { useStyles } from './DayItem.styles';
 import { CombinedEntry, CombinedEntryWorkout } from '../DaysView.component';
 import { useState } from 'react';
@@ -11,35 +11,43 @@ export interface DayItemProps {
 
 const DayItem: React.FC<DayItemProps> = ({ entry, handleDayClick, index }) => {
   const { classes, cx } = useStyles({ entry });
-  const [tooltipOpen, setTooltipOpen] = useState(false);
+  const [anchorElement, setAnchorElement] = useState<(EventTarget & HTMLElement) | null>(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const handleTooltipOpen = () => setTooltipOpen(true);
-  const handleTooltipClose = () => setTooltipOpen(false);
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    setIsMenuOpen(!isMenuOpen);
+    setAnchorElement(event.currentTarget);
+  };
+  const handleMenuClose = () => setIsMenuOpen(false);
+
+  const handleClick = (workout: CombinedEntryWorkout) => {
+    handleDayClick(workout);
+    handleMenuClose();
+  };
 
   return (
-    <ClickAwayListener onClickAway={handleTooltipClose}>
-      <Tooltip
-        open={tooltipOpen}
-        classes={{ tooltip: classes.tooltipContainer }}
-        title={
-          <div>
-            <div className={classes.list}>
-              {entry.workouts &&
-                entry.workouts.map((workout, index) => (
-                  <div key={index} onClick={() => handleDayClick(workout)} className={classes.tooltipItem}>
-                    {workout.label}
-                  </div>
-                ))}
-            </div>
-          </div>
-        }
+    <>
+      <span
+        onClick={handleMenuOpen}
         className={cx({
           [classes.day]: true,
           [classes.dayActive]: entry && entry.workouts && entry.workouts.length > 0
         })}>
-        <span onClick={handleTooltipOpen}>{index + 1}</span>
-      </Tooltip>
-    </ClickAwayListener>
+        {index + 1}
+      </span>
+      <Menu open={isMenuOpen} anchorEl={anchorElement} onClose={handleMenuClose}>
+        <div>
+          <div className={classes.list}>
+            {entry.workouts &&
+              entry.workouts.map((workout, index) => (
+                <div key={index} onClick={() => handleClick(workout)} className={classes.tooltipItem}>
+                  {workout.label}
+                </div>
+              ))}
+          </div>
+        </div>
+      </Menu>
+    </>
   );
 };
 export default DayItem;

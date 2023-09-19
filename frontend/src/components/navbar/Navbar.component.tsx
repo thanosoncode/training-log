@@ -45,6 +45,11 @@ const Navbar: React.FC<NavbarProps> = ({ handleThemeMode, mode }) => {
     setIsMobileMenuOpen(false);
   };
 
+  const handleThemeModeClick = () => {
+    handleThemeMode();
+    handleCloseUserMenu();
+  };
+
   const handleLogout = () => {
     const token = document.cookie.split('authToken=')[1];
     if (token) {
@@ -158,7 +163,7 @@ const Navbar: React.FC<NavbarProps> = ({ handleThemeMode, mode }) => {
               }}>
               <Typography className={classes.userEmail}>{user?.email}</Typography>
               <Divider />
-              <MenuItem onClick={handleThemeMode}>
+              <MenuItem onClick={handleThemeModeClick}>
                 <IconButton className={classes.modeButton}>
                   {mode === 'light' ? (
                     <Box className={classes.listItemContainer}>

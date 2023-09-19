@@ -34,8 +34,6 @@ const RootLayout: React.FC<RootLayoutProps> = ({ mode, handleThemeMode }) => {
     </Box>
   );
 
-  console.log('user', user);
-
   return user ? (
     app
   ) : isLoading ? (

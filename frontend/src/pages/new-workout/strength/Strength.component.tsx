@@ -47,7 +47,7 @@ const NewStrength = () => {
     <Box className={cx({ [classes.mobileRoot]: mobileView })}>
       {workoutLabel ? (
         <Box className={classes.labelHeader}>
-          <Typography variant="h3" className={classes.label}>
+          <Typography variant={mobileView ? 'h5' : 'h4'} className={classes.label}>
             {workoutLabel}
           </Typography>
           {exercises.length > 0 && (
@@ -61,15 +61,17 @@ const NewStrength = () => {
       )}
       {workoutLabel ? (
         <>
-          <Box sx={{ marginBottom: '64px' }}>
+          <Box className={cx({ [classes.exercisesListContainer]: true, [classes.exercisesListContainerMobile]: mobileView })}>
             <ExercisesList exercises={exercises} showTitle={true} onDelete={handleRemoveExercise} />
           </Box>
           {exercises.length > 0 ? (
-            <Typography sx={{ marginBottom: '24px' }}>Keep going!</Typography>
+            <Typography className={classes.message}>Keep going!</Typography>
           ) : (
-            <Typography sx={{ marginBottom: '24px' }}>Add exercises to create your workout!</Typography>
+            <Typography className={classes.message}>Add exercises to create your workout!</Typography>
           )}
-          <AddExercise exercises={exercises} setExercises={setExercises} label={workoutLabel} />
+          <Box className={classes.addExerciseContainer}>
+            <AddExercise exercises={exercises} setExercises={setExercises} label={workoutLabel} />
+          </Box>
         </>
       ) : null}
       <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={isSavingWorkout}>

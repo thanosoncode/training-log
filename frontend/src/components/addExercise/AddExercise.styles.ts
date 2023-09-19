@@ -10,7 +10,8 @@ export const useStyles = makeStyles()((theme: Theme) => ({
   fieldsContainer: {
     display: 'flex',
     justifyContent: 'space-between',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    gap: '16px'
   },
   fieldsContainerMobile: {
     flexDirection: 'column',

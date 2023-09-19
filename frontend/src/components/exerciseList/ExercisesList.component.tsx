@@ -1,4 +1,4 @@
-import { Box, Theme } from '@mui/material';
+import { Box, Theme, useMediaQuery } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -24,6 +24,7 @@ interface ExercisesListProps {
 
 const ExercisesList: React.FC<ExercisesListProps> = ({ exercises, workout, showTitle, onDelete, colorLabel }) => {
   const { classes, cx } = useStyles();
+  const mobileView = useMediaQuery('(max-width:800px)');
 
   return (
     <>
@@ -42,24 +43,32 @@ const ExercisesList: React.FC<ExercisesListProps> = ({ exercises, workout, showT
           <Table size="small">
             <TableHead>
               <TableRow>
-                <TableCell sx={{ color: theme.palette.text.secondary }}>Exercise</TableCell>
-                <TableCell className={classes.headCell}>Sets</TableCell>
-                <TableCell className={classes.headCell}>Reps</TableCell>
-                <TableCell className={classes.headCell}>Weight</TableCell>
-                {onDelete && <TableCell className={classes.headCell}>Remove</TableCell>}
+                <TableCell sx={{ color: theme.palette.text.secondary }} className={cx({ [classes.headCellMobile]: mobileView })}>
+                  Exercise
+                </TableCell>
+                <TableCell className={cx({ [classes.headCell]: true, [classes.headCellMobile]: mobileView })}>Sets</TableCell>
+                <TableCell className={cx({ [classes.headCell]: true, [classes.headCellMobile]: mobileView })}>Reps</TableCell>
+                <TableCell className={cx({ [classes.headCell]: true, [classes.headCellMobile]: mobileView })}>Weight</TableCell>
+                {onDelete && <TableCell className={cx({ [classes.headCell]: true, [classes.headCellMobile]: mobileView })}>Remove</TableCell>}
               </TableRow>
             </TableHead>
             <TableBody>
               {exercises.map((exercise) => (
                 <TableRow key={exercise.id}>
-                  <TableCell className={classes.cellName} sx={{ fontSize: '16px' }}>
+                  <TableCell sx={{ fontSize: '16px' }} className={cx({ [classes.cellName]: true, [classes.cellMobile]: mobileView })}>
                     {exercise.name}
                   </TableCell>
-                  <TableCell sx={{ textAlign: 'center', fontSize: '16px' }}>{exercise.sets}</TableCell>
-                  <TableCell sx={{ textAlign: 'center', fontSize: '16px' }}>{exercise.reps}</TableCell>
-                  <TableCell sx={{ textAlign: 'center', fontSize: '16px' }}>{exercise.weight}</TableCell>
+                  <TableCell sx={{ textAlign: 'center', fontSize: '16px' }} className={cx({ [classes.cellMobile]: mobileView })}>
+                    {exercise.sets}
+                  </TableCell>
+                  <TableCell sx={{ textAlign: 'center', fontSize: '16px' }} className={cx({ [classes.cellMobile]: mobileView })}>
+                    {exercise.reps}
+                  </TableCell>
+                  <TableCell sx={{ textAlign: 'center', fontSize: '16px' }} className={cx({ [classes.cellMobile]: mobileView })}>
+                    {exercise.weight}
+                  </TableCell>
                   {onDelete && (
-                    <TableCell sx={{ textAlign: 'center', fontSize: '16px' }}>
+                    <TableCell sx={{ textAlign: 'center', fontSize: '16px' }} className={cx({ [classes.cellMobile]: mobileView })}>
                       <CancelPresentationIcon onClick={() => onDelete(exercise.id)} />
                     </TableCell>
                   )}
@@ -88,5 +97,7 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     marginLeft: theme.spacing(7)
   },
   headCell: { color: theme.palette.text.secondary, textAlign: 'center' },
-  cellName: { fontWeight: 500 }
+  cellMobile: { padding: '6px 8px' },
+  cellName: { fontWeight: 500 },
+  headCellMobile: { padding: '6px 8px' }
 }));
