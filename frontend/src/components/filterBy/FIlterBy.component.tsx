@@ -20,7 +20,7 @@ const FIlterBy: React.FC<FilterByProps> = ({ handleLabelChange, selectedLabel, l
   const filteredLabels = workoutsMap && labels.filter((label) => Object.keys(workoutsMap).includes(label));
 
   return (
-    <FormControl variant="standard" sx={{ minWidth: 120 }}>
+    <FormControl variant="standard" sx={{ minWidth: 120 }} data-testid="filter-by-type">
       <InputLabel id="filter-by-label">Type</InputLabel>
       <Select id="filter-by-label" label="Filter by" labelId="filter-by-label" value={selectedLabel} onChange={handleLabelChange} className={classes.select}>
         {filteredLabels &&

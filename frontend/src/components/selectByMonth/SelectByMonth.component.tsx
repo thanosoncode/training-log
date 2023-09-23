@@ -17,7 +17,7 @@ const SelectByMonth: React.FC<SelectByMonthProps> = ({ setSelectedMonth, selecte
   };
 
   return (
-    <FormControl variant="standard" sx={{ minWidth: 160 }}>
+    <FormControl variant="standard" sx={{ minWidth: 160 }} data-testid="select-by-month">
       <InputLabel id="month" sx={{ width: 160 }}>
         Month
       </InputLabel>

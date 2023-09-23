@@ -133,7 +133,7 @@ const CardioList = () => {
   const workoutsPerMonth = cardio && cardio.map((c) => new Date(c.createdAt).getMonth());
 
   return (
-    <div>
+    <div data-testid="cardio-list-root">
       <Box className={classes.titleContainer}>
         <Box className={cx({ [classes.buttonsContainer]: true, [classes.buttonsContainerMobile]: mobileView })}>
           <SelectByMonth setSelectedMonth={setSelectedMonth} workoutsPerMonth={workoutsPerMonth} selectedMonth={selectedMonth} />
@@ -141,7 +141,7 @@ const CardioList = () => {
         </Box>
       </Box>
       {cardioToShow && cardioToShow.length > 0 ? (
-        <TableContainer component={Paper} sx={{ height: 'min-content', border: '1px solid #464646' }}>
+        <TableContainer component={Paper} sx={{ height: 'min-content', border: '1px solid #464646' }} data-testid="cardio-table">
           <Table size="small">
             <TableHead className={classes.head}>
               <TableRow>
@@ -173,6 +173,7 @@ const CardioList = () => {
                   <Button
                     variant="text"
                     endIcon={<ImportExportIcon />}
+                    data-testid="cardio-table-time-button"
                     className={cx({ [classes.headCellButton]: true, [classes.headCellButtonMobile]: mobileView })}>
                     Time &#40;m&#41;
                   </Button>
@@ -183,7 +184,7 @@ const CardioList = () => {
             <TableBody>
               {cardioToShow.map((c) => {
                 return (
-                  <TableRow key={c.id} className={classes.row}>
+                  <TableRow key={c.id} className={classes.row} data-testid="cardio-table-body-row">
                     <TableCell sx={{ fontSize: '16px' }} className={cx({ [classes.cellName]: true, [classes.cellMobile]: mobileView })}>
                       {c.exercise.name}
                     </TableCell>
@@ -193,7 +194,10 @@ const CardioList = () => {
                     <TableCell sx={{ textAlign: 'center', fontSize: '16px' }} className={cx({ [classes.cellMobile]: mobileView })}>
                       {c.exercise.distance}
                     </TableCell>
-                    <TableCell sx={{ textAlign: 'center', fontSize: '16px' }} className={cx({ [classes.cellMobile]: mobileView })}>
+                    <TableCell
+                      sx={{ textAlign: 'center', fontSize: '16px' }}
+                      className={cx({ [classes.cellMobile]: mobileView })}
+                      data-testid="cardio-table-time">
                       {c.exercise.minutes}
                     </TableCell>
                     <TableCell sx={{ textAlign: 'center', fontSize: '16px' }} className={cx({ [classes.cellMobile]: mobileView })}>

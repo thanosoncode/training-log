@@ -50,7 +50,7 @@ export const MONTHS = [
   { name: 'June', value: 6 },
   { name: 'July', value: 7 },
   { name: 'August', value: 8 },
-  { name: 'Semptember', value: 9 },
+  { name: 'September', value: 9 },
   { name: 'October', value: 10 },
   { name: 'November', value: 11 },
   { name: 'December', value: 12 }

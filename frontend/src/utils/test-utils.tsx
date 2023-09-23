@@ -5,12 +5,15 @@ import { ReactElement } from 'react';
 import { RouterProvider } from 'react-router-dom';
 
 import theme from '../theme';
+import AppProvider from '../context/AppContext';
 
-const AllTheProviders = () => {
+const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
   const queryClient = new QueryClient();
   return (
     <ThemeProvider theme={theme}>
-      <QueryClientProvider client={queryClient}></QueryClientProvider>
+      <AppProvider>
+        <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      </AppProvider>
     </ThemeProvider>
   );
 };
