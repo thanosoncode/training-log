@@ -4,6 +4,9 @@ A MERN app to keep track and check the progress of your strength and cardio sess
 
 ## Backend
 <ul>
+   <li>
+    Node.js
+  </li>
   <li>
     Express
   </li>
@@ -21,18 +24,18 @@ A MERN app to keep track and check the progress of your strength and cardio sess
     React
   </li>
   <li>
-    React query
+    React Query
   </li>
   <li>
-    React router
+    React Router
   </li>
   <li>
-    Axios
+    React Testing Library
   </li>
    <li>
     Recharts
   </li>
     <li>
-    Material ui
+    Material UI
   </li>
 </ul>
